@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+}
+
+@using BoldRealties.Models
+@model  IEnumerable<jobs>
+
+<div class="container p-2">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class= "text-primary">Maintenance Jobs</h2>
+        </div>
+        <div class="col-6">
+            <a asp-controller="maintenanceJobs" asp-action="AddMJ" class="btn btn-primary">Create a job</a>
+        </div>
+    </div>
+    <table class= "table table-table-bordered table-table-striped">
+        <thead>
+            <tr>
+                <th>Job ID</th>
+                 <th>Start Date</th>
+                <th>Completion Date</th>
+                <th>Is Completed</th>
+                <th>Tenancy ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+             <tr>
+                <td>@item.ID</td>
+                <td>@item.StartDate</td>
+                <td>@item.EndDate</td>
+                <td>@item.isCompleted</td>
+                <td>@item.tenanciesID</td>
+                <td>
+                    <a asp-controller="maintenanceJobs" asp-action="EditMJ" asp-route-id="@item.ID" class="btn btn-primary mx-2">
+                       <i class="bi bi-file-earmark-richtext"></i>
+                     </a>
+                       <a   class="btn btn-primary mx-2">
+                        <i class="bi bi-pencil-square"></i>
+                        </a>
+                          <a asp-controller="maintenanceJobs" asp-action="DeleteMJ" asp-route-id="@item.ID"  class="btn btn-danger mx-2">
+                       <i class="bi bi-trash"></i>
+                        </a>
+
+                    </td>
+            </tr>
+            }
+           
+
+        </tbody>
+    </table>
+</div>
+
+
+
+

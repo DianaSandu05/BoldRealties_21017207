@@ -1,0 +1,94 @@
+﻿@using BoldRealties.Models
+@model PropertiesRS
+@{
+    ViewData["Title"] = "AddProperties";
+    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+}
+
+<form method="post">
+    <div class="border p-3 mt-4">
+         <a asp-page="/Properties/Index" class="btn btn-primary">Properties List</a>
+        <div class= "row pb-2">
+            <h2 cass="text-primary pl-3"> Add Property</h2>
+        </div>
+        <div class="mb-3">
+           <label asp-for="floorSpace">Floor Space (SQ. M)</label>
+            <input asp-for="floorSpace" class="form-control" />
+            <span asp-validation-for="floorSpace" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+           <label asp-for="balconiesNo">Balconies number</label>
+            <input asp-for="balconiesNo" class="form-control" />
+            <span asp-validation-for="balconiesNo" class="text-danger"></span>
+        </div>
+         <div class="mb-3">
+           <label asp-for="balconySpace">Balcony space(SQ. M)</label>
+            <input asp-for="balconySpace" class="form-control" />
+           
+        </div>
+        <div class="mb-3">
+           <label asp-for="bedsNo">Beds number</label>
+            <input asp-for="bedsNo" class="form-control" />
+             <span asp-validation-for="bedsNo" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+           <label asp-for="bathsNo">Bathrooms number</label>
+            <input asp-for="bathsNo" class="form-control" />
+             <span asp-validation-for="bathsNo" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+           <label asp-for="garagesNo">Garages number</label>
+            <input asp-for="garagesNo" class="form-control" />
+             <span asp-validation-for="garagesNo" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+           <label asp-for="parkingNo">Parking number</label>
+            <input asp-for="parkingNo" class="form-control" />
+             <span asp-validation-for="parkingNo" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+           <label asp-for="estateDescription">Estate description</label>
+            <input asp-for="estateDescription" class="form-control col-lg-6" />
+             <span asp-validation-for="estateDescription" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+           <label asp-for="propertyType">Property type</label>
+            <input asp-for="propertyType" class="form-control col-lg-6" />
+             <span asp-validation-for="propertyType" class="text-danger"></span>
+        </div>
+        <span onformchange="Properties.propertyType" class="text-danger"></span>
+        
+      
+        <div class="mb-3">
+        <label asp-for="billsIncluded">Bills Included</label>
+        @Html.DropDownList("billsIncluded", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})
+      
+    </div>
+    <div class="mb-3">
+           <label asp-for="propertyAddress">Property Address</label>
+            <input asp-for="propertyAddress" class="form-control" />
+        </div>
+        <div class="mb-3">
+           <label asp-for="marketPrice">Market Price</label>
+            <input asp-for="marketPrice" class="form-control" />
+        </div>
+         <div class="mb-3">
+        <label asp-for="petsAllowed">Pets Allowed</label>
+        @Html.DropDownList("petsAllowed", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})
+      
+    </div>
+        <div class="mb-3">
+           <label asp-for="minPrice">Minimum Price</label>
+            <input asp-for="minPrice" class="form-control" />
+        </div>
+         <div class="mb-3">
+           <label asp-for="maxPrice">Maximum Price</label>
+            <input asp-for="maxPrice" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+         <a asp-controller="PropertiesRS" asp-action="Index" class="btn btn-primary">Properties List</a>
+    </div>
+</form>
+
+

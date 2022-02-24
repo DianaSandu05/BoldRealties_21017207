@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+}
+@using BoldRealties.Models
+@model  IEnumerable<tenancies>
+
+<div class="container p-2">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class= "text-primary">Tenancies</h2>
+        </div>
+        <div class="col-6">
+            <a asp-controller="Tenancy" asp-action="AddTenancy" class="btn btn-primary">Add tenancy</a>
+        </div>
+    </div>
+    <table class= "table table-table-bordered table-table-striped">
+        <thead>
+            <tr>
+                <th>Tenancy ID</th>
+                 <th>Rent Price</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Management Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+             <tr>
+                <td>@item.Id</td>
+                <td>@item.rentPrice</td>
+                <td>@item.StartDate</td>
+                <td>@item.EndDate</td>
+                <td>@item.managementType</td>
+                <td>
+                    <a asp-controller="Tenancy" asp-action="EditTenancy" asp-route-id="@item.Id" class="btn btn-primary mx-2">
+                       <i class="bi bi-file-earmark-richtext"></i>
+                     </a>
+                       <a   class="btn btn-primary mx-2">
+                        <i class="bi bi-pencil-square"></i>
+                        </a>
+                          <a asp-controller="Tenancy" asp-action="DeleteTenancy" asp-route-id="@item.Id"  class="btn btn-danger mx-2">
+                       <i class="bi bi-trash"></i>
+                        </a>
+
+                    </td>
+            </tr>
+            }
+           
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+

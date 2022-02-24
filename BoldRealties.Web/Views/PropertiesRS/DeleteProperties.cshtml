@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "DeleteProperties";
+    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+}
+@using BoldRealties.Models
+@model PropertiesRS
+
+
+<form method="post" asp-action="DeleteProperty">
+    <div class="border p-3 mt-4">
+         <div class="border p-3 mt-4">
+         <a asp-page="/Properties/Index" class="btn btn-primary">Properties List</a>
+        
+        <div class= "row pb-2">
+            <h2 cass="text-primary pl-3"> Delete Property</h2>
+        </div>
+         <input asp-for="ID" hidden/>
+        <div class="mb-3">
+           <label asp-for="floorSpace">Floor Space (SQ. M)</label>
+            <input disabled asp-for="floorSpace" class="form-control" />           
+        </div>
+        <div class="mb-3">
+           <label asp-for="balconiesNo">Balconies number</label>
+            <input disabled asp-for="balconiesNo" class="form-control" />        
+        </div>
+         <div class="mb-3">
+           <label asp-for="balconySpace">Balcony space(SQ. M)</label>
+            <input disabled asp-for="balconySpace" class="form-control" />         
+        </div>
+        <div class="mb-3">
+           <label asp-for="bedsNo">Beds number</label>
+            <input disabled asp-for="bedsNo" class="form-control" />         
+        </div>
+        <div class="mb-3">
+           <label asp-for="bathsNo">Bathrooms number</label>
+            <input disabled asp-for="bathsNo" class="form-control" />           
+        </div>
+        <div class="mb-3">
+           <label asp-for="garagesNo">Garages number</label>
+            <input disabled asp-for="garagesNo" class="form-control" />          
+        </div>
+        <div class="mb-3">
+           <label asp-for="parkingNo">Parking number</label>
+            <input disabled asp-for="parkingNo" class="form-control" />          
+        </div>
+        <div class="mb-3">
+           <label asp-for="estateDescription">Estate description</label>
+            <input disabled asp-for="estateDescription" class="form-control col-lg-6" />           
+        </div>
+        <div class="mb-3">
+           <label asp-for="propertyType">Property type</label>
+            <input disabled asp-for="propertyType" class="form-control col-lg-6" />          
+        </div>
+        <div class="mb-3">
+        <label asp-for="billsIncluded">Bills Included</label>
+        @Html.DropDownList("billsIncluded", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})
+      
+    </div>
+    <div class="mb-3">
+           <label asp-for="propertyAddress">Property Address</label>
+            <input asp-for="propertyAddress" class="form-control" />
+        </div>
+        <div class="mb-3">
+           <label asp-for="marketPrice">Market Price</label>
+            <input asp-for="marketPrice" class="form-control" />
+        </div>
+         <div class="mb-3">
+        <label asp-for="petsAllowed">Pets Allowed</label>
+        @Html.DropDownList("petsAllowed", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})     
+    </div>
+        <div class="mb-3">
+           <label asp-for="minPrice">Minimum Price</label>
+            <input asp-for="minPrice" class="form-control" />
+        </div>
+         <div class="mb-3">
+           <label asp-for="maxPrice">Maximum Price</label>
+            <input asp-for="maxPrice" class="form-control" />
+        </div>
+       
+         <a asp-controller="PropertiesRS" asp-action="Index" class="btn btn-primary">Properties List</a>
+    </div>
+
+         <button type="submit" class="btn btn-primary">Delete</button>
+         </div>
+         </form>
+        
+

@@ -1,0 +1,105 @@
+﻿@using BoldRealties.Models
+@model BoldRealties.Models.ViewModels.TenancyViewModel
+@{
+    ViewData["Title"] = "Upsert";
+    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+}
+
+
+<form method="post" asp-action="Upsert">
+     <a asp-page="/Properties/Index" class="btn btn-primary">Properties List</a>
+     <hr/>
+    <div class="border p-3 mt-4 row">
+        
+        <div class= "row pb-2">
+            <h2 cass="text-primary pl-3">@(Model.tenancy.Id !=0?"Update":"Create") | Tenancy</h2>
+        </div>
+        <div class="mb-3 col-6">
+           <label asp-for="tenancy.StartDate">Tenancy Start Date</label>
+            <input type="date" asp-for="tenancy.StartDate" class="form-control" />
+            <span asp-validation-for="tenancy.StartDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3 col-6">
+           <label asp-for="tenancy.EndDate">Tenancy End Date</label>
+            <input type="date" asp-for="tenancy.EndDate" class="form-control" />
+            <span asp-validation-for="tenancy.EndDate" class="text-danger"></span>
+        </div>
+         <div class="mb-3 col-6">
+           <label asp-for="tenancy.rentPrice">Rent Price</label>
+            <input asp-for="tenancy.rentPrice" class="form-control" />
+           
+        </div>
+        <div class="mb-3  col-6">
+           <label asp-for="tenancy.comission">Agency comission</label>
+            <input asp-for="tenancy.comission" class="form-control" />
+             <span asp-validation-for="tenancy.comission" class="text-danger"></span>
+        </div>
+        <div class="mb-3  col-6">
+           <label asp-for="tenancy.imagePath">Upload Images</label>
+            <input type="text"   asp-for="tenancy.imagePath" class="form-control" />
+            
+        </div>
+        <div class="mb-3  col-6">
+           <label asp-for="tenancy.filePath">Upload File</label>
+            <input  asp-for="tenancy.filePath" class="form-control" />
+           
+            
+        </div>
+        <div class="mb-3  col-6">
+        <label asp-for="tenancy.managementType">Management Type</label>
+        @Html.DropDownList("tenancy.managementType", new SelectList(new[] { "Rent only", "Rent collection", "Fully managed" }), new { @class="form-control select1"})
+      </div>
+       <div class="mb-3  col-6">
+           <label asp-for="tenancy.PropertyID">Property ID</label>
+            <select asp-for="tenancy.PropertyID" asp-items="@Model.PropertiesList" class="form-select">
+                <option disabled selected>--Select Property--</option>
+            </select>
+        </div>
+        <div class="mb-3  col-6">
+           <label asp-for="tenancy.UserID">User ID</label>
+            <select asp-for="tenancy.UserID" asp-items="@Model.UserList" class="form-select">
+                <option disabled selected>--Select Property--</option>
+            </select>
+        </div>
+        
+    </div>
+    <div class="col-12">
+        @if(Model.tenancy.Id!=0)
+        {
+            <button type="submit" class="btn btn-primary">Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary">Add</button>
+        }
+         <a asp-controller="Tenancy" asp-action="Index" class="btn btn-primary">Tenancies List</a>
+    </div>
+      
+</form>
+<section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial"/>
+    }
+    <script>
+        function ValidateInput(){
+            if(document.getElementById("uploadImg").value=="")
+            {
+                Swal.fire({
+              icon: 'warning',
+              title: 'Oops...',
+              text: 'Please upload requested images such as: proof of id tenants and/or other required images',
+              
+            })
+             else if(document.getElementById("uploadFiles").value=="")
+            {
+                Swal.fire({
+              icon: 'warning',
+              title: 'Oops...',
+              text: 'Please upload requested files for tenancy! e.g. tenancy agreement and so on',
+              
+            })
+            }
+        }
+    </script>
+}
