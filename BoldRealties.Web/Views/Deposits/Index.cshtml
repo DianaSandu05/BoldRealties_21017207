@@ -1,5 +1,75 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using BoldRealties.Models
+@model  IEnumerable<Deposits>
 @{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
 }
+<div class="container p-2">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class= "text-primary">Deposits List</h2>
+        </div>
+        <div class="col-6">
+            <a asp-controller="Deposits" asp-action="AddDeposits" class="btn btn-primary"> Add new record</a>
+        </div>
+    </div>
+    <table class= "table table-table-bordered table-table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                 <th>Tenancy ID</th>
+                <th> UserID</th>
+                <th>amount</th>
+                <th>Due Date</th>
+                 <th>Protected?</th>
+                 <th>Protected Date</th>
+                <th>is Received?</th>
+                <th>Received date</th>
+                <th>is Transferred?</th>
+                   <th>Transferred date</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+             <tr>
+                <td>@item.Id</td>
+                <td>@item.TenancyID</td>
+                <td>@item.UserID</td>
+                <td>@item.amount</td>
+                <td>@item.due_date</td>
+                <td>@item.isProtected</td>
+                 <td>@item.protected_Date</td>
+                <td>@item.isReceived</td>
+                <td>@item.receivedDate</td>
+                <td>@item.isReturned</td>
+                 <td>@item.returned_Date</td>
+                <td>@item.isTransfered</td>
+                <td>@item.transfered_Date</td>
+                <td>@item.FilePath</td>
+               
+              
+                <td>
+                    <a asp-controller="User" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary mx-2">
+                       <i class="bi bi-file-earmark-richtext"></i>
+                     </a>
+                       <a   class="btn btn-primary mx-2">
+                        <i class="bi bi-pencil-square"></i>
+                        </a>
+                          <a asp-controller="User" asp-action="Delete" asp-route-id="@item.Id"  class="btn btn-danger mx-2">
+                       <i class="bi bi-trash"></i>
+                        </a>
+
+                    </td>
+            </tr>
+            }
+           
+
+        </tbody>
+    </table>
+</div>
+
+
+
+

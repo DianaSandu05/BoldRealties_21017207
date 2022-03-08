@@ -15,7 +15,7 @@ namespace BoldRealties.Web.Controllers
         public IActionResult Index()
         {
             IEnumerable<Enquiries> enquiriesList = _unit.Enquiries.GetAll();
-            return View();
+            return View(enquiriesList);
         }
         public IActionResult AddEnquiry()
         {

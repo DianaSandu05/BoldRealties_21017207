@@ -15,7 +15,7 @@ namespace BoldRealties.Web.Controllers
         public IActionResult Index()
         {
             IEnumerable<Invoices> invoicesList = _unit.Invoices.GetAll();
-            return View();
+            return View(invoicesList);
         }
         public IActionResult AddInvoice()
         {

@@ -9,11 +9,13 @@ namespace BoldRealties.Web.Controllers
         public readonly IUnitOfWork _unit;
         public AccountsController(IUnitOfWork unit)
         {
+
             _unit = unit;
         }
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Accounts> objAccountsList = _unit.Accounts.GetAll();
+            return View(objAccountsList);
         }
         public IActionResult AddAccountsRecord()
         {

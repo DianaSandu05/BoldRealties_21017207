@@ -1,6 +1,60 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-*@
+﻿@using BoldRealties.Models
+@model  IEnumerable<officeAddress>
 @{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
 }
+<div class="container p-2">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class= "text-primary">Addresses List</h2>
+        </div>
+        <div class="col-6">
+            <a asp-controller="officeAddress" asp-action="Add" class="btn btn-primary"> Add new record</a>
+        </div>
+    </div>
+    <table class= "table table-table-bordered table-table-striped">
+        <thead>
+            <tr>
+                <th> ID</th>
+                <th>address</th>
+                <th>email</th>
+                 <th>fax</th>
+                <th>phone 1</th>
+               <th>phone 2</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+             <tr>
+                <td>@item.ID</td>
+                <td>@item.Address</td>
+                <td>@item.Email</td>
+                <td>@item.Fax</td>
+                <td>@item.Phone1</td>
+                <td>@item.Phone2</td>
+                <td>
+                    <a asp-controller="officeAddress" asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary mx-2">
+                       <i class="bi bi-file-earmark-richtext"></i>
+                     </a>
+                       <a   class="btn btn-primary mx-2">
+                        <i class="bi bi-pencil-square"></i>
+                        </a>
+                          <a asp-controller="officeAddress" asp-action="Delete" asp-route-id="@item.ID"  class="btn btn-danger mx-2">
+                       <i class="bi bi-trash"></i>
+                        </a>
+
+                    </td>
+            </tr>
+            }
+           
+
+        </tbody>
+    </table>
+</div>
+
+
+
+

@@ -15,5 +15,23 @@ namespace BoldRealties.Models.ViewModels
         public IEnumerable<SelectListItem> PropertiesList { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> UserList { get; set; }
+        public IEnumerable<SelectListItem> AccountsList { get; set; }
+       
+        public IEnumerable<SelectListItem> DepositsList { get; set; }
+       
+        public IEnumerable<SelectListItem> ViewingsList { get; set; }
+       
+        public IEnumerable<SelectListItem> EnquiriesList { get; set; }
+       
+        public IEnumerable<SelectListItem> baReportsList { get; set; }
+      
+        public IEnumerable<SelectListItem> maintenanceJobsList { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem> officeAddressList { get; set; }
+        public IEnumerable<SelectListItem> InvoicesList { get; set; }
+        public IEnumerable<SelectListItem> paymentList { get; set; }
+
+
+
     }
 }

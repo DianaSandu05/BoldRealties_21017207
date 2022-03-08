@@ -15,16 +15,16 @@ namespace BoldRealties.Web.Controllers
         public IActionResult Index()
         {
             IEnumerable<officeAddress> addressesList = _unit.OfficeAddress.GetAll();
-            return View();
+            return View(addressesList);
         }
-        public IActionResult AddofficeAddress()
+        public IActionResult Add()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken] //to avoid the cross site request forgery
 
-        public IActionResult AddofficeAddress(officeAddress office)
+        public IActionResult Add(officeAddress office)
         {
             if (ModelState.IsValid)
             {

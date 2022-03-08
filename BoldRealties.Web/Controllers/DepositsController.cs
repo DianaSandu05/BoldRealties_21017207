@@ -13,7 +13,8 @@ namespace BoldRealties.Web.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Deposits> objDepositsList = _unit.Deposits.GetAll();
+            return View(objDepositsList);
         }
         public IActionResult AddDeposits()
         {

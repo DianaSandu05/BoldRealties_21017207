@@ -14,7 +14,7 @@ namespace BoldRealties.Web.Controllers
         public IActionResult Index()
         {
             IEnumerable<Viewings> viewingList = _unit.viewings.GetAll();
-            return View();
+            return View(viewingList);
         }
         public IActionResult AddViewings()
         {
