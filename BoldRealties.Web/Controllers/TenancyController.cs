@@ -35,7 +35,7 @@ namespace BoldRealties.Web.Controllers
                 UserList = _unit.Users.GetAll().Select(x => new SelectListItem
                 {
                     Text = x.firstName + x.lastName,
-                    Value = x.ID.ToString()
+                 /*   Value = x.ID.ToString()*/
                 }),
             };
           if(ID==null || ID ==0)

@@ -21,26 +21,7 @@
             <input asp-for="lastName" class="form-control" />
             <span asp-validation-for="lastName" class="text-danger"></span>
         </div>
-         <div class="mb-3">
-           <label asp-for="userName">User Name</label>
-            <input asp-for="userName" class="form-control" />
-            <span asp-validation-for="userName" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-           <label asp-for="password">Password</label>
-            <input asp-for="password" class="form-control" />
-            <span asp-validation-for="password" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-           <label asp-for="email">Email</label>
-            <input asp-for="email" class="form-control" />
-            <span asp-validation-for="email" class="text-danger"></span>
-        </div>
-         <div class="mb-3">
-        <label asp-for="Role">User Role</label>
-        @Html.DropDownList("Role", new SelectList(new[] { "Tenant", "Landlord", "User" }), new { @class="form-control select1"})
-       <span asp-validation-for="Role" class="text-danger"></span>
-    </div>
+   
         <button type="submit" class="btn btn-primary">Add</button>
          <a asp-controller="User" asp-action="Index" class="btn btn-primary">User List</a>
     </div>

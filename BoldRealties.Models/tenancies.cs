@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,10 +24,10 @@ namespace BoldRealties.Models
         [ValidateNever]
         public PropertiesRS PropertiesRS { get; set; }
 
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         [ForeignKey("UserID")]
         [ValidateNever]
-        public Users Users { get; set; }
+        public IdentityUser Users { get; set; }
 
         public string managementType { get; set; }
 

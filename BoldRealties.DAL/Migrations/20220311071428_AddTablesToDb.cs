@@ -10,6 +10,20 @@ namespace BoldRealties.DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "officeAddress",
                 columns: table => new
                 {
@@ -29,6 +43,27 @@ namespace BoldRealties.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id");
+
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Accounts",
                 columns: table => new
                 {
@@ -38,7 +73,7 @@ namespace BoldRealties.DAL.Migrations
                     charged_date = table.Column<float>(type: "real", nullable: false),
                     isReceived = table.Column<bool>(type: "bit", nullable: false),
                     received_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TenancyID = table.Column<int>(type: "int", nullable: false),
                     PaymentID = table.Column<int>(type: "int", nullable: false),
                     InvoiceID = table.Column<int>(type: "int", nullable: false),
@@ -47,6 +82,113 @@ namespace BoldRealties.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Accounts", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id");
+
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    firstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    lastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    filePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PropertyID = table.Column<int>(type: "int", nullable: true),
+                    ApplicantID = table.Column<int>(type: "int", nullable: true),
+                    InvoicesID = table.Column<int>(type: "int", nullable: true),
+                    AccountsID = table.Column<int>(type: "int", nullable: true),
+                    imagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Accounts_AccountsID",
+                        column: x => x.AccountsID,
+                        principalTable: "Accounts",
+                        principalColumn: "ID");
+
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+
                 });
 
             migrationBuilder.CreateTable(
@@ -81,13 +223,19 @@ namespace BoldRealties.DAL.Migrations
                     isReturned = table.Column<bool>(type: "bit", nullable: false),
                     returned_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     isTransfered = table.Column<bool>(type: "bit", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TenancyID = table.Column<int>(type: "int", nullable: false),
                     transfered_Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Deposits", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Deposits_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+
                 });
 
             migrationBuilder.CreateTable(
@@ -109,13 +257,19 @@ namespace BoldRealties.DAL.Migrations
                     postcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     minPrice = table.Column<int>(type: "int", nullable: false),
                     maxPrice = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PropertyID = table.Column<int>(type: "int", nullable: false),
                     crime_Rate = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Enquiries", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Enquiries_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+
                 });
 
             migrationBuilder.CreateTable(
@@ -145,7 +299,7 @@ namespace BoldRealties.DAL.Migrations
                     isCompleted = table.Column<bool>(type: "bit", nullable: false),
                     diagnostics = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     tenanciesID = table.Column<int>(type: "int", nullable: false),
-                    userID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     filePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PropertyID = table.Column<int>(type: "int", nullable: false),
                     invoiceID = table.Column<int>(type: "int", nullable: false),
@@ -155,10 +309,16 @@ namespace BoldRealties.DAL.Migrations
                 {
                     table.PrimaryKey("PK_jobs", x => x.ID);
                     table.ForeignKey(
+                        name: "FK_jobs_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_jobs_Invoices_invoiceID",
                         column: x => x.invoiceID,
                         principalTable: "Invoices",
-                        principalColumn: "Id" );
+                        principalColumn: "Id");
+
                 });
 
             migrationBuilder.CreateTable(
@@ -170,12 +330,18 @@ namespace BoldRealties.DAL.Migrations
                     amount = table.Column<float>(type: "real", nullable: false),
                     received_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TenancyID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     currency = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_payment", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_payment_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+
                 });
 
             migrationBuilder.CreateTable(
@@ -199,7 +365,7 @@ namespace BoldRealties.DAL.Migrations
                     petsAllowed = table.Column<bool>(type: "bit", nullable: false),
                     minPrice = table.Column<float>(type: "real", nullable: false),
                     TenancyID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     EnquiriesID = table.Column<int>(type: "int", nullable: false),
                     maxPrice = table.Column<float>(type: "real", nullable: false)
                 },
@@ -207,54 +373,16 @@ namespace BoldRealties.DAL.Migrations
                 {
                     table.PrimaryKey("PK_PropertiesRS", x => x.ID);
                     table.ForeignKey(
+                        name: "FK_PropertiesRS_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_PropertiesRS_Enquiries_EnquiriesID",
                         column: x => x.EnquiriesID,
                         principalTable: "Enquiries",
-                        principalColumn: "ID" );
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    firstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    lastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    userName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    filePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PropertyID = table.Column<int>(type: "int", nullable: false),
-                    ApplicantID = table.Column<int>(type: "int", nullable: false),
-                    InvoicesID = table.Column<int>(type: "int", nullable: false),
-                    AccountsID = table.Column<int>(type: "int", nullable: false),
-                    imagePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Users_Accounts_AccountsID",
-                        column: x => x.AccountsID,
-                        principalTable: "Accounts",
-                        principalColumn: "ID" );
-                    table.ForeignKey(
-                        name: "FK_Users_Enquiries_ApplicantID",
-                        column: x => x.ApplicantID,
-                        principalTable: "Enquiries",
-                        principalColumn: "ID" );
-                    table.ForeignKey(
-                        name: "FK_Users_Invoices_InvoicesID",
-                        column: x => x.InvoicesID,
-                        principalTable: "Invoices",
-                        principalColumn: "Id" );
-                    table.ForeignKey(
-                        name: "FK_Users_PropertiesRS_PropertyID",
-                        column: x => x.PropertyID,
-                        principalTable: "PropertiesRS",
                         principalColumn: "ID");
+
                 });
 
             migrationBuilder.CreateTable(
@@ -270,7 +398,7 @@ namespace BoldRealties.DAL.Migrations
                     comission = table.Column<float>(type: "real", nullable: false),
                     imagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PropertyID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     managementType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     accountsID = table.Column<int>(type: "int", nullable: false),
                     DepositsID = table.Column<int>(type: "int", nullable: false),
@@ -284,21 +412,25 @@ namespace BoldRealties.DAL.Migrations
                         column: x => x.accountsID,
                         principalTable: "Accounts",
                         principalColumn: "ID");
+
+                    table.ForeignKey(
+                        name: "FK_tenancies_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+
                     table.ForeignKey(
                         name: "FK_tenancies_Deposits_DepositsID",
                         column: x => x.DepositsID,
                         principalTable: "Deposits",
                         principalColumn: "Id");
+
                     table.ForeignKey(
                         name: "FK_tenancies_PropertiesRS_PropertyID",
                         column: x => x.PropertyID,
                         principalTable: "PropertiesRS",
                         principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_tenancies_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "ID");
+
                 });
 
             migrationBuilder.CreateTable(
@@ -308,7 +440,7 @@ namespace BoldRealties.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     viewing_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PropertyID = table.Column<int>(type: "int", nullable: false),
                     ApplicantID = table.Column<int>(type: "int", nullable: false),
                     isConfirmed = table.Column<bool>(type: "bit", nullable: false)
@@ -317,20 +449,23 @@ namespace BoldRealties.DAL.Migrations
                 {
                     table.PrimaryKey("PK_Viewings", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Viewings_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+
+                    table.ForeignKey(
                         name: "FK_Viewings_Enquiries_ApplicantID",
                         column: x => x.ApplicantID,
                         principalTable: "Enquiries",
                         principalColumn: "ID");
+
                     table.ForeignKey(
                         name: "FK_Viewings_PropertiesRS_PropertyID",
                         column: x => x.PropertyID,
                         principalTable: "PropertiesRS",
                         principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_Viewings_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "ID");
+
                 });
 
             migrationBuilder.CreateIndex(
@@ -352,8 +487,66 @@ namespace BoldRealties.DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_UserID",
                 table: "Accounts",
-                column: "UserID",
-                unique: true);
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_AccountsID",
+                table: "AspNetUsers",
+                column: "AccountsID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_ApplicantID",
+                table: "AspNetUsers",
+                column: "ApplicantID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_InvoicesID",
+                table: "AspNetUsers",
+                column: "InvoicesID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_PropertyID",
+                table: "AspNetUsers",
+                column: "PropertyID");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BBAReports_tenancyID",
@@ -408,9 +601,9 @@ namespace BoldRealties.DAL.Migrations
                 column: "tenanciesID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_jobs_userID",
+                name: "IX_jobs_UserID",
                 table: "jobs",
-                column: "userID");
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_payment_TenancyID",
@@ -458,26 +651,6 @@ namespace BoldRealties.DAL.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_AccountsID",
-                table: "Users",
-                column: "AccountsID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_ApplicantID",
-                table: "Users",
-                column: "ApplicantID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_InvoicesID",
-                table: "Users",
-                column: "InvoicesID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_PropertyID",
-                table: "Users",
-                column: "PropertyID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Viewings_ApplicantID",
                 table: "Viewings",
                 column: "ApplicantID");
@@ -493,11 +666,20 @@ namespace BoldRealties.DAL.Migrations
                 column: "UserID");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_Accounts_AspNetUsers_UserID",
+                table: "Accounts",
+                column: "UserID",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id");
+
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_Accounts_Invoices_InvoiceID",
                 table: "Accounts",
                 column: "InvoiceID",
                 principalTable: "Invoices",
                 principalColumn: "Id");
+
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Accounts_payment_PaymentID",
@@ -506,6 +688,7 @@ namespace BoldRealties.DAL.Migrations
                 principalTable: "payment",
                 principalColumn: "ID");
 
+
             migrationBuilder.AddForeignKey(
                 name: "FK_Accounts_tenancies_TenancyID",
                 table: "Accounts",
@@ -513,11 +696,51 @@ namespace BoldRealties.DAL.Migrations
                 principalTable: "tenancies",
                 principalColumn: "Id");
 
+
             migrationBuilder.AddForeignKey(
-                name: "FK_Accounts_Users_UserID",
-                table: "Accounts",
-                column: "UserID",
-                principalTable: "Users",
+                name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id");
+
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id");
+
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                table: "AspNetUserRoles",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id");
+
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUsers_Enquiries_ApplicantID",
+                table: "AspNetUsers",
+                column: "ApplicantID",
+                principalTable: "Enquiries",
+                principalColumn: "ID");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUsers_Invoices_InvoicesID",
+                table: "AspNetUsers",
+                column: "InvoicesID",
+                principalTable: "Invoices",
+                principalColumn: "Id");
+
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUsers_PropertiesRS_PropertyID",
+                table: "AspNetUsers",
+                column: "PropertyID",
+                principalTable: "PropertiesRS",
                 principalColumn: "ID");
 
             migrationBuilder.AddForeignKey(
@@ -527,6 +750,7 @@ namespace BoldRealties.DAL.Migrations
                 principalTable: "tenancies",
                 principalColumn: "Id");
 
+
             migrationBuilder.AddForeignKey(
                 name: "FK_Deposits_tenancies_TenancyID",
                 table: "Deposits",
@@ -534,12 +758,6 @@ namespace BoldRealties.DAL.Migrations
                 principalTable: "tenancies",
                 principalColumn: "Id");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Deposits_Users_UserID",
-                table: "Deposits",
-                column: "UserID",
-                principalTable: "Users",
-                principalColumn: "ID");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Enquiries_PropertiesRS_PropertyID",
@@ -548,12 +766,6 @@ namespace BoldRealties.DAL.Migrations
                 principalTable: "PropertiesRS",
                 principalColumn: "ID");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Enquiries_Users_UserID",
-                table: "Enquiries",
-                column: "UserID",
-                principalTable: "Users",
-                principalColumn: "ID");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Invoices_PropertiesRS_PropertyID",
@@ -562,6 +774,7 @@ namespace BoldRealties.DAL.Migrations
                 principalTable: "PropertiesRS",
                 principalColumn: "ID");
 
+
             migrationBuilder.AddForeignKey(
                 name: "FK_Invoices_tenancies_TenancyID",
                 table: "Invoices",
@@ -569,12 +782,14 @@ namespace BoldRealties.DAL.Migrations
                 principalTable: "tenancies",
                 principalColumn: "Id");
 
+
             migrationBuilder.AddForeignKey(
                 name: "FK_jobs_PropertiesRS_PropertyID",
                 table: "jobs",
                 column: "PropertyID",
                 principalTable: "PropertiesRS",
                 principalColumn: "ID");
+         
 
             migrationBuilder.AddForeignKey(
                 name: "FK_jobs_tenancies_tenanciesID",
@@ -583,12 +798,6 @@ namespace BoldRealties.DAL.Migrations
                 principalTable: "tenancies",
                 principalColumn: "Id");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_jobs_Users_userID",
-                table: "jobs",
-                column: "userID",
-                principalTable: "Users",
-                principalColumn: "ID");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_payment_tenancies_TenancyID",
@@ -597,12 +806,6 @@ namespace BoldRealties.DAL.Migrations
                 principalTable: "tenancies",
                 principalColumn: "Id");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_payment_Users_UserID",
-                table: "payment",
-                column: "UserID",
-                principalTable: "Users",
-                principalColumn: "ID");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_PropertiesRS_tenancies_TenancyID",
@@ -610,24 +813,37 @@ namespace BoldRealties.DAL.Migrations
                 column: "TenancyID",
                 principalTable: "tenancies",
                 principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_PropertiesRS_Users_UserID",
-                table: "PropertiesRS",
-                column: "UserID",
-                principalTable: "Users",
-                principalColumn: "ID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Accounts_Invoices_InvoiceID",
+                name: "FK_Accounts_AspNetUsers_UserID",
                 table: "Accounts");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Users_Invoices_InvoicesID",
-                table: "Users");
+                name: "FK_Deposits_AspNetUsers_UserID",
+                table: "Deposits");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Enquiries_AspNetUsers_UserID",
+                table: "Enquiries");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_payment_AspNetUsers_UserID",
+                table: "payment");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_PropertiesRS_AspNetUsers_UserID",
+                table: "PropertiesRS");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_tenancies_AspNetUsers_UserID",
+                table: "tenancies");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Accounts_Invoices_InvoiceID",
+                table: "Accounts");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Accounts_payment_PaymentID",
@@ -646,20 +862,23 @@ namespace BoldRealties.DAL.Migrations
                 table: "PropertiesRS");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Accounts_Users_UserID",
-                table: "Accounts");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Enquiries_Users_UserID",
-                table: "Enquiries");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_PropertiesRS_Users_UserID",
+                name: "FK_PropertiesRS_Enquiries_EnquiriesID",
                 table: "PropertiesRS");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Enquiries_PropertiesRS_PropertyID",
-                table: "Enquiries");
+            migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
                 name: "BBAReports");
@@ -674,6 +893,12 @@ namespace BoldRealties.DAL.Migrations
                 name: "Viewings");
 
             migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Invoices");
 
             migrationBuilder.DropTable(
@@ -683,19 +908,16 @@ namespace BoldRealties.DAL.Migrations
                 name: "tenancies");
 
             migrationBuilder.DropTable(
-                name: "Deposits");
-
-            migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
                 name: "Accounts");
 
             migrationBuilder.DropTable(
-                name: "PropertiesRS");
+                name: "Deposits");
 
             migrationBuilder.DropTable(
                 name: "Enquiries");
+
+            migrationBuilder.DropTable(
+                name: "PropertiesRS");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,9 +24,10 @@ namespace BoldRealties.Models
         [ValidateNever]
         public tenancies Tenancies { get; set; }
 
-        public int userID { get; set; }
-        [ForeignKey("userID")]
-        public Users Users { get; set; }
+        public string UserID { get; set; }
+        [ForeignKey("UserID")]
+        [ValidateNever]
+        public IdentityUser Users { get; set; }
 
         public string filePath { get; set; }
         public int PropertyID { get; set; }

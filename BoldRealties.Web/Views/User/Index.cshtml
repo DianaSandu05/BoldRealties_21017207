@@ -27,19 +27,18 @@
             @foreach(var item in Model)
             {
              <tr>
-                <td>@item.ID</td>
+             
                 <td>@item.firstName</td>
                 <td>@item.lastName</td>
-                <td>@item.email</td>
-                <td>@item.Role</td>
+               
                 <td>
-                    <a asp-controller="User" asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary mx-2">
+                    <a asp-controller="User" asp-action="Edit" asp-route-id="" class="btn btn-primary mx-2">
                        <i class="bi bi-file-earmark-richtext"></i>
                      </a>
                        <a   class="btn btn-primary mx-2">
                         <i class="bi bi-pencil-square"></i>
                         </a>
-                          <a asp-controller="User" asp-action="Delete" asp-route-id="@item.ID"  class="btn btn-danger mx-2">
+                          <a asp-controller="User" asp-action="Delete" asp-route-id=""  class="btn btn-danger mx-2">
                        <i class="bi bi-trash"></i>
                         </a>
 

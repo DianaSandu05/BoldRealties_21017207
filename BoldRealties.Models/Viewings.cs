@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Identity;
 
 namespace BoldRealties.Models
 {
@@ -14,10 +15,10 @@ namespace BoldRealties.Models
         [Key]
         public int Id { get; set; }
         public DateTime viewing_Date { get; set; }
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         [ForeignKey("UserID")]
         [ValidateNever]
-        public Users Users { get; set; }
+        public IdentityUser Users { get; set; }
 
         public int PropertyID { get; set; }
         [ForeignKey("PropertyID")]

@@ -4,21 +4,24 @@ using BoldRealties.DAL.Repository;
 using BoldRealties.DAL.Repository.IRepository;
 using BoldRealties.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// ADD COMMENTS!!! -- I should explain what I did here!!!
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BoldRealties_dbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddDefaultIdentity<IdentityUser>()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
     .AddEntityFrameworkStores<BoldRealties_dbContext>();
-
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 // below line is used for mapping stripe keys with the properties from the class StripeSettings
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddRazorPages();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

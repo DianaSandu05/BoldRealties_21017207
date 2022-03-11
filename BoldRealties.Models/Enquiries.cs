@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Identity;
 
 namespace BoldRealties.Models
 {
@@ -37,11 +38,10 @@ namespace BoldRealties.Models
         public int maxPrice { get; set; }
         [Required]
 
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         [ForeignKey("UserID")]
         [ValidateNever]
-        public Users Users { get; set; }
-
+        public IdentityUser Users { get; set; }
         public int PropertyID { get; set; }
         [ForeignKey("PropertyID")]
         [ValidateNever]

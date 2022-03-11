@@ -12,12 +12,12 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {
-        private readonly UserManager<Users> _userManager;
-        private readonly SignInManager<Users> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
         public ExternalLoginsModel(
-            UserManager<Users> userManager,
-            SignInManager<Users> signInManager)
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -44,7 +44,7 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account.Manage
             OtherLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync())
                 .Where(auth => CurrentLogins.All(ul => auth.Name != ul.LoginProvider))
                 .ToList();
-            ShowRemoveButton = user.password != null || CurrentLogins.Count > 1;
+            ShowRemoveButton = user.PasswordHash != null || CurrentLogins.Count > 1;
             return Page();
         }
 
@@ -87,10 +87,10 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID 'user.Id'.");
             }
 
-            var info = await _signInManager.GetExternalLoginInfoAsync(Convert.ToString(user.ID));
+            var info = await _signInManager.GetExternalLoginInfoAsync(Convert.ToString(user.Id));
             if (info == null)
             {
-                throw new InvalidOperationException($"Unexpected error occurred loading external login info for user with ID '{ user.ID}'.");
+                throw new InvalidOperationException($"Unexpected error occurred loading external login info for user with ID '{ user.Id}'.");
             }
 
             var result = await _userManager.AddLoginAsync(user, info);

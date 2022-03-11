@@ -67,24 +67,24 @@ namespace BoldRealties.Web.Controllers
            {
                return NotFound();
            }
-           var UserFromDb = _unit.Users.GetFirstOrDefault(x => x.ID == ID);
+      /*     var UserFromDb = _unit.Users.GetFirstOrDefault(x => x.ID == ID);
            if (UserFromDb == null)
            {
                return NotFound();
-           }
-           return View(UserFromDb);
+           }*/
+           return View();
        }
        [HttpPost]
        [ValidateAntiForgeryToken] //to avoid the cross site request forgery
        public IActionResult DeleteUsers(int? ID)
        {
-           var user = _unit.Users.GetFirstOrDefault(x => x.ID == ID);
+          /* var user = _unit.Users.GetFirstOrDefault(x => x.ID == ID);
            if (user == null)
            {
                return NotFound();
-           }
-
-           _unit.Users.Remove(user);
+           }*/
+/*
+           _unit.Users.Remove(user);*/
            _unit.Save();
            TempData["success"] = "The record was deleted successfully!";
            return RedirectToAction("Index");
