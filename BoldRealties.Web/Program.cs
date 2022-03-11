@@ -2,14 +2,22 @@
 using BoldRealties.DAL;
 using BoldRealties.DAL.Repository;
 using BoldRealties.DAL.Repository.IRepository;
+using BoldRealties.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<BoldRealties_dbContext>(options=>options.UseSqlServer(
+builder.Services.AddDbContext<BoldRealties_dbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDefaultIdentity<IdentityUser>()
+    .AddEntityFrameworkStores<BoldRealties_dbContext>();
+
+// below line is used for mapping stripe keys with the properties from the class StripeSettings
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
 
@@ -25,8 +33,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
+// Stripe.Net - the NuGet package was installed in order to configure
+// we provide the ApiKey which is the secret key which is retrieved though the method GetSection and returned as a string value
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 app.UseAuthorization();
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",

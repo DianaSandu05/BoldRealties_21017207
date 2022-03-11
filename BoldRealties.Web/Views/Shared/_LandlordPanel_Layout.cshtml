@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BoldRealties.Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-      <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
+   <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
      <link rel="stylesheet" href="~/css/stylesheet.css" asp-append-version="true" />
@@ -33,10 +33,39 @@
                          <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">User</a>
                         </li>
-                         
-                          
+                          <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tenancy" asp-action="Upsert">Tenancy</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Accounts" asp-action="Index">Accounts</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="baReports" asp-action="Index">Business Analysis</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Deposits" asp-action="Index">Deposits</a>
+                        </li>
+                             <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Enquiries" asp-action="Index">Enquiries</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Invoices" asp-action="Index">Invoices</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="maintenanceJobs" asp-action="Index">Tenancy</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="payment" asp-action="Index">Payment</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Viewings" asp-action="Index">Viewings</a>
+                        </li>
+                           </li>
+                           <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="officeAddress" asp-action="Index">Office Address</a>
+                        </li>
                     </ul>
-                      <partial name="_LoginPartial"/>
+                    
                 </div>
             </div>
         </nav>

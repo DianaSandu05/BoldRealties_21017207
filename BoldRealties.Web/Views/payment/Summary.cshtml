@@ -1,5 +1,11 @@
 ﻿@using BoldRealties.Models
+<!--eliminate both lines below and above and use -->
+<!--using BoldRealties.Models.ViewModels.ShoppingCartVM  -->
 @model  IEnumerable<payment>
+<!--add using statement for IOptions below -->
+@using Microsoft.Extensions.Options
+<!--inject StripeSettings as Stripe inside this view  -->
+@inject IOptions<BoldRealties.Models.StripeSettings> Stripe
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";

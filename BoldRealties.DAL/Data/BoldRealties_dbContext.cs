@@ -1,10 +1,11 @@
 ﻿using BoldRealties.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoldRealties.DAL
 {
     //it is like a data layer to connect the application to the database
-    public class BoldRealties_dbContext : DbContext // DbContext is part of EntityFrameworkCore
+    public class BoldRealties_dbContext : IdentityDbContext // DbContext is part of EntityFrameworkCore
                                                     // it is used to manage and access the database
     {
         public BoldRealties_dbContext(DbContextOptions<BoldRealties_dbContext> options) : base(options)
