@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BoldRealties.BLL\BoldRealties.BLL.csproj" />
     <ProjectReference Include="..\BoldRealties.DAL\BoldRealties.DAL.csproj" />
   </ItemGroup>
 

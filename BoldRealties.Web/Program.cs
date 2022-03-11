@@ -15,7 +15,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BoldRealties_dbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+
+{
+
+    options.SignIn.RequireConfirmedAccount = false;
+
+    options.User.RequireUniqueEmail = true;
+
+    options.Lockout.AllowedForNewUsers = true;
+
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+
+    options.Lockout.MaxFailedAccessAttempts = 3;
+
+
+
+})
+
+    .AddDefaultTokenProviders()
+
     .AddEntityFrameworkStores<BoldRealties_dbContext>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 // below line is used for mapping stripe keys with the properties from the class StripeSettings

@@ -17,7 +17,7 @@ namespace BoldRealties.DAL
         }
         // we reference each class here and then we do the migration
         public DbSet<PropertiesRS> PropertiesRS { get; set; }
-        public DbSet<Users> Users { get; set; }
+        public DbSet<Users> user { get; set; }
         public DbSet<tenancies> tenancies { get; set; }
         public DbSet<jobs> jobs { get; set; }
         public DbSet<Enquiries> Enquiries { get; set; }
