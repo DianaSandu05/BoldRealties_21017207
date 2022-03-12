@@ -121,6 +121,9 @@ namespace BoldRealties.Web.Controllers
 
 
         }
-       
+       public IActionResult ViewMyTenancy()
+        {
+            return View();
+        }
     }
 }

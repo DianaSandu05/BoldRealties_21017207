@@ -143,15 +143,42 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                     else
-                    {
+                    { 
                         await _userManager.AddToRoleAsync(user, Input.Role);
+                        if (StaticDetails.Role_Tenant == Input.Role)
+                        {
+                            return RedirectToPage("ViewMyTenancy", "tenancies", new { email = Input.Email, returnUrl = returnUrl });
+                          
+                        }
+                        else if (StaticDetails.Role_Admin == Input.Role)
+                        {
+                            return RedirectToPage("Index", "tenancies", new { email = Input.Email, returnUrl = returnUrl });
+                        }
+                        else if (StaticDetails.Role_Landlord == Input.Role)
+                        {
+                            return RedirectToPage("ViewMyTenancy", "tenancies", new { email = Input.Email, returnUrl = returnUrl });
+                        }
+                        else if (StaticDetails.Role_User == Input.Role)
+                        {
+                            return RedirectToPage("Index", "PropertiesRS", new { email = Input.Email, returnUrl = returnUrl });
+                        
+                        }
+                        else if (StaticDetails.Role_Subcontractor == Input.Role)
+                        {
+                            return RedirectToPage("AddMJ", "maintenanceJobs", new { email = Input.Email, returnUrl = returnUrl });
+                          
+                        }
+                        else
+                        {
+                            return RedirectToPage("Index", "Home");
+                        }
                         /*    
                             await _userManager.AddToRoleAsync(user, StaticDetails.Role_Admin);
                             await _userManager.AddToRoleAsync(user, StaticDetails.Role_Subcontractor);
                             await _userManager.AddToRoleAsync(user, StaticDetails.Role_Landlord);*/
                     }
 
-                    var userId = await _userManager.GetUserIdAsync(user);
+                  
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -165,6 +192,7 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
+                       
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else

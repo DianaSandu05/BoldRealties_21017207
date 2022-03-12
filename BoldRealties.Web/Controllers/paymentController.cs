@@ -2,6 +2,8 @@
 using BoldRealties.Models;
 using BoldRealties.DAL.Repository.IRepository;
 using Stripe.Checkout;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace BoldRealties.Web.Controllers
 {
@@ -12,12 +14,12 @@ namespace BoldRealties.Web.Controllers
         {
             _unit = unit;
         }
-        public IActionResult Summary()
+        
+        public IActionResult Summary(tenancies tenancy)
         {
-            IEnumerable<payment> objpaymentList = _unit.payment.GetAll();
-            return View(objpaymentList);
+          
 
-
+           /* tenancies tenancyObj = _unit.Tenancies.GetFirstOrDefault(x => x.Id == id);*/
             //stripe settings
             var domain = "https://localhost:44368/";
             // below a session is created and in this session a list is created

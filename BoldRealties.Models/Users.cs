@@ -39,7 +39,7 @@ namespace BoldRealties.Models
         [ValidateNever]
         public Accounts? Accounts { get; set; }
 
-
+   
         public string? imagePath { get; set; }
     }
 }
