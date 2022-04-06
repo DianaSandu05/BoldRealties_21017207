@@ -13,5 +13,8 @@ namespace BoldRealties.BLL
         public const string Role_Landlord = "Landlord";
         public const string Role_Subcontractor = "Subcontractor";
         public const string Role_Admin = "Admin";
+
+
+        public const string SessionPayment = "SessionPayment";
     }
 }

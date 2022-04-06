@@ -15,34 +15,33 @@ namespace BoldRealties.Models
         [Required]
         public float rentPrice { get; set; }
         [Required]
-        public bool billsIncluded { get; set; }
         public float comission { get; set; }
-        [Required]
-        public string imagePath { get; set; }
-        public int PropertyID { get; set; }
+     
+        public int? PropertyID { get; set; }
         [ForeignKey("PropertyID")]
         [ValidateNever]
-        public PropertiesRS PropertiesRS { get; set; }
+        public PropertiesRS? PropertiesRS { get; set; }
 
-        public string UserID { get; set; }
+        public string? UserID { get; set; }
         [ForeignKey("UserID")]
         [ValidateNever]
-        public IdentityUser Users { get; set; }
+        public Users Users { get; set; }
 
         public string managementType { get; set; }
 
-        public int accountsID { get; set; }
+        public int? accountsID { get; set; }
         [ForeignKey("accountsID")]
         [ValidateNever]
-        public Accounts Accounts { get; set; }
+        public Accounts? Accounts { get; set; }
 
-        public int DepositsID { get; set; }
+        public int? DepositsID { get; set; }
         [ForeignKey("DepositsID")]
         [ValidateNever]
-        public Deposits Deposits { get; set; }
-
+        public Deposits? Deposits { get; set; }
+        [ValidateNever]
 
         public string filePath { get; set; }
-
+        [ValidateNever]
+        public bool billsIncluded { get; set; }
     }
 }

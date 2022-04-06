@@ -17,7 +17,7 @@ namespace BoldRealties.Models
         [Required]
         public string lastName { get; set; }
         [Required]
-        public string? filePath { get; set; }
+       
     
         public int? PropertyID { get; set; }
         [ForeignKey("PropertyID")]
@@ -38,8 +38,7 @@ namespace BoldRealties.Models
         [ForeignKey("AccountsID")]
         [ValidateNever]
         public Accounts? Accounts { get; set; }
+        public string? filePath { get; set; }
 
-   
-        public string? imagePath { get; set; }
     }
 }

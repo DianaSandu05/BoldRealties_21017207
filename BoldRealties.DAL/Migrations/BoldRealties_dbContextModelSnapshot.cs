@@ -174,13 +174,6 @@ namespace BoldRealties.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PropertyID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("applicantType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -228,11 +221,6 @@ namespace BoldRealties.DAL.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("PropertyID")
-                        .IsUnique();
-
-                    b.HasIndex("UserID");
-
                     b.ToTable("Enquiries");
                 });
 
@@ -252,6 +240,10 @@ namespace BoldRealties.DAL.Migrations
 
                     b.Property<int>("TenancyID")
                         .HasColumnType("int");
+
+                    b.Property<string>("filePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("invoice_No")
                         .HasColumnType("int");
@@ -291,10 +283,6 @@ namespace BoldRealties.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("filePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -400,14 +388,13 @@ namespace BoldRealties.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int>("EnquiriesID")
+                    b.Property<int?>("EnquiriesID")
                         .HasColumnType("int");
 
-                    b.Property<int>("TenancyID")
+                    b.Property<int?>("TenancyID")
                         .HasColumnType("int");
 
                     b.Property<string>("UserID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("balconiesNo")
@@ -434,6 +421,10 @@ namespace BoldRealties.DAL.Migrations
 
                     b.Property<int>("garagesNo")
                         .HasColumnType("int");
+
+                    b.Property<string>("imagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("marketPrice")
                         .HasColumnType("real");
@@ -477,23 +468,22 @@ namespace BoldRealties.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("DepositsID")
+                    b.Property<int?>("DepositsID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PropertyID")
+                    b.Property<int?>("PropertyID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("accountsID")
+                    b.Property<int?>("accountsID")
                         .HasColumnType("int");
 
                     b.Property<bool>("billsIncluded")
@@ -503,10 +493,6 @@ namespace BoldRealties.DAL.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("filePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -716,12 +702,10 @@ namespace BoldRealties.DAL.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -758,12 +742,10 @@ namespace BoldRealties.DAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -778,28 +760,22 @@ namespace BoldRealties.DAL.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<int?>("AccountsID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("ApplicantID")
                         .HasColumnType("int");
 
                     b.Property<int?>("InvoicesID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("PropertyID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("filePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("firstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -883,25 +859,6 @@ namespace BoldRealties.DAL.Migrations
                     b.Navigation("tenancies");
                 });
 
-            modelBuilder.Entity("BoldRealties.Models.Enquiries", b =>
-                {
-                    b.HasOne("BoldRealties.Models.PropertiesRS", "PropertiesRS")
-                        .WithOne()
-                        .HasForeignKey("BoldRealties.Models.Enquiries", "PropertyID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Users")
-                        .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PropertiesRS");
-
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("BoldRealties.Models.Invoices", b =>
                 {
                     b.HasOne("BoldRealties.Models.PropertiesRS", "PropertiesRS")
@@ -979,21 +936,15 @@ namespace BoldRealties.DAL.Migrations
                 {
                     b.HasOne("BoldRealties.Models.Enquiries", "Enquiries")
                         .WithMany()
-                        .HasForeignKey("EnquiriesID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EnquiriesID");
 
                     b.HasOne("BoldRealties.Models.tenancies", "tenancies")
                         .WithMany()
-                        .HasForeignKey("TenancyID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TenancyID");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Users")
                         .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserID");
 
                     b.Navigation("Enquiries");
 
@@ -1006,27 +957,19 @@ namespace BoldRealties.DAL.Migrations
                 {
                     b.HasOne("BoldRealties.Models.Deposits", "Deposits")
                         .WithMany()
-                        .HasForeignKey("DepositsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepositsID");
 
                     b.HasOne("BoldRealties.Models.PropertiesRS", "PropertiesRS")
                         .WithMany()
-                        .HasForeignKey("PropertyID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PropertyID");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Users")
+                    b.HasOne("BoldRealties.Models.Users", "Users")
                         .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserID");
 
                     b.HasOne("BoldRealties.Models.Accounts", "Accounts")
                         .WithMany()
-                        .HasForeignKey("accountsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("accountsID");
 
                     b.Navigation("Accounts");
 
@@ -1119,9 +1062,7 @@ namespace BoldRealties.DAL.Migrations
                 {
                     b.HasOne("BoldRealties.Models.Accounts", "Accounts")
                         .WithMany()
-                        .HasForeignKey("AccountsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountsID");
 
                     b.HasOne("BoldRealties.Models.Enquiries", "Enquiries")
                         .WithMany()
@@ -1129,13 +1070,13 @@ namespace BoldRealties.DAL.Migrations
 
                     b.HasOne("BoldRealties.Models.Invoices", "Invoices")
                         .WithMany()
-                        .HasForeignKey("InvoicesID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InvoicesID");
 
                     b.HasOne("BoldRealties.Models.PropertiesRS", "PropertiesRS")
                         .WithMany()
-                        .HasForeignKey("PropertyID");
+                        .HasForeignKey("PropertyID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Accounts");
 

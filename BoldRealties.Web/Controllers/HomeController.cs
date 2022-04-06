@@ -8,6 +8,7 @@ using System.Security.Claims;
 
 namespace BoldRealties.Web.Controllers
 {
+   
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -21,33 +22,22 @@ namespace BoldRealties.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<PropertiesRS> propertyList = _unit.Properties.GetAll();
+            return View(propertyList);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
 
-        //most probably this should be moved in the user portal??
-        public IActionResult Details (int tenancyId)
-        {
-            tenancies tenancyObj = _unit.Tenancies.GetFirstOrDefault(x => x.Id == tenancyId /* includeProperties: "tenancies, rentPrice"*/);
-            return View(tenancyObj);
-        }
-        public IActionResult Details(tenancies tenancy)
-        {
-            //extract user ID from claimsIdentity
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            tenancy.UserID = claim.Value;
-
-            _unit.Tenancies.Add(tenancy);
-            _unit.Save();
-            return RedirectToAction(nameof(Index));
-        }
+     
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult ContactUs()
+        {   
+            return View();
         }
     }
 }

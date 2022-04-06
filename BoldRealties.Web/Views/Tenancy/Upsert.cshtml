@@ -1,18 +1,20 @@
 ﻿@using BoldRealties.Models
-@model BoldRealties.Models.ViewModels.TenancyViewModel
+@model BoldRealties.Models.ViewModels.tenancyVM
 @{
     ViewData["Title"] = "Upsert";
     Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
 }
 
 
-<form method="post" asp-action="Upsert">
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+	<input asp-for="tenancy.Id" hidden />
+	<input asp-for="tenancy.filePath" hidden />
      <a asp-page="/Properties/Index" class="btn btn-primary">Properties List</a>
      <hr/>
     <div class="border p-3 mt-4 row">
         
         <div class= "row pb-2">
-            <h2 cass="text-primary pl-3">@(Model.tenancy.Id !=0?"Update":"Create") | Tenancy</h2>
+            <h2 cass="text-primary pl-3"> Tenancy</h2>
         </div>
         <div class="mb-3 col-6">
            <label asp-for="tenancy.StartDate">Tenancy Start Date</label>
@@ -35,17 +37,8 @@
             <input asp-for="tenancy.comission" class="form-control" />
              <span asp-validation-for="tenancy.comission" class="text-danger"></span>
         </div>
-        <div class="mb-3  col-6">
-           <label asp-for="tenancy.imagePath">Upload Images</label>
-            <input type="text"   asp-for="tenancy.imagePath" class="form-control" />
-            
-        </div>
-        <div class="mb-3  col-6">
-           <label asp-for="tenancy.filePath">Upload File</label>
-            <input  asp-for="tenancy.filePath" class="form-control" />
-           
-            
-        </div>
+       
+       
         <div class="mb-3  col-6">
         <label asp-for="tenancy.managementType">Management Type</label>
         @Html.DropDownList("tenancy.managementType", new SelectList(new[] { "Rent only", "Rent collection", "Fully managed" }), new { @class="form-control select1"})
@@ -57,49 +50,34 @@
             </select>
         </div>
         <div class="mb-3  col-6">
-           <label asp-for="tenancy.UserID">User ID</label>
-            <select asp-for="tenancy.UserID" asp-items="@Model.UserList" class="form-select">
-                <option disabled selected>--Select Property--</option>
+           <label asp-for="tenancy.Users.Id">User ID</label>
+            <select asp-for="tenancy.Users.Id" asp-items="@Model.UserList" class="form-select">
+                <option disabled selected>--Select User--</option>
             </select>
         </div>
-        
-    </div>
-    <div class="col-12">
-        @if(Model.tenancy.Id!=0)
-        {
-            <button type="submit" class="btn btn-primary">Update</button>
-        }
-        else
-        {
-            <button type="submit" class="btn btn-primary">Add</button>
-        }
-         <a asp-controller="Tenancy" asp-action="Index" class="btn btn-primary">Tenancies List</a>
-    </div>
-      
+         <div class="mb-3  col-6">
+           <label asp-for="tenancy.filePath">Upload File</label>
+            <input  asp-for="@Model.tenancy.filePath" type="file" id="uploadBox" name="file" class="form-control" />    
+        </div>
+     <div class="col-6">
+			@if (Model.tenancy.Id != 0)
+			{
+				<button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+			}
+			else
+			{
+				<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+			}
+			<a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:150px">
+				Back to List
+			</a>
+		</div>
+
+	</div>
+
+		<div class="col-2 pt-4">
+			<img src="@Model.tenancy.filePath"
+			width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+		</div>
+	
 </form>
-<section Scripts{
-    @{
-    <partial name="_ValidationScriptsPartial"/>
-    }
-    <script>
-        function ValidateInput(){
-            if(document.getElementById("uploadImg").value=="")
-            {
-                Swal.fire({
-              icon: 'warning',
-              title: 'Oops...',
-              text: 'Please upload requested images such as: proof of id tenants and/or other required images',
-              
-            })
-             else if(document.getElementById("uploadFiles").value=="")
-            {
-                Swal.fire({
-              icon: 'warning',
-              title: 'Oops...',
-              text: 'Please upload requested files for tenancy! e.g. tenancy agreement and so on',
-              
-            })
-            }
-        }
-    </script>
-}

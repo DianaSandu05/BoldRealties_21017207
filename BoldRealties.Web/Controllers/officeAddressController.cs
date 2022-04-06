@@ -4,6 +4,7 @@ using BoldRealties.DAL.Repository.IRepository;
 
 namespace BoldRealties.Web.Controllers
 {
+
     public class officeAddressController : Controller
     {
         private readonly IUnitOfWork _unit;

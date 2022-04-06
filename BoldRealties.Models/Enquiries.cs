@@ -37,17 +37,6 @@ namespace BoldRealties.Models
         [Required]
         public int maxPrice { get; set; }
         [Required]
-
-        public string UserID { get; set; }
-        [ForeignKey("UserID")]
-        [ValidateNever]
-        public IdentityUser Users { get; set; }
-        public int PropertyID { get; set; }
-        [ForeignKey("PropertyID")]
-        [ValidateNever]
-
-        public PropertiesRS PropertiesRS { get; set; }
-
      
         public string crime_Rate { get; set; }
 

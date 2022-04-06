@@ -29,7 +29,7 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, 
+        public LoginModel(SignInManager<IdentityUser> signInManager,
             ILogger<LoginModel> logger,
             UserManager<IdentityUser> userManager,
              RoleManager<IdentityRole> roleManager,
@@ -64,12 +64,12 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
-        
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-           
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -87,55 +87,24 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.Content("~/Tenancy/Index");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        
+
             if (ModelState.IsValid)
             {
-               /* RoleList = _roleManager.Roles.FindFirst(x => x.Name).Where(y => y.email == Input.Email)()*/
-                
+             
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                var identityUser = _userManager.FindByIdAsync(Input.Email);
-                // Resolve the user via their email
-                var user = await _userManager.FindByEmailAsync(Input.Email);
-                // Get the roles for the user
-                var roles = await _userManager.GetRolesAsync(user);
-
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    if (roles.Contains("Landlord"))
-                    {
-                        return RedirectToPage("ViewMyTenancy", "tenancies", new { email = Input.Email, returnUrl = returnUrl });
-
-                    }
-                    else if (roles.Contains("Tenant"))
-                    {
-                        return RedirectToPage("Index", "tenancies", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else if (roles.Contains("Admin"))
-                    {
-                        return RedirectToPage("Index", "tenancies", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else if (roles.Contains("User"))
-                    {
-                        return RedirectToPage("Index", "PropertiesRS", new { email = Input.Email, returnUrl = returnUrl });
-
-                    }
-                    else if (roles.Contains("Subcontractor"))
-                    {
-                        return RedirectToPage("AddMJ", "maintenanceJobs", new { email = Input.Email, returnUrl = returnUrl });
-
-                    }
-                    else
-                    {
-                        return LocalRedirect(returnUrl);
-                    }
                   
+                        return LocalRedirect(returnUrl);
+                    
+
                 }
                 if (result.RequiresTwoFactor)
                 {

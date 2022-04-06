@@ -1,10 +1,10 @@
 ﻿using BoldRealties.DAL.Repository.IRepository;
 using BoldRealties.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoldRealties.Web.Controllers
 {
+
     public class EnquiriesController : Controller
     {
         private readonly IUnitOfWork _unit;
@@ -24,7 +24,7 @@ namespace BoldRealties.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken] //to avoid the cross site request forgery
-        [Authorize(Roles = "Tenant")]
+
         public IActionResult AddEnquiry(Enquiries enquiries)
         {
             if (ModelState.IsValid)

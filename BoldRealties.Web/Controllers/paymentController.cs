@@ -7,6 +7,7 @@ using System.Security.Claims;
 
 namespace BoldRealties.Web.Controllers
 {
+
     public class paymentController : Controller
     {
         private readonly IUnitOfWork _unit;
@@ -14,7 +15,9 @@ namespace BoldRealties.Web.Controllers
         {
             _unit = unit;
         }
-        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
         public IActionResult Summary(tenancies tenancy)
         {
           

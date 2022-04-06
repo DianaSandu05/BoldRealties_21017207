@@ -17,8 +17,7 @@ namespace BoldRealties.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool isCompleted { get; set; }
-        public string diagnostics { get; set; }
-    
+      
         public int tenanciesID { get; set; }
         [ForeignKey("tenanciesID")]
         [ValidateNever]
@@ -28,8 +27,9 @@ namespace BoldRealties.Models
         [ForeignKey("UserID")]
         [ValidateNever]
         public IdentityUser Users { get; set; }
-
+    
         public string filePath { get; set; }
+   
         public int PropertyID { get; set; }
         [ForeignKey("PropertyID")]
         [ValidateNever]
@@ -39,7 +39,7 @@ namespace BoldRealties.Models
         [ForeignKey("invoiceID")]
         [ValidateNever]
         public Invoices Invoices { get; set; }
+        public string diagnostics { get; set; }
 
-        public string imagePath { get; set; }
     }
 }

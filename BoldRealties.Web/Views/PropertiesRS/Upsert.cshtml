@@ -1,0 +1,121 @@
+﻿@using BoldRealties.Models
+@model BoldRealties.Models.ViewModels.PropertiesVM
+@{
+    ViewData["Title"] = "AddProperties";
+    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+}
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+	<input asp-for="Properties.ID" hidden />
+	<input asp-for="Properties.imagePath" hidden />
+   <div class="border p-3 mt-4 row">
+
+         <a asp-page="/Properties/Index" class="btn btn-primary">Properties List</a>
+        <div class= "row pb-2">
+            <h2 cass="text-primary pl-3"> Add Property</h2>
+        </div>
+          <div class="mb-3 col-6">
+           <label asp-for="Properties.floorSpace">Floor Space (SQ. M)</label>
+            <input asp-for="Properties.floorSpace" class="form-control" />
+            <span asp-validation-for="Properties.floorSpace" class="text-danger"></span>
+        </div>
+
+       <div class="mb-3 col-6">
+           <label asp-for="Properties.balconiesNo">Balconies number</label>
+            <input asp-for="Properties.balconiesNo" class="form-control" />
+            <span asp-validation-for="Properties.balconiesNo" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+           <label asp-for="Properties.balconySpace">Balcony space(SQ. M)</label>
+            <input asp-for="Properties.balconySpace" class="form-control" />
+           
+        </div>
+         <div class="mb-3 col-6">
+           <label asp-for="Properties.bedsNo">Beds number</label>
+            <input asp-for="Properties.bedsNo" class="form-control" />
+             <span asp-validation-for="Properties.bedsNo" class="text-danger"></span>
+        </div>
+         <div class="mb-3 col-6">
+           <label asp-for="Properties.bathsNo">Bathrooms number</label>
+            <input asp-for="Properties.bathsNo" class="form-control" />
+             <span asp-validation-for="Properties.bathsNo" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+           <label asp-for="Properties.garagesNo">Garages number</label>
+            <input asp-for="Properties.garagesNo" class="form-control" />
+             <span asp-validation-for="Properties.garagesNo" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+           <label asp-for="Properties.parkingNo">Parking number</label>
+            <input asp-for="Properties.parkingNo" class="form-control" />
+             <span asp-validation-for="Properties.parkingNo" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+           <label asp-for="Properties.estateDescription">Estate description</label>
+            <input asp-for="Properties.estateDescription" class="form-control col-lg-6" />
+             <span asp-validation-for="Properties.estateDescription" class="text-danger"></span>
+        </div>
+         <div class="mb-3 col-6">
+           <label asp-for="Properties.propertyType">Property type</label>
+            <input asp-for="Properties.propertyType" class="form-control col-lg-6" />
+             <span asp-validation-for="Properties.propertyType" class="text-danger"></span>
+        </div>
+    
+          <div class="mb-3 col-6">
+        <label asp-for="Properties.billsIncluded">Bills Included</label>
+        @Html.DropDownList("billsIncluded", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})
+      
+    </div>
+     <div class="mb-3 col-6">
+           <label asp-for="Properties.propertyAddress">Property Address</label>
+            <input asp-for="Properties.propertyAddress" class="form-control" />
+        </div>
+         <div class="mb-3 col-6">
+           <label asp-for="Properties.marketPrice">Market Price</label>
+            <input asp-for="Properties.marketPrice" class="form-control" />
+        </div>
+         <div class="mb-3 col-6">
+        <label asp-for="Properties.petsAllowed">Pets Allowed</label>
+        @Html.DropDownList("petsAllowed", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})
+      
+    </div>
+        <div class="mb-3 col-6">
+           <label asp-for="Properties.minPrice">Minimum Price</label>
+            <input asp-for="Properties.minPrice" class="form-control" />
+        </div>
+         <div class="mb-3 col-6">
+           <label asp-for="Properties.maxPrice">Maximum Price</label>
+            <input asp-for="Properties.maxPrice" class="form-control" />
+        </div>
+     
+         <div class="mb-3 col-6">
+			<label asp-for="Properties.imagePath"></label>
+			<input asp-for="@Model.Properties.imagePath" type="file" id="uploadBox" name="file" class="form-control" />
+		</div>
+
+	
+    <div class="col-6">
+			@if (Model.Properties.ID != 0)
+			{
+				<button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+			}
+			else
+			{
+				<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+			}
+			<a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:150px">
+				Back to List
+			</a>
+		</div>
+
+	</div>
+	
+		<div class="col-2 pt-4">
+			<img src="@Model.Properties.imagePath"
+			width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+		</div>
+	
+    
+</form>
+
+

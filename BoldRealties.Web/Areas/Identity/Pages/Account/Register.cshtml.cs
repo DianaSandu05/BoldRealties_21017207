@@ -33,8 +33,6 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
         // we create a private readonly private role manager to manage
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
-
-
         public RegisterModel(
              UserManager<IdentityUser> userManager,
              IUserStore<IdentityUser> userStore,
@@ -53,15 +51,10 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
         }
-
-
         [BindProperty]
         public InputModel Input { get; set; }
-
         public string ReturnUrl { get; set; }
-
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
         public class InputModel
         {
             [Required]
@@ -83,14 +76,14 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
             public string firstName { get; set; }
             [Required]
             public string lastName { get; set; }
-           
+
             public string? filePath { get; set; }
             public int? PropertyID { get; set; }
             public int? ApplicantID { get; set; }
-            public int? InvoicesID { get; set; }         
+            public int? InvoicesID { get; set; }
             public int? AccountsID { get; set; }
             public string? imagePath { get; set; }
-            public string? PhoneNumber { get;set; }
+            public string? PhoneNumber { get; set; }
             public string Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
@@ -98,7 +91,8 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if(!_roleManager.RoleExistsAsync(StaticDetails.Role_Landlord).GetAwaiter().GetResult())
+            
+            if (!_roleManager.RoleExistsAsync(StaticDetails.Role_Landlord).GetAwaiter().GetResult())
             {
                 _roleManager.CreateAsync(new IdentityRole(StaticDetails.Role_Admin)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(StaticDetails.Role_User)).GetAwaiter().GetResult();
@@ -122,7 +116,7 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.Content("~/Tenancy/Index");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
@@ -136,71 +130,41 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
                     if (Input.Role == null)
                     {
-
-                        return LocalRedirect(returnUrl);
+                        await _userManager.AddToRoleAsync(user, StaticDetails.Role_Tenant);
                     }
                     else
-                    { 
+                    {
                         await _userManager.AddToRoleAsync(user, Input.Role);
-                        if (StaticDetails.Role_Tenant == Input.Role)
+                    }
+                    _logger.LogInformation("User created a new account with password.");
+
+                    return LocalRedirect(returnUrl);
+
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                        var callbackUrl = Url.Page(
+                            "/Account/ConfirmEmail",
+                            pageHandler: null,
+                            values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                            protocol: Request.Scheme);
+
+                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                        if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         {
-                            return RedirectToPage("ViewMyTenancy", "tenancies", new { email = Input.Email, returnUrl = returnUrl });
-                          
-                        }
-                        else if (StaticDetails.Role_Admin == Input.Role)
-                        {
-                            return RedirectToPage("Index", "tenancies", new { email = Input.Email, returnUrl = returnUrl });
-                        }
-                        else if (StaticDetails.Role_Landlord == Input.Role)
-                        {
-                            return RedirectToPage("ViewMyTenancy", "tenancies", new { email = Input.Email, returnUrl = returnUrl });
-                        }
-                        else if (StaticDetails.Role_User == Input.Role)
-                        {
-                            return RedirectToPage("Index", "PropertiesRS", new { email = Input.Email, returnUrl = returnUrl });
-                        
-                        }
-                        else if (StaticDetails.Role_Subcontractor == Input.Role)
-                        {
-                            return RedirectToPage("AddMJ", "maintenanceJobs", new { email = Input.Email, returnUrl = returnUrl });
-                          
+
+                            return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                         }
                         else
                         {
-                            return RedirectToPage("Index", "Home");
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            return LocalRedirect(returnUrl);
                         }
-                        /*    
-                            await _userManager.AddToRoleAsync(user, StaticDetails.Role_Admin);
-                            await _userManager.AddToRoleAsync(user, StaticDetails.Role_Subcontractor);
-                            await _userManager.AddToRoleAsync(user, StaticDetails.Role_Landlord);*/
                     }
-
-                  
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                       
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
-                }
+                
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

@@ -24,6 +24,8 @@ namespace BoldRealties.Models
         [ForeignKey("TenancyID")]
         [ValidateNever]
         public tenancies tenancies { get; set; }
+        public string filePath { get; set; }
+        [ValidateNever]
 
         public DateTime Due_Date { get; set; }
 

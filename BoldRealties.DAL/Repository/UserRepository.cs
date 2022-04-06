@@ -15,5 +15,11 @@ namespace BoldRealties.DAL.Repository.IRepository
         {
             _db.Users.Update(user);
         }
+     
+
+        public Users GetUserByID(string userId)
+        {
+            return _db.user.Find(userId);
+        }
     }
 }

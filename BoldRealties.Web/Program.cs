@@ -1,4 +1,3 @@
-
 using BoldRealties.DAL;
 using BoldRealties.DAL.Repository;
 using BoldRealties.DAL.Repository.IRepository;
@@ -16,9 +15,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BoldRealties_dbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-
 {
-
     options.SignIn.RequireConfirmedAccount = false;
 
     options.User.RequireUniqueEmail = true;
@@ -28,11 +25,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
 
     options.Lockout.MaxFailedAccessAttempts = 3;
-
-
-
 })
-
     .AddDefaultTokenProviders()
 
     .AddEntityFrameworkStores<BoldRealties_dbContext>();
@@ -41,6 +34,12 @@ builder.Services.AddSingleton<IEmailSender, EmailSender>();
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddRazorPages();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

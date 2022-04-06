@@ -4,6 +4,7 @@ using BoldRealties.Models;
 
 namespace BoldRealties.Web.Controllers
 {
+   
     public class baReportsController : Controller
     {
         private readonly IUnitOfWork _unit;

@@ -4,6 +4,7 @@ using BoldRealties.DAL.Repository.IRepository;
 
 namespace BoldRealties.Web.Controllers
 {
+
     public class ViewingsController : Controller
     {
         public readonly IUnitOfWork _unit;

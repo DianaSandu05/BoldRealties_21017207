@@ -1,20 +1,30 @@
-﻿using BoldRealties.DAL.Repository.IRepository;
+﻿using BoldRealties.BLL;
+using BoldRealties.DAL.Repository.IRepository;
 using BoldRealties.Models;
 using BoldRealties.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
+using System.Security.Claims;
 
 namespace BoldRealties.Web.Controllers
 {
+
     public class TenancyController : Controller
     {
         private readonly IUnitOfWork _unit;
         private readonly IWebHostEnvironment _webHost;
-     
-        public TenancyController(IUnitOfWork unit, IWebHostEnvironment webHost) //implementation of connection string and table to retrieve data
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        public TenancyController(IUnitOfWork unit, IWebHostEnvironment webHost, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager) //implementation of connection string and table to retrieve data
         {
             _unit = unit;
             _webHost = webHost;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
         public IActionResult Index()
         {
@@ -23,11 +33,10 @@ namespace BoldRealties.Web.Controllers
         }
         public IActionResult Upsert(int? ID)
         {
-
-            TenancyViewModel tvm = new()
+            tenancyVM tenancyVM = new()
             {
                 tenancy = new(),
-                 PropertiesList = _unit.Properties.GetAll().Select(x => new SelectListItem
+                PropertiesList = _unit.Properties.GetAll().Select(x => new SelectListItem
                 {
                     Text = x.propertyAddress,
                     Value = x.ID.ToString()
@@ -35,62 +44,68 @@ namespace BoldRealties.Web.Controllers
                 UserList = _unit.Users.GetAll().Select(x => new SelectListItem
                 {
                     Text = x.firstName + x.lastName,
-                 /*   Value = x.ID.ToString()*/
+                    /*   Value = x.ID.ToString()*/
                 }),
             };
-          if(ID==null || ID ==0)
+            if (ID == null || ID == 0)
             {
-                return View(tvm);
+                return View(tenancyVM);
             }
             else
             {
-                if (ID == null || ID == 0)
-                {
-                    return NotFound();
-                }
-                var TenancyFromDb = _unit.Tenancies.GetFirstOrDefault(x => x.Id == ID);
-                if (TenancyFromDb == null)
-                {
-                    return NotFound();
-                }
-                return View(TenancyFromDb);
+                tenancyVM.tenancy = _unit.Tenancies.GetFirstOrDefault(u => u.Id == ID);
+                return View(tenancyVM);
+
+
             }
+
         }
         [HttpPost]
         [ValidateAntiForgeryToken] //to avoid the cross site request forgery
-        public IActionResult Upsert(TenancyViewModel tenancies, IFormFile? file)
+        public IActionResult Upsert(tenancyVM tenancyVM, IFormFile? file)
         {
-            //add tenancy it's not working at the moment because of the code below. Comment it out and replace the input from Upsert/Tenancy
-            //with the following code  <div class="mb-3  col-6">
-           //< label asp -for= "tenancy.imagePath" > Upload Images </ label >
-            //  < input type = "file"  id = "uploadBox" name = "img" asp -for= "tenancy.imagePath" class="form-control" />    
-         // </div>
-      /*     if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                string wwwrootPath = _webHost.WebRootPath;
-                if(file!=null)
+                string wwwRootPath = _webHost.WebRootPath;
+                if (file != null)
                 {
-                   
                     string fileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(wwwrootPath, @"files\tenancy");
+                    var fileUploads = Path.Combine(wwwRootPath, @"files\tenancy");
                     var extension = Path.GetExtension(file.FileName);
- 
-                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+
+                    if (tenancyVM.tenancy.filePath != null)
+                    {
+                        var oldImagePath = Path.Combine(wwwRootPath, tenancyVM.tenancy.filePath.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    using (var fileStreams = new FileStream(Path.Combine(fileUploads, fileName + extension), FileMode.Create))
                     {
                         file.CopyTo(fileStreams);
-                    }    
-                    tenancies.tenancy.filePath = @"\files\tenancy" + fileName + extension;
+                    }
+                    tenancyVM.tenancy.filePath = @"\files\tenancy\" + fileName + extension;
+
                 }
-              
-                 _unit.Tenancies.Add(tenancies.tenancy);
+                if (tenancyVM.tenancy.Id == 0)
+                {
+                    _unit.Tenancies.Add(tenancyVM.tenancy);
+                }
+                else
+                {
+                    _unit.Tenancies.Update(tenancyVM.tenancy);
+                }
                 _unit.Save();
-                TempData["success"] = "The record was added successfully!";
+                TempData["success"] = "Record added successfully";
                 return RedirectToAction("Index");
             }
-      */
-            return View(tenancies);
+            return View(tenancyVM);
+    
         }
-       
+
+        [HttpDelete]
         public IActionResult DeleteTenancies(int? ID)
         {
             if (ID == null || ID == 0)
@@ -121,7 +136,98 @@ namespace BoldRealties.Web.Controllers
 
 
         }
-       public IActionResult ViewMyTenancy()
+        //most probably this should be moved in the user portal??
+
+        //To do for Details:
+        /*
+         1. The details should be taken from user page when the tenant view his tenancy
+        2. Show payment due
+        3. Click details
+        4. View details about payments and have a button for 'shopping cart' aka 'pay now'
+        5. Redirect to payment summary. 
+
+        logical:
+        Function Details()
+        1. get tenancy id, create payment obj and pass the tenanancy details. return the obj
+
+        Function DetailsPayment()
+        1. claim the identity of the tenant
+        2. pass the identity claim value to the payment obj.userID
+        3. get shopping cart from database if the ApplicationUserId is equal to user id from the claim identity
+        4. and product id is equal tot the product id (FK) from shopping cart
+         */
+        public IActionResult Details(int id)
+        {
+            var tenancyFromDb = _unit.Tenancies.
+                        GetFirstOrDefault(u => u.Id == id, includeProperties: "Properties");
+            //shopping cart = payment
+            //product = tenancy
+
+            payment paymentObj = new payment()
+            {
+                tenancies = tenancyFromDb,
+                TenancyID = tenancyFromDb.Id
+            };
+            return View(paymentObj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public IActionResult Details(payment paymentObj)
+        {
+            paymentObj.ID = 0;
+            if (ModelState.IsValid)
+            {
+                //DS: we create a variable 'claimsIdentity' and we initialize it with the name identifier
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                //DS: we then create another variable 'claim' to extract the claim from the ClaimsIdentity
+                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                //DS: we assign the value of user id extracted from the ClaimsIdentity to 'ApplicationUserId
+                paymentObj.UserID = claim.Value;
+
+                //DS:get shopping cart from database if the ApplicationUserId is equal to user id from the claim identity
+                //DS: and product id is equal tot the product id (FK) from shopping cart
+                payment paymentFromDb = _unit.payment.GetFirstOrDefault(
+                    u => u.UserID == paymentObj.UserID && u.TenancyID == paymentObj.TenancyID
+                    , includeProperties: "tenancies"
+                    );
+                //DS: the if statement conditions checks if there is no record. If true, a new record will be added to DB
+                if (paymentFromDb == null)
+                {
+                    //LC: no records exists in database for that product for that user
+                    _unit.payment.Add(paymentObj);
+                }
+               
+                _unit.Save();
+
+                var count = _unit.payment
+                    .GetAll(c => c.UserID == paymentObj.UserID)
+                    .ToList().Count();
+
+                //HttpContext.Session.SetObject(SD.ssShoppingCart, CartObject);
+
+                //DS: these lines were causing the errors
+
+                HttpContext.Session.SetInt32(StaticDetails.SessionPayment, count);
+
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                var tenancyFromDb = _unit.Tenancies.
+                        GetFirstOrDefault(u => u.Id == paymentObj.TenancyID, includeProperties: "PropertiesRS");
+                payment paymentObject = new payment()
+                {
+                    tenancies = tenancyFromDb,
+                    TenancyID = tenancyFromDb.Id
+                };
+                return View(paymentObject);
+            }
+
+
+        }
+        public IActionResult ViewMyTenancy()
         {
             return View();
         }

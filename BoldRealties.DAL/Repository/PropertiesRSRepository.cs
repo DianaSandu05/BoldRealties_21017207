@@ -15,5 +15,9 @@ namespace BoldRealties.DAL.Repository.IRepository
         {
             _db.PropertiesRS.Update(properties);
         }
+        public PropertiesRS GetPropertyByID(int propertyId)
+        {
+            return _db.PropertiesRS.Find(propertyId);
+        }
     }
 }

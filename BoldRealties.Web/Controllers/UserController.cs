@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BoldRealties.Web.Controllers
 {
+
     public class UserController : Controller
     {
         private readonly IUnitOfWork _unit;
@@ -18,23 +19,7 @@ namespace BoldRealties.Web.Controllers
            IEnumerable<Users> objUserList = _unit.Users.GetAll();
            return View(objUserList);
        }
-       public IActionResult AddUser()
-       {
-           return View();
-       }
-       [HttpPost]
-       [ValidateAntiForgeryToken] //to avoid the cross site request forgery
-       public IActionResult AddUser(Users user)
-       {
-           if (ModelState.IsValid)
-           {
-               _unit.Users.Add(user);
-               _unit.Save();
-               TempData["success"] = "The record was added successfully!";
-               return RedirectToAction("Index");
-           }
-           return View(user);
-       }
+      
        public IActionResult EditUser(int? ID)
        {
            if (ID == null || ID == 0)

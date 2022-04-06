@@ -4,7 +4,7 @@ namespace BoldRealties.DAL.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private BoldRealties_dbContext _db;
+        private readonly BoldRealties_dbContext _db;
         public UnitOfWork(BoldRealties_dbContext db)
         {
             _db = db;

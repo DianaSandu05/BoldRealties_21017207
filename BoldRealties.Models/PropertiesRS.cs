@@ -35,21 +35,24 @@ namespace BoldRealties.Models
         [Required]
         public bool petsAllowed { get; set; }
         public float minPrice { get; set; }
-        public int TenancyID { get; set; }
+        public int? TenancyID { get; set; }
         [ForeignKey("TenancyID")]
         [ValidateNever]
-        public tenancies tenancies { get; set; }
-
-        public string UserID { get; set; }
+        public tenancies? tenancies { get; set; }
+        public string? UserID { get; set; }
         [ForeignKey("UserID")]
         [ValidateNever]
-        public IdentityUser Users { get; set; }
-        public int EnquiriesID { get; set; }
+        public IdentityUser? Users { get; set; }
+        public int? EnquiriesID { get; set; }
         [ForeignKey("EnquiriesID")]
         [ValidateNever]
-        public Enquiries Enquiries { get; set; }
-
+        public Enquiries? Enquiries { get; set; }
+        [ValidateNever]
+      
+        public string imagePath { get; set; }
+        [ValidateNever]
         public float maxPrice { get; set; }
+    
 
     }
 }

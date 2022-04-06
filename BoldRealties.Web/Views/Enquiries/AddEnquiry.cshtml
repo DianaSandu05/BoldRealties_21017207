@@ -1,0 +1,95 @@
+﻿@using BoldRealties.Models
+@model Enquiries
+@{
+    ViewData["Title"] = "AddEnquiry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post">
+    <div class="border p-3 mt-4">
+       
+        <div class= "row pb-2">
+            <h2 cass="text-primary pl-3"> Add Enquiries</h2>
+        </div>
+        <div class="mb-3">
+           <label asp-for="NameSurname">Full Name</label>
+            <input asp-for="NameSurname" placeholder="First Name + Second Name" class="form-control" />
+            <span asp-validation-for="NameSurname" class="text-danger"></span>
+        </div>
+           <label asp-for="email">Email</label>
+            <input asp-for="email" class="form-control" />
+            <span asp-validation-for="email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+           <label asp-for="applicantType">Applicant Type</label>
+            <input asp-for="applicantType" placeholder="e.g. buyer, tenant" class="form-control" />
+            <span asp-validation-for="applicantType" class="text-danger"></span>
+        </div>
+       
+        
+         <div class="mb-3">
+           <label asp-for="phone_No">Phone Number</label>
+            <input asp-for="phone_No" class="form-control" />
+            <span asp-validation-for="phone_No" class="text-danger"></span>
+        </div>
+
+          <div class="mb-3">
+        <label asp-for="pets">Pets?</label>
+        @Html.DropDownList("Pets?", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})
+       <span asp-validation-for="pets" class="text-danger"></span>
+    </div>
+         <div class="mb-3">
+           <label asp-for="noPets">Pets number</label>
+            <input asp-for="noPets" class="form-control" />
+            <span asp-validation-for="noPets" class="text-danger"></span>
+        </div>
+        
+         <div class="mb-3">
+           <label asp-for="noBeds">Number of bedrooms required</label>
+            <input asp-for="noBeds" class="form-control" />
+            <span asp-validation-for="noBeds" class="text-danger"></span>
+        </div>
+            <div class="mb-3">
+           <label asp-for="noBaths">Number of bathrooms required</label>
+            <input asp-for="noBaths" class="form-control" />
+            <span asp-validation-for="noBaths" class="text-danger"></span>
+        </div>
+         <div class="mb-3">
+           <label asp-for="specification_Content">Other requirements...</label>
+            <input asp-for="specification_Content" class="form-control" />
+            <span asp-validation-for="specification_Content" class="text-danger"></span>
+        </div>
+          <div class="mb-3">
+           <label asp-for="location">Location</label>
+            <input asp-for="location" class="form-control" />
+            <span asp-validation-for="location" class="text-danger"></span>
+        </div>
+          <div class="mb-3">
+           <label asp-for="postcode">Postcodes</label>
+            <input asp-for="postcode" placeholder="e.g. IG1, NW1, N1, SW1" class="form-control" />
+            <span asp-validation-for="postcode" class="text-danger"></span>
+        </div>
+         <div class="mb-3">
+           <label asp-for="minPrice">Minimum Price</label>
+            <input asp-for="minPrice"  class="form-control" />
+            <span asp-validation-for="minPrice" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+           <label asp-for="maxPrice">Maximum Price</label>
+            <input asp-for="maxPrice"  class="form-control" />
+            <span asp-validation-for="maxPrice" class="text-danger"></span>
+        </div>
+         <div class="mb-3">
+           <label asp-for="crime_Rate">Crime Rate</label>
+            <input asp-for="crime_Rate"  class="form-control" />
+            <span asp-validation-for="crime_Rate" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+         <a asp-controller="User" asp-action="Index" class="btn btn-primary">User List</a>
+    </div>
+</form>
+
+
+
+
+

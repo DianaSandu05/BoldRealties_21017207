@@ -1,0 +1,64 @@
+﻿@using BoldRealties.Models
+@model BoldRealties.Models.ViewModels.mJobsVM
+@{
+    ViewData["Title"] = "Upsert";
+    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+}
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <input asp-for="mJobVM.ID" hidden />
+        <input asp-for="mJobVM.UserID" hidden />
+        <input asp-for="mJobVM.filePath" hidden name="file" />
+         <a asp-page="/maintenanceJobs/Index" class="btn btn-primary">Jobs List</a>
+        <div class= "row pb-2">
+            <h2 cass="text-primary pl-3"> Create job</h2>
+        </div>
+        <div class="mb-3">
+           <label asp-for="mJobVM.StartDate">Start Date</label>
+            <input asp-for="mJobVM.StartDate" class="form-control" />
+            <span asp-validation-for="mJobVM.StartDate" class="text-danger"></span>
+        </div>
+       
+        <div class="mb-3">
+           <label asp-for="mJobVM.EndDate">End Date</label>
+            <input asp-for="mJobVM.EndDate" class="form-control" />
+            <span asp-validation-for="mJobVM.EndDate" class="text-danger"></span>
+        </div>
+           <div class="mb-3  col-6">
+        <label asp-for="mJobVM.isCompleted">Completed?</label>
+        @Html.DropDownList("mJobVM.isCompleted", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})
+      </div>
+     <div class="mb-3">
+           <label asp-for="mJobVM.diagnostics">Diagnostics</label>
+            <input asp-for="mJobVM.diagnostics" class="form-control" />
+            <span asp-validation-for="mJobVM.diagnostics" class="text-danger"></span>
+        </div>
+          <div class="mb-3 col-6">
+			<label asp-for="mJobVM.filePath"></label>
+			<input asp-for="mJobVM.filePath" type="file" id="uploadBox" name="file" class="form-control" />
+               <span asp-validation-for="mJobVM.filePath" class="text-danger"></span>
+		</div>
+       
+        <div class="mb-3  col-6">
+           <label asp-for="mJobVM.Users.Id">User ID</label>
+            <select asp-for="mJobVM.Users.Id" asp-items="@Model.UserList" class="form-select">
+                <option disabled selected>--Select User--</option>
+            </select>
+        </div>
+        <div class="mb-3  col-6">
+           <label asp-for="mJobVM.Tenancies.PropertyID">Tenancy ID</label>
+            <select asp-for="mJobVM.Tenancies.PropertyID" asp-items="@Model.TenancyList" class="form-select">
+                <option disabled selected>--Select Tenancy--</option>
+            </select>
+        </div>
+	
+        <button type="submit" class="btn btn-primary">Create</button>
+         <a asp-controller="maintenanceJobs" asp-action="Index" class="btn btn-primary">Jobs List</a>
+    </div>
+</form>
+
+
+
+
+

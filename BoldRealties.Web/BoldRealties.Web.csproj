@@ -25,7 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\files\invoices\" />
+    <Folder Include="wwwroot\files\jobs\" />
     <Folder Include="wwwroot\files\tenancy\" />
+    <Folder Include="wwwroot\images\Properties\" />
   </ItemGroup>
 
 </Project>

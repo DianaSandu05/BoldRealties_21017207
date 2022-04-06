@@ -4,7 +4,10 @@
     ViewData["Title"] = "Add";
     Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
 }
-<form method="post">
+<div class="row">
+    <div class="col-md-4">
+     
+<form method="post" class="justify-content-sm-right">
     <div class="border p-3 mt-4">
          <a asp-page="/officeAddress/Index" class="btn btn-primary">Office Addresses List</a>
         <div class= "row pb-2">
@@ -54,6 +57,10 @@
          <a asp-controller="User" asp-action="Index" class="btn btn-primary">User List</a>
     </div>
 </form>
+</div>
+</div>
+
+
 
 
 
