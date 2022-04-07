@@ -3,6 +3,7 @@ using BoldRealties.Models;
 using BoldRealties.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PagedList;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -20,10 +21,38 @@ namespace BoldRealties.Web.Controllers
             _unit = unit;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? id, string sortOrder, string currentFilter, string searchString, int? page)
         {
-            IEnumerable<PropertiesRS> propertyList = _unit.Properties.GetAll();
-            return View(propertyList);
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+
+            var propertiesRs = from p in _unit.Properties.GetAll()
+                               select p;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                propertiesRs = propertiesRs.Where(p => p.propertyAddress.ToUpper().Contains(searchString.ToUpper())
+                                       || p.marketPrice.ToString().Contains(searchString.ToUpper()));
+            }
+    
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(propertiesRs.ToPagedList(pageNumber, pageSize));
+            var propertiesList = _unit.Properties.GetFirstOrDefault(i => i.ID == id);
+            return View(propertiesList);
+        
+
+   
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -39,5 +68,7 @@ namespace BoldRealties.Web.Controllers
         {   
             return View();
         }
+    
+
     }
 }
