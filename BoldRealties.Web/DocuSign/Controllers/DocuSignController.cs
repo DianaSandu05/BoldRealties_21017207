@@ -26,8 +26,8 @@ namespace BoldRealties.Web.Controllers
 
         public override string EgName => "eg001";
 
-       /* [HttpPost]*/
-     /*   public IActionResult Create(string signerEmail, string signerName)
+        [HttpPost]
+        public IActionResult Create(string signerEmail, string signerName)
         {
             // Data for this method
             // signerEmail 
@@ -61,6 +61,6 @@ namespace BoldRealties.Web.Controllers
 
             // Redirect the user to the Signing Ceremony
             return Redirect(result.Item2);
-        }*/
+        }
     }
 }

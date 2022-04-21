@@ -52,6 +52,7 @@ namespace BoldRealties.Web.Controllers
         {
             IEnumerable<tenancies> objTenanciesList = _unit.Tenancies.GetAll();
             return View(objTenanciesList);
+           
         }
         public IActionResult Upsert(int? ID)
         {

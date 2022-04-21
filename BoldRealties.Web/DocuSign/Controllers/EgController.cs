@@ -17,7 +17,7 @@ namespace BoldRealties.Web.Controllers
             ViewBag.csrfToken = "";
         }
 
-      /*  [HttpGet]
+        [HttpGet]
         public virtual IActionResult Get()
         {
             // Check that the token is valid and will remain valid for awhile to enable the
@@ -77,6 +77,6 @@ namespace BoldRealties.Web.Controllers
         protected bool CheckToken(int bufferMin = 60)
         {
             return RequestItemsService.CheckToken(bufferMin);
-        }*/
+        }
     }
 }
