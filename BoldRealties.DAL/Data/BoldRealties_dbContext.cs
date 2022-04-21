@@ -28,5 +28,7 @@ namespace BoldRealties.DAL
         public DbSet<payment> payment { get; set; }
         public DbSet<Invoices> Invoices { get; set; }
         public DbSet<Viewings> Viewings { get; set; }
+        public DbSet<RentPaymentHeader> RentPaymentHeaders { get; set; }
+        public DbSet<RentPaymentDetails> RentPaymentDetails { get; set; }
     }
 }

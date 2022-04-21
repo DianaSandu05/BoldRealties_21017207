@@ -15,6 +15,7 @@ namespace BoldRealties.Models.ViewModels
         public IEnumerable<SelectListItem> PropertiesList { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> UserList { get; set; }
-
+        [ValidateNever]
+        public IEnumerable<SelectListItem> Invoices { get; set; }
     }
 }

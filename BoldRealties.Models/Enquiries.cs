@@ -39,6 +39,7 @@ namespace BoldRealties.Models
         [Required]
      
         public string crime_Rate { get; set; }
+     
 
     }
 }

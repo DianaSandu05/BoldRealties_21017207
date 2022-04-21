@@ -20,27 +20,17 @@ namespace BoldRealties.Models
         public int? PropertyID { get; set; }
         [ForeignKey("PropertyID")]
         [ValidateNever]
-        public PropertiesRS? PropertiesRS { get; set; }
+        public PropertiesRS PropertiesRS { get; set; }
 
         public string? UserID { get; set; }
         [ForeignKey("UserID")]
         [ValidateNever]
         public Users Users { get; set; }
 
+
         public string managementType { get; set; }
 
-        public int? accountsID { get; set; }
-        [ForeignKey("accountsID")]
-        [ValidateNever]
-        public Accounts? Accounts { get; set; }
-
-        public int? DepositsID { get; set; }
-        [ForeignKey("DepositsID")]
-        [ValidateNever]
-        public Deposits? Deposits { get; set; }
-        [ValidateNever]
-
-        public string filePath { get; set; }
+        public string? filePath { get; set; }
         [ValidateNever]
         public bool billsIncluded { get; set; }
     }

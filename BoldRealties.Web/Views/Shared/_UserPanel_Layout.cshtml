@@ -5,203 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BoldRealties.Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-     <link rel="stylesheet" href="~/css/SideNavBar.css/>
-<link rel="stylesheet" href="~/css~/css/all.min.css" />
+      <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
      <link rel="stylesheet" href="~/css/stylesheet.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BoldRealties.Web.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-
-    <partial name="Partial/Messages" />
 </head>
-
-
 <body>
-    <!-- Site wrapper -->
-    <div class="wrapper"  style="display:flex; float:left; justify-content:flex-start;">
-        <!-- Navbar -->
-      
-           
-<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width:280px;" >
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-    </a>
-       <a href="../../index3.html" class="brand-link">
-                  <span class="fs-4">Bold Realties</span>
-            </a>
-   
-    <hr>
- 
-         <div class="dropdown align-content-lg-center mb-md-auto">
-      <a href="#" class="d-flex align-items-center text-white dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-    <div class="dropdown-header fs-5 text-center border-white border-bottom">Properties</div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-          <li class="nav-item">
-                           <a class="nav-link text-white" asp-area="" asp-controller="PropertiesRS" asp-action="Index">Properties</a>
-                        </li>
-      </ul>
-    </div>
- 
-    <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-        
-       <div class="dropdown-header fs-5 text-center border-white border-bottom">User</div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-          <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Index">User</a>
-                        </li>
-      </ul>
-    </div>
- 
-    <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-     
-      <div class="dropdown-header fs-5 text-center border-white border-bottom">Tenancy</div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Tenancy" asp-action="Upsert">Tenancy</a>
-                        </li>
-      </ul>
-    </div>
-
-                        <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-      
-        <div class="dropdown-header fs-5 text-center border-white border-bottom">Accounts</div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Accounts" asp-action="Index">Accounts</a>
-                        </li>
-      </ul>
-    </div>
-  
-                         <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-        
-        <div class="dropdown-header fs-5 text-center border-white border-bottom">Business Analysis</div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-           <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="baReports" asp-action="Index">Business Analysis</a>
-                        </li>
-      </ul>
-    </div>
-
-                         
-                         <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-       
-         <div class="dropdown-header fs-5 text-center border-white border-bottom">Deposits</div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-            <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Deposits" asp-action="Index">Deposits</a>
-                        </li>
-      </ul>
-    </div>
-
-                   <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-     
-        <div class="dropdown-header fs-5 text-center border-white border-bottom">Enquiries</div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-            <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Enquiries" asp-action="Index">Enquiries</a>
-                        </li>
-      </ul>
-    </div>
-        
-    <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-     
-      <div class="dropdown-header fs-5 text-center border-white border-bottom">Invoices</div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-            <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Invoices" asp-action="Index">Invoices</a>
-                        </li>
-      </ul>
-    </div>
-         
-                    <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-       
-       <div class="dropdown-header fs-5 text-center border-white border-bottom">Maintenance Jobs</div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-            <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="maintenanceJobs" asp-action="Index">Maintenance Jobs</a>
-                        </li>
-      </ul>
-    </div>
-          
-                      <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-      
-         <div class="dropdown-header fs-5 text-center border-white border-bottom">Payment</div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-             <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="payment" asp-action="Index">Payment</a>
-                        </li>
-      </ul>
-    </div>
-          
-
-                       <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-     
-        <div class="dropdown-header fs-5 text-center border-white border-bottom">Viewings</div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-            <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Viewings" asp-action="Index">Viewings</a>
-                        </li>
-      </ul>
-    </div>
-            
-                          <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-  
-       <div class="dropdown-header fs-5 text-center border-white border-bottom">Office Address</div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-             <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="officeAddress" asp-action="Index">Office Address</a>
-                          
-                        </li>
-      </ul>
-    </div>
-     </div>
-            
-                           
-
-    <hr>
-    </div>
-   
-     <header>
+    <partial name="Partial/Messages" />
+    <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                    
-              
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BoldRealties.Web</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                          
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            
+                            <a class="nav-link text-dark" asp-area="" asp-controller="PropertiesRS" asp-action="Index">Properties</a>
                         </li>
                          <li class="nav-item">
-                          
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Enquiries" asp-action="AddEnquiry">Send enquiry</a>
                         </li>
-                         
+                             <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tenancy" asp-action="Index">Tenancy</a>
+                        </li>
+                          <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">User</a>
+                        </li>
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="officeAddress" asp-action="Index">User</a>
+                        </li>
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="baReports" asp-action="Index">Reports</a>
+                        </li>
                           
                     </ul>
                       <partial name="_LoginPartial"/>
@@ -209,50 +52,16 @@
             </div>
         </nav>
     </header>
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper"">
-            <!-- Content Header (Page header) -->
-            <div class="card-header">
-
-                 </div>
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                          @RenderBody()
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
-                            </ol>
-                        </div>
-                    </div>
-                </div><!-- /.container-fluid -->
-           
-
-            <!-- Main content -->
-            <!-- /.content -->
+    <div class="container">
+        <main role="main" class="pb-3">
             @RenderBody()
-        </div>
-        <!-- /.content-wrapper -->
+        </main>
+    </div>
 
-        <footer class="main-footer border-top border-dark">
-            <div class="float-right d-none d-sm-block">
-                <b>Bold Realties</b>
-            </div>
-        </footer>
-
-
-       
-   
-
-
-    <script src="~/wwwroot/bootstrap-4.3.1-dist"></script>
-
-</body>
-</html>
-
-       
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @await RenderSectionAsync("Scripts", required: false)
-
+</body>
+</html>

@@ -16,7 +16,9 @@
         IUserRepository Users { get; }
 
         IViewingsRepository viewings { get; }
-
+        IRentPaymentHeaderRepository RentPaymentHeader { get; }
+        IRentPaymentDetailsRepository RentPaymentDetails { get; }
+        
         void Save();
     }
 }

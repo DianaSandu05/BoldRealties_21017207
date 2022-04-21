@@ -14,19 +14,21 @@ namespace BoldRealties.Models
     {
         [Key]
         public int ID{get; set; }
-        public float amount { get; set; }
+        public double amount { get; set; }
         public DateTime received_Date { get; set; }
         public int TenancyID { get; set; }
         [ForeignKey("TenancyID")]
         [ValidateNever]
         public tenancies tenancies { get; set; }
-
-        public string UserID { get; set; }
+   
+        public string? UserID { get; set; }
         [ForeignKey("UserID")]
         [ValidateNever]
-        public IdentityUser Users { get; set; }
+        public Users Users { get; set; }
+       
+        public int Count { get; set; }
 
-        public string currency { get; set; }
+       
 
     }
 }

@@ -2,12 +2,16 @@
 using BoldRealties.DAL.Repository.IRepository;
 using BoldRealties.Models;
 using BoldRealties.Models.ViewModels;
+using DocuSign.eSign.Api;
+using DocuSign.eSign.Client;
+using DocuSign.eSign.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 
 namespace BoldRealties.Web.Controllers
 {
@@ -18,13 +22,31 @@ namespace BoldRealties.Web.Controllers
         private readonly IWebHostEnvironment _webHost;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ILogger<TenancyController> _logger;
+        /// <summary>
+        /// Creates an envelope that would include two documents and add a signer and cc recipients to be notified via email
+        /// </summary>
+        /// <param name="signerEmail">Email address for the signer</param>
+        /// <param name="signerName">Full name of the signer</param>
+        /// <param name="ccEmail">Email address for the cc recipient</param>
+        /// <param name="ccName">Name of the cc recipient</param>
+        /// <param name="accessToken">Access Token for API call (OAuth)</param>
+        /// <param name="basePath">BasePath for API calls (URI)</param>
+        /// <param name="accountId">The DocuSign Account ID (GUID or short version) for which the APIs call would be made</param>
+        /// <param name="docPdf">String of bytes representing the document (pdf)</param>
+        /// <param name="docDocx">String of bytes representing the Word document (docx)</param>
+        /// <param name="envStatus">Status to set the envelope to</param>
+        /// <returns>EnvelopeId for the new envelope</returns>
 
-        public TenancyController(IUnitOfWork unit, IWebHostEnvironment webHost, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager) //implementation of connection string and table to retrieve data
+        public TenancyController(IUnitOfWork unit, ILogger<TenancyController> logger, IWebHostEnvironment webHost, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager
+       )
         {
             _unit = unit;
             _webHost = webHost;
             _userManager = userManager;
             _roleManager = roleManager;
+            _logger = logger;
+            ViewBag.title = "Signing request by email";
         }
         public IActionResult Index()
         {
@@ -102,7 +124,7 @@ namespace BoldRealties.Web.Controllers
                 return RedirectToAction("Index");
             }
             return View(tenancyVM);
-    
+
         }
 
         [HttpDelete]
@@ -159,7 +181,7 @@ namespace BoldRealties.Web.Controllers
         public IActionResult Details(int id)
         {
             var tenancyFromDb = _unit.Tenancies.
-                        GetFirstOrDefault(u => u.Id == id, includeProperties: "Properties");
+                        GetFirstOrDefault(u => u.Id == id, includeProperties: "PropertiesRS");
             //shopping cart = payment
             //product = tenancy
 
@@ -176,6 +198,7 @@ namespace BoldRealties.Web.Controllers
         [Authorize]
         public IActionResult Details(payment paymentObj)
         {
+
             paymentObj.ID = 0;
             if (ModelState.IsValid)
             {
@@ -189,8 +212,8 @@ namespace BoldRealties.Web.Controllers
                 //DS:get shopping cart from database if the ApplicationUserId is equal to user id from the claim identity
                 //DS: and product id is equal tot the product id (FK) from shopping cart
                 payment paymentFromDb = _unit.payment.GetFirstOrDefault(
-                    u => u.UserID == paymentObj.UserID && u.TenancyID == paymentObj.TenancyID
-                    , includeProperties: "tenancies"
+                    u => u.UserID== paymentObj.UserID && u.TenancyID == paymentObj.TenancyID
+                    , includeProperties: "tenancies" 
                     );
                 //DS: the if statement conditions checks if there is no record. If true, a new record will be added to DB
                 if (paymentFromDb == null)
@@ -198,19 +221,24 @@ namespace BoldRealties.Web.Controllers
                     //LC: no records exists in database for that product for that user
                     _unit.payment.Add(paymentObj);
                 }
-               
+                else
+                {
+
+                    paymentFromDb.Count += paymentObj.Count;
+                    //LC: _unitOfWork.ShoppingCart.Update(cartFromDb);
+                }
                 _unit.Save();
 
                 var count = _unit.payment
                     .GetAll(c => c.UserID == paymentObj.UserID)
                     .ToList().Count();
 
-                //HttpContext.Session.SetObject(SD.ssShoppingCart, CartObject);
+              /*  HttpContext.Session.SetObject(StaticDetails.SessionPayment, paymentObj);*/
 
                 //DS: these lines were causing the errors
 
-                HttpContext.Session.SetInt32(StaticDetails.SessionPayment, count);
-
+           /*     HttpContext.Session.SetInt32(StaticDetails.SessionPayment, count);
+*/
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -231,5 +259,7 @@ namespace BoldRealties.Web.Controllers
         {
             return View();
         }
+
+
     }
 }

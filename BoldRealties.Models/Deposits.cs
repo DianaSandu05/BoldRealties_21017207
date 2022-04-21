@@ -21,7 +21,8 @@ namespace BoldRealties.Models
         public DateTime receivedDate { get; set; }
         [Required]
         public DateTime due_date { get; set; }
-        public string FilePath { get; set; }
+        public string? FilePath { get; set; }
+        [ValidateNever]
         public bool isProtected { get; set; }
         [Required]
         public DateTime protected_Date { get; set; }
@@ -35,7 +36,7 @@ namespace BoldRealties.Models
         public string UserID { get; set; }
         [ForeignKey("UserID")]
         [ValidateNever]
-        public IdentityUser Users { get; set; }
+        public Users Users { get; set; }
         public int TenancyID { get; set; }
         [ForeignKey("TenancyID")]
         [ValidateNever]

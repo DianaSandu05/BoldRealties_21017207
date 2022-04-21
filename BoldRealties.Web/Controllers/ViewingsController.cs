@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BoldRealties.Models;
 using BoldRealties.DAL.Repository.IRepository;
+using BoldRealties.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoldRealties.Web.Controllers
 {
@@ -8,58 +10,74 @@ namespace BoldRealties.Web.Controllers
     public class ViewingsController : Controller
     {
         public readonly IUnitOfWork _unit;
-        public ViewingsController(IUnitOfWork unit)
+        private readonly IWebHostEnvironment _host;
+        public ViewingsController(IUnitOfWork unit, IWebHostEnvironment host)
         {
             _unit = unit;
+            _host = host;
         }
         public IActionResult Index()
         {
             IEnumerable<Viewings> viewingList = _unit.viewings.GetAll();
             return View(viewingList);
         }
-        public IActionResult AddViewings()
+        public IActionResult Upsert(int? id)
         {
-            return View();
+            ViewingsVM viewingsVM = new()
+            {
+                Viewings = new(),
+                PropertiesList = _unit.Properties.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.propertyAddress,
+                    Value = i.ID.ToString()
+                }),
+                UserList = _unit.Users.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.firstName + i.lastName,
+                 /*   Value = i.Id.ToString()*/
+                }),
+                //get the aplicants full name for the viewing
+                AplicantsList = _unit.Enquiries.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.NameSurname,
+                    Value = i.ID.ToString()
+                }),
+            };
+
+            if (id == null || id == 0)
+            {
+
+                return View(viewingsVM);
+            }
+            else
+            {
+                viewingsVM.Viewings= _unit.viewings.GetFirstOrDefault(u => u.Id == id);
+                return View(viewingsVM);
+
+
+            }
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult AddViewings(Viewings viewing)
+        [ValidateAntiForgeryToken] //to avoid the cross site request forgery
+        public IActionResult Upsert(ViewingsVM viewingsVM)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                _unit.viewings.Add(viewing);
-                _unit.Save(); 
-                TempData["success"] = "The record was added successfully!";
-                return RedirectToAction("Index");
-            }
-            return View(viewing);
-        }
-        public IActionResult EditViewing(int? ID)
-        {
-            if(ID== null || ID == 0)
-            {
-                return NotFound();
-            }
-            var objFromDb = _unit.viewings.GetFirstOrDefault(x => x.Id == ID);
-            if(objFromDb == null)
-            {
-                return NotFound();
-            }
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EditViewing(Viewings viewing)
-        {
-            if(ModelState.IsValid)
-            {
-                _unit.viewings.Update(viewing);
+                if (viewingsVM.Viewings.Id == 0)
+                {
+                    _unit.viewings.Add(viewingsVM.Viewings);
+                }
+                else
+                {
+                    _unit.viewings.Update(viewingsVM.Viewings);
+                }
                 _unit.Save();
-                TempData["success"] = "The record was updated successfully!";
+                TempData["success"] = "Record added successfully";
                 return RedirectToAction("Index");
             }
-            return View(viewing);
+            return View(viewingsVM);
         }
+    
         public IActionResult DeleteViewing(int? ID)
         {
             if(ID == null || ID == 0)

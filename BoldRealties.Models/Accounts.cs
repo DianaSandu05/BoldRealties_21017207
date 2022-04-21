@@ -21,25 +21,19 @@ namespace BoldRealties.Models
         public bool isReceived { get; set; }
         public DateTime received_Date { get; set; }
 
-        public string UserID { get; set; }
+        public string? UserID { get; set; }
         [ForeignKey("UserID")]
         [ValidateNever]
-        public IdentityUser Users { get; set; }
+        public Users? Users { get; set; }
 
-        public int TenancyID { get; set; }
+        public int? TenancyID { get; set; }
         [ForeignKey("TenancyID")]
         [ValidateNever]
-        public tenancies tenancies { get; set; }
-
-        public int PaymentID { get; set; }
-        [ForeignKey("PaymentID")]
-        [ValidateNever]
-        public payment payment { get; set; }
-  
-        public int InvoiceID { get; set; }
+        public tenancies? tenancies { get; set; }
+        public int? InvoiceID { get; set; }
         [ForeignKey("InvoiceID")]
         [ValidateNever]
-        public Invoices Invoices { get; set; }
+        public Invoices? Invoices { get; set; }
     
         public string FilePath { get; set; }
     }

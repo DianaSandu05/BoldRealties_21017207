@@ -9,7 +9,8 @@ namespace BoldRealties.DAL.Repository.IRepository
 {
     public interface IpaymentRepository : IRepository<payment>
     {
-        void Update(payment payment);
+        int IncrementCount(payment payment, int count);
+        int DecrementCount(payment payment, int count);
 
     }
 }

@@ -20,6 +20,8 @@ namespace BoldRealties.DAL.Repository
             Tenancies = new TenanciesRepository(_db);
             Users = new UserRepository(_db);
             viewings = new ViewingsRepository(_db);
+            RentPaymentHeader = new RentPaymentHeaderRepository(_db);
+            RentPaymentDetails= new RentPaymentDetailsRepository(_db);
         }
         public IAccountsRepository Accounts { get; private set; }
         public IBAReportsRepository BA_Reports { get; private set; }
@@ -34,6 +36,8 @@ namespace BoldRealties.DAL.Repository
         public IUserRepository Users { get; private set; }
       
         public IViewingsRepository viewings { get; private set; }
+        public IRentPaymentHeaderRepository RentPaymentHeader { get; private set; }
+        public IRentPaymentDetailsRepository RentPaymentDetails { get; private set; }
         
         public void Save()
         {

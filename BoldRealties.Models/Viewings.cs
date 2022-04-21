@@ -15,10 +15,10 @@ namespace BoldRealties.Models
         [Key]
         public int Id { get; set; }
         public DateTime viewing_Date { get; set; }
-        public string UserID { get; set; }
+        public string? UserID { get; set; }
         [ForeignKey("UserID")]
         [ValidateNever]
-        public IdentityUser Users { get; set; }
+        public Users Users { get; set; }
 
         public int PropertyID { get; set; }
         [ForeignKey("PropertyID")]

@@ -9,7 +9,7 @@
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
 	<input asp-for="tenancy.Id" hidden />
 	<input asp-for="tenancy.filePath" hidden />
-     <a asp-page="/Properties/Index" class="btn btn-primary">Properties List</a>
+     <a asp-controller="Tenancy" asp-action="Index" class="btn btn-primary">Tenancy List</a>
      <hr/>
     <div class="border p-3 mt-4 row">
         
