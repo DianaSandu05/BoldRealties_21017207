@@ -22,7 +22,7 @@ namespace BoldRealties.Models
         [Required]
         public DateTime due_date { get; set; }
         public string? FilePath { get; set; }
-        [ValidateNever]
+        
         public bool isProtected { get; set; }
         [Required]
         public DateTime protected_Date { get; set; }

@@ -3,10 +3,12 @@ using BoldRealties.Models;
 using BoldRealties.DAL.Repository.IRepository;
 using BoldRealties.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using BoldRealties.BLL;
 
 namespace BoldRealties.Web.Controllers
 {
-
+    [Authorize(Roles = StaticDetails.Role_Admin)]
     public class ViewingsController : Controller
     {
         public readonly IUnitOfWork _unit;
@@ -16,11 +18,14 @@ namespace BoldRealties.Web.Controllers
             _unit = unit;
             _host = host;
         }
+        //function to list all records in Admin portal
+       
         public IActionResult Index()
         {
             IEnumerable<Viewings> viewingList = _unit.viewings.GetAll();
             return View(viewingList);
         }
+       
         public IActionResult Upsert(int? id)
         {
             ViewingsVM viewingsVM = new()
@@ -34,7 +39,7 @@ namespace BoldRealties.Web.Controllers
                 UserList = _unit.Users.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.firstName + i.lastName,
-                 /*   Value = i.Id.ToString()*/
+                
                 }),
                 //get the aplicants full name for the viewing
                 AplicantsList = _unit.Enquiries.GetAll().Select(i => new SelectListItem

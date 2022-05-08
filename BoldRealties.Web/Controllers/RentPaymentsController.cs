@@ -6,47 +6,71 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using Stripe.Checkout;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 
-namespace BoldRealties.Web.Controllers
+namespace LCDSArtGalleryWeb.Areas.Customer.Controllers
 {
-    [Area("Admin")]
+
     [Authorize]
-    public class RentPaymentController : Controller
+    public class RentPaymentsController : Controller
     {
         private readonly IUnitOfWork _unit;
         [BindProperty]
-        public RentPaymentVM RentPaymentVM { get; set; }
-        public RentPaymentController(IUnitOfWork unit)
+        public OrderVM OrderVM { get; set; }
+        public RentPaymentsController(IUnitOfWork unit)
         {
             _unit = unit;
         }
+        [Authorize(Roles = StaticDetails.Role_Admin)]
+        //displays the list of payments in the admin portal
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<OrderHeader> obj = _unit.OrderHeader.GetAll();
+            return View(obj);
         }
+        //get details about payments made for the logged in user
+        [Authorize(Roles = StaticDetails.Role_Tenant)]
 
-        public IActionResult Details(int RentPaymentId)
+        public IActionResult TenantPayments()
         {
-            RentPaymentVM = new RentPaymentVM()
+            // we create a variable 'claimsIdentity' and we initialize it with the name identifier
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            // we then create another variable 'claim' to extract the claim from the ClaimsIdentity
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            IEnumerable<OrderHeader> obj = _unit.OrderHeader.GetAll().Where(u=> u.UserId == claim.Value);
+            return View(obj);
+        }
+   
+        public IActionResult Details(int orderId)
+        {
+            // used to display the info about order and user in the summary
+            OrderVM = new OrderVM()
             {
-                RentPaymentHeader = _unit.RentPaymentHeader.GetFirstOrDefault(u => u.Id == RentPaymentId, includeProperties: "Users"),
-                RentPaymentDetails = _unit.RentPaymentDetails.GetAll(u => u.RentPaymentId == RentPaymentId, includeProperties: "Tenancy"),
+                OrderHeader = _unit.OrderHeader.GetFirstOrDefault(u => u.Id == orderId, includeProperties: "Users"),
+                OrderDetails = _unit.OrderDetails.GetAll(u => u.OrderId == orderId, includeProperties: "tenancies"),
             };
-            return View(RentPaymentVM);
+            return View(OrderVM);
         }
 
         [ActionName("Details")]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //Function used for payment and for getting all the info about order and user for stripe payment
         public IActionResult Details_PAY_NOW()
         {
-            RentPaymentVM.RentPaymentHeader = _unit.RentPaymentHeader.GetFirstOrDefault(u => u.Id == RentPaymentVM.RentPaymentHeader.Id, includeProperties: "Users");
-            RentPaymentVM.RentPaymentDetails = _unit.RentPaymentDetails.GetAll(u => u.RentPaymentId == RentPaymentVM.RentPaymentHeader.Id, includeProperties: "Tenancy");
+            OrderVM.OrderHeader = _unit.OrderHeader.GetFirstOrDefault(u => u.Id == OrderVM.OrderHeader.Id, includeProperties: "Users");
+            OrderVM.OrderDetails = _unit.OrderDetails.GetAll(u => u.OrderId == OrderVM.OrderHeader.Id, includeProperties: "tenancies");
 
             //stripe settings 
-            var domain = "https://localhost:44300/";
+            // when the payment succedeed, the user is redirected from stripe portal back to the web app LCDSArtGallery
+            //the domain is needed for redirecting the user back
+            var domain = "https://localhost:7208/";
+            //payment options. Same as in shopping cart controller. I explained the process of payment options there
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string>
@@ -55,13 +79,14 @@ namespace BoldRealties.Web.Controllers
                 },
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
-                SuccessUrl = domain + $"admin/order/PaymentConfirmation?orderHeaderid={RentPaymentVM.RentPaymentHeader.Id}",
-                CancelUrl = domain + $"admin/order/details?orderId={RentPaymentVM.RentPaymentHeader.Id}",
+                SuccessUrl = domain + $"payment/PaymentConfirmation?orderHeaderid={OrderVM.OrderHeader.Id}",
+                CancelUrl = domain + $"payment/details?orderId={OrderVM.OrderHeader.Id}",
             };
 
-            foreach (var item in RentPaymentVM.RentPaymentDetails)
+            foreach (var item in OrderVM.OrderDetails)
             {
-
+                // the code below represents the 'LineItems' options 
+                // so foreach statement will apply the options
                 var sessionLineItem = new SessionLineItemOptions
                 {
                     PriceData = new SessionLineItemPriceDataOptions
@@ -70,7 +95,7 @@ namespace BoldRealties.Web.Controllers
                         Currency = "usd",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
-                            Name = item.Tenancies.PropertiesRS.propertyAddress
+                            Name = item.tenancies.Id.ToString()
                         },
 
                     },
@@ -82,153 +107,28 @@ namespace BoldRealties.Web.Controllers
 
             var service = new SessionService();
             Session session = service.Create(options);
-            _unit.RentPaymentHeader.UpdateStripePaymentID(RentPaymentVM.RentPaymentHeader.Id, session.Id, session.PaymentIntentId);
+            _unit.OrderHeader.UpdateStripePaymentID(OrderVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
             _unit.Save();
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
         }
-
+        // function for payment confirmation
         public IActionResult PaymentConfirmation(int orderHeaderid)
         {
-            RentPaymentHeader paymentHeader = _unit.RentPaymentHeader.GetFirstOrDefault(u => u.Id == orderHeaderid);
-            if (paymentHeader.PaymentStatus == StaticDetails.PaymentStatusDelayedPayment)
+            //get the id of order header and compare it to the param value, when the record is found its value is assigned to the obj orderHeader
+            OrderHeader orderHeader = _unit.OrderHeader.GetFirstOrDefault(u => u.Id == orderHeaderid);
+            if (orderHeader.PaymentStatus == StaticDetails.PaymentStatusDelayedPayment)
             {
+                // create instance of SessionService and use this service to get the session id & check the stripe status
                 var service = new SessionService();
-                Session session = service.Get(paymentHeader.SessionId);
+                Session session = service.Get(orderHeader.SessionId);
                 //check the stripe status
                 if (session.PaymentStatus.ToLower() == "paid")
                 {
-                    _unit.RentPaymentHeader.UpdateStatus(orderHeaderid,paymentHeader.OrderStatus, StaticDetails.PaymentStatusApproved);
                     _unit.Save();
                 }
             }
             return View(orderHeaderid);
         }
-
-        [HttpPost]
-        [Authorize(Roles = StaticDetails.Role_Admin + "," + StaticDetails.Role_User)]
-        [ValidateAntiForgeryToken]
-        public IActionResult UpdateOrderDetail()
-        {
-            var objFromDb = _unit.RentPaymentHeader.GetFirstOrDefault(u => u.Id == RentPaymentVM.RentPaymentHeader.Id, tracked: false);
-            objFromDb.FirstName = RentPaymentVM.RentPaymentHeader.FirstName;
-            objFromDb.LastName = RentPaymentVM.RentPaymentHeader.LastName;
-            objFromDb.PhoneNumber = RentPaymentVM.RentPaymentHeader.PhoneNumber;
-            objFromDb.Email = RentPaymentVM.RentPaymentHeader.Email;
-            objFromDb.Address = RentPaymentVM.RentPaymentHeader.Address;
-
-            if (RentPaymentVM.RentPaymentHeader.Carrier != null)
-            {
-                objFromDb.Carrier = RentPaymentVM.RentPaymentHeader.Carrier;
-            }
-            if (RentPaymentVM.RentPaymentHeader.TrackingNumber != null)
-            {
-                objFromDb.TrackingNumber = RentPaymentVM.RentPaymentHeader.TrackingNumber;
-            }
-            _unit.RentPaymentHeader.Update(objFromDb);
-            _unit.Save();
-            TempData["Success"] = "Order Details Updated Successfully.";
-            return RedirectToAction("Details", "Order", new { orderId = objFromDb.Id });
-        }
-
-        [HttpPost]
-        [Authorize(Roles = StaticDetails.Role_Admin + "," + StaticDetails.Role_User)]
-        [ValidateAntiForgeryToken]
-        public IActionResult StartProcessing()
-        {
-            _unit.RentPaymentHeader.UpdateStatus(RentPaymentVM.RentPaymentHeader.Id, StaticDetails.StatusInProcess);
-            _unit.Save();
-            TempData["Success"] = "Order Status Updated Successfully.";
-            return RedirectToAction("Details", "Order", new { orderId = RentPaymentVM.RentPaymentHeader.Id });
-        }
-
-        [HttpPost]
-        [Authorize(Roles = StaticDetails.Role_Admin + "," + StaticDetails.Role_User)]
-        [ValidateAntiForgeryToken]
-        public IActionResult ShipOrder()
-        {
-            var orderHeader = _unit.RentPaymentHeader.GetFirstOrDefault(u => u.Id == RentPaymentVM.RentPaymentHeader.Id, tracked: false);
-            orderHeader.TrackingNumber = RentPaymentVM.RentPaymentHeader.TrackingNumber;
-            orderHeader.Carrier = RentPaymentVM.RentPaymentHeader.Carrier;
-            orderHeader.OrderStatus = StaticDetails.StatusShipped;
-            orderHeader.ShippingDate = DateTime.Now;
-            if (orderHeader.PaymentStatus == StaticDetails.PaymentStatusDelayedPayment)
-            {
-                orderHeader.PaymentDueDate = DateTime.Now.AddDays(30);
-            }
-            _unit.RentPaymentHeader.Update(orderHeader);
-            _unit.Save();
-            TempData["Success"] = "Order Shipped Successfully.";
-            return RedirectToAction("Details", "Order", new { orderId = RentPaymentVM.RentPaymentHeader.Id });
-        }
-
-        [HttpPost]
-        [Authorize(Roles = StaticDetails.Role_Admin + "," + StaticDetails.Role_User)]
-        [ValidateAntiForgeryToken]
-        public IActionResult CancelOrder()
-        {
-            var orderHeader = _unit.RentPaymentHeader.GetFirstOrDefault(u => u.Id == RentPaymentVM.RentPaymentHeader.Id, tracked: false);
-            if (orderHeader.PaymentStatus == StaticDetails.PaymentStatusApproved)
-            {
-                var options = new RefundCreateOptions
-                {
-                    Reason = RefundReasons.RequestedByCustomer,
-                    PaymentIntent = orderHeader.PaymentIntentId
-                };
-
-                var service = new RefundService();
-                Refund refund = service.Create(options);
-
-                _unit.RentPaymentHeader.UpdateStatus(orderHeader.Id, StaticDetails.StatusCancelled, StaticDetails.StatusRefunded);
-            }
-            else
-            {
-                _unit.RentPaymentHeader.UpdateStatus(orderHeader.Id, StaticDetails.StatusCancelled, StaticDetails.StatusCancelled);
-            }
-            _unit.Save();
-
-            TempData["Success"] = "Order Cancelled Successfully.";
-            return RedirectToAction("Details", "Order", new { orderId = RentPaymentVM.RentPaymentHeader.Id });
-        }
-
-        #region API CALLS
-        [HttpGet]
-        public IActionResult GetAll(string status)
-        {
-            IEnumerable<RentPaymentHeader> orderHeaders;
-
-            if (User.IsInRole(StaticDetails.Role_Admin) || User.IsInRole(StaticDetails.Role_User))
-            {
-                orderHeaders = _unit.RentPaymentHeader.GetAll(includeProperties: "Users");
-            }
-            else
-            {
-                var claimsIdentity = (ClaimsIdentity)User.Identity;
-                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-                orderHeaders = _unit.RentPaymentHeader.GetAll(u => u.UserId == claim.Value, includeProperties: "Users");
-            }
-
-            switch (status)
-            {
-                case "pending":
-                    orderHeaders = orderHeaders.Where(u => u.PaymentStatus == StaticDetails.PaymentStatusDelayedPayment);
-                    break;
-                case "inprocess":
-                    orderHeaders = orderHeaders.Where(u => u.OrderStatus == StaticDetails.StatusInProcess);
-                    break;
-                case "completed":
-                    orderHeaders = orderHeaders.Where(u => u.OrderStatus == StaticDetails.StatusShipped);
-                    break;
-                case "approved":
-                    orderHeaders = orderHeaders.Where(u => u.OrderStatus == StaticDetails.StatusApproved);
-                    break;
-                default:
-                    break;
-            }
-
-
-            return Json(new { data = orderHeaders });
-        }
-        #endregion
     }
 }

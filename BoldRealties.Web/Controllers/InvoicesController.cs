@@ -1,6 +1,8 @@
-﻿using BoldRealties.DAL.Repository.IRepository;
+﻿using BoldRealties.BLL;
+using BoldRealties.DAL.Repository.IRepository;
 using BoldRealties.Models;
 using BoldRealties.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -19,55 +21,62 @@ namespace BoldRealties.Web.Controllers
             _webHost = webHost;
 
         }
+        //function to show a list with invoices
+        [Authorize(Roles = StaticDetails.Role_Admin)]
+
         public IActionResult Index()
         {
             IEnumerable<Invoices> invoicesList = _unit.Invoices.GetAll();
             return View(invoicesList);
         }
+        [Authorize(Roles = StaticDetails.Role_Landlord)]
+        //function to list all the invoices for a property for a specific tenancy for logged in landlord
+        public IActionResult InvoicesListLandlord(int? Id)
+        {
+            IEnumerable<Invoices> obj = _unit.Invoices.GetAll().Where(u => u.TenancyID == Id);
+            return View(obj);
+
+        }
+        //function to update and/or create invoices 
+        [Authorize(Roles = StaticDetails.Role_Admin)]
         public IActionResult Upsert(int? ID)
         {
-            // Keeping this for later as I want to get the identity of the user later on.
-
-            /*
-               var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            jobs objFromDb = _unit.maintenanceJobs.GetFirstOrDefault(
-                u => u.UserID == claim.Value && u.tenanciesID == mJobVM.mJobVM.tenanciesID);
-                      */
-
             //the code below is to display users, properties and tenancies in the dropdown
             //this will be changed at a later stage as I would like to have search functionality instead of dropdown but still didn't decided
-            InvoicesVM invoices = new()
+            InvoicesVM invoicesVM = new()
             {
                 invoices = new(),
                 TenancyList = _unit.Tenancies.GetAll().Select(x => new SelectListItem
                 {
-                    Text = x.managementType + x.PropertiesRS.propertyAddress,
+                    Text = x.managementType,
                     Value = x.Id.ToString()
                 }),
-
-
+                PropertyList = _unit.Properties.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.propertyAddress,
+                    Value = x.ID.ToString()
+                }),
             };
 
             if (ID == null || ID == 0)
             {
-                return View(invoices);
+                return View(invoicesVM);
             }
             else
             {
-                invoices.invoices = _unit.Invoices.GetFirstOrDefault(u => u.Id == ID);
-                return View(invoices);
-
-
+                invoicesVM.invoices = _unit.Invoices.GetFirstOrDefault(u => u.Id == ID);
+                return View(invoicesVM);
             }
-
         }
+        [Authorize(Roles = StaticDetails.Role_Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken] //to avoid the cross site request forgery
-        public IActionResult Upsert(InvoicesVM invoices, IFormFile? file)
+        public IActionResult Upsert(InvoicesVM invoicesVM, IFormFile? file)
         {
+            //validates the input
             if (ModelState.IsValid)
             {
+                //create/update image
                 string wwwRootPath = _webHost.WebRootPath;
                 if (file != null)
                 {
@@ -75,9 +84,9 @@ namespace BoldRealties.Web.Controllers
                     var fileUploads = Path.Combine(wwwRootPath, @"files\tenancy");
                     var extension = Path.GetExtension(file.FileName);
 
-                    if (invoices.invoices.filePath != null)
+                    if (invoicesVM.invoices.filePath != null)
                     {
-                        var oldImagePath = Path.Combine(wwwRootPath, invoices.invoices.filePath.TrimStart('\\'));
+                        var oldImagePath = Path.Combine(wwwRootPath, invoicesVM.invoices.filePath.TrimStart('\\'));
                         if (System.IO.File.Exists(oldImagePath))
                         {
                             System.IO.File.Delete(oldImagePath);
@@ -88,22 +97,24 @@ namespace BoldRealties.Web.Controllers
                     {
                         file.CopyTo(fileStreams);
                     }
-                    invoices.invoices.filePath = @"\files\tenancy\" + fileName + extension;
+                    invoicesVM.invoices.filePath = @"\files\tenancy\" + fileName + extension;
 
                 }
-                if (invoices.invoices.Id == 0)
+                if (invoicesVM.invoices.Id == 0)
                 {
-                    _unit.Invoices.Add(invoices.invoices);
+                    //add invoice
+                    _unit.Invoices.Add(invoicesVM.invoices);
                 }
                 else
                 {
-                    _unit.Invoices.Update(invoices.invoices);
+                    //update invoice
+                    _unit.Invoices.Update(invoicesVM.invoices);
                 }
                 _unit.Save();
                 TempData["success"] = "Record added successfully";
                 return RedirectToAction("Index");
             }
-            return View(invoices);
+            return View(invoicesVM);
 
         }
         public IActionResult Delete(int? ID)
@@ -133,6 +144,28 @@ namespace BoldRealties.Web.Controllers
             _unit.Save();
             TempData["success"] = "The record was deleted successfully!";
             return RedirectToAction("Index");
+        }
+        //displays details about an invoice
+        [Authorize(Roles = StaticDetails.Role_Admin)]
+        public IActionResult Details()
+        {
+            InvoicesVM invoices = new()
+            {
+                invoices = new(),
+                TenancyList = _unit.Tenancies.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.managementType + x.PropertiesRS.propertyAddress,
+                    Value = x.Id.ToString()
+                }),
+                PropertyList = _unit.Properties.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.propertyAddress,
+                    Value = x.ID.ToString()
+                })
+
+
+            };
+            return View(invoices);
         }
 
     }

@@ -21,14 +21,11 @@ namespace BoldRealties.DAL
         public DbSet<tenancies> tenancies { get; set; }
         public DbSet<jobs> jobs { get; set; }
         public DbSet<Enquiries> Enquiries { get; set; }
-        public DbSet<BA_Reports> BBAReports { get; set; }
-        public DbSet<Accounts> Accounts { get; set; }
         public DbSet<Deposits> Deposits { get; set; }
-        public DbSet<officeAddress> officeAddress { get; set; }
-        public DbSet<payment> payment { get; set; }
         public DbSet<Invoices> Invoices { get; set; }
         public DbSet<Viewings> Viewings { get; set; }
-        public DbSet<RentPaymentHeader> RentPaymentHeaders { get; set; }
-        public DbSet<RentPaymentDetails> RentPaymentDetails { get; set; }
+        public DbSet<OrderDetails> OrderDetail { get; set; }
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
     }
 }

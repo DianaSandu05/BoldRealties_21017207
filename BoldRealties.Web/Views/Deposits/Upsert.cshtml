@@ -1,0 +1,105 @@
+﻿@using BoldRealties.Models
+@model BoldRealties.Models.ViewModels.DepositsVM
+@{
+    ViewData["Title"] = "Upsert";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <div class="border p-3 mt-4">
+        <input asp-for="Deposits.Id" hidden />
+        <input asp-for="Deposits.FilePath" hidden name="file" />
+         <a asp-controller="maintenanceJobs" asp-action="Index" class="btn btn-warning">Jobs List</a>
+        <div class= "row pb-2">
+            <h2 cass="text-primary pl-3">Deposits</h2>
+        </div>
+        <div class="mb-3">
+           <label asp-for="Deposits.due_date">Due Date</label>
+            <input asp-for="Deposits.due_date" class="form-control" />
+            <span asp-validation-for="Deposits.due_date" class="text-danger"></span>
+        </div>
+       
+        <div class="mb-3">
+           <label asp-for="Deposits.amount">Amount</label>
+            <input asp-for="Deposits.amount" class="form-control" />
+            <span asp-validation-for="Deposits.amount" class="text-danger"></span>
+        </div>
+           <div class="mb-3  col-6">
+        <label asp-for="Deposits.isReceived">Received?</label>
+        @Html.DropDownList("Deposits.isReceived", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})
+      </div>
+     <div class="mb-3">
+           <label asp-for="Deposits.receivedDate">Received date</label>
+            <input asp-for="Deposits.receivedDate" class="form-control" />
+            <span asp-validation-for="Deposits.receivedDate" class="text-danger"></span>
+        </div>
+            <div class="mb-3  col-6">
+        <label asp-for="Deposits.isProtected">Protected?</label>
+        @Html.DropDownList("Deposits.isProtected", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})
+      </div>
+     <div class="mb-3">
+           <label asp-for="Deposits.protected_Date">Protected date</label>
+            <input asp-for="Deposits.protected_Date" class="form-control" />
+            <span asp-validation-for="Deposits.protected_Date" class="text-danger"></span>
+        </div>
+            <div class="mb-3  col-6">
+        <label asp-for="Deposits.isTransfered">Transfered to landlord?</label>
+        @Html.DropDownList("Deposits.isTransfered", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})
+      </div>
+     <div class="mb-3">
+           <label asp-for="Deposits.transfered_Date">Transferred date</label>
+            <input asp-for="Deposits.transfered_Date" class="form-control" />
+            <span asp-validation-for="Deposits.transfered_Date" class="text-danger"></span>
+        </div>
+             <div class="mb-3  col-6">
+        <label asp-for="Deposits.isReturned">Returned to tenant?</label>
+        @Html.DropDownList("Deposits.isReturned", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})
+      </div>
+     <div class="mb-3">
+           <label asp-for="Deposits.returned_Date">Returned date</label>
+            <input asp-for="Deposits.returned_Date" class="form-control" />
+            <span asp-validation-for="Deposits.returned_Date" class="text-danger"></span>
+        </div>
+          <div class="mb-3 col-6">
+			<label asp-for="Deposits.FilePath"></label>
+			<input asp-for="Deposits.FilePath" type="file" id="uploadBox" name="file" class="form-control" />
+		</div>
+        <div class="mb-3  col-6">
+           <label asp-for="Deposits.UserID">Landlord ID</label>
+            <select asp-for="Deposits.UserID" asp-items="@Model.UserList" class="form-select">
+                <option disabled selected>--Select Landlord Id--</option>
+            </select>
+        </div>
+       
+   
+        <div class="mb-3  col-6">
+           <label asp-for="Deposits.TenancyID">Tenancy ID</label>
+            <select asp-for="Deposits.TenancyID" asp-items="@Model.TenancyList" class="form-select">
+                <option disabled selected>--Select Tenancy--</option>
+            </select>
+        </div>
+          
+	
+    </div>
+    <div class="col-6">
+			@if (Model.Deposits.Id != 0)
+			{
+				<button type="submit" class="btn btn-warning" style="width:150px">Update</button>
+			}
+			else
+			{
+				<button type="submit" onclick="return ValidateInput()" class="btn btn-warning" style="width:150px">Create</button>
+			}
+
+	</div>
+	
+		<div class="col-2 pt-4">
+			<img src="@Model.Deposits.FilePath"
+			width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+		</div>
+</form>
+
+
+
+
+

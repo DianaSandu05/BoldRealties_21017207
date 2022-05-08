@@ -17,6 +17,7 @@ using BoldRealties.BLL;
 using System.Security.Claims;
 using BoldRealties.DAL.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BoldRealties.Web.Areas.Identity.Pages.Account
 {
@@ -64,6 +65,17 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
+            [ValidateNever]
+            [NotMapped]
+            public string RefreshToken { get; set; }
+            [ValidateNever]
+            [NotMapped]
+            public DateTime? ExpireIn { get; set; }
+            [ValidateNever]
+            [NotMapped]
+
+            public string AccountId { get; set; }
+
 
         }
 
@@ -87,9 +99,10 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/Tenancy/Index");
+            returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+          
 
             if (ModelState.IsValid)
             {
@@ -97,7 +110,7 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-
+               
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

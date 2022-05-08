@@ -2,7 +2,7 @@
 @model BoldRealties.Models.ViewModels.tenancyVM
 @{
     ViewData["Title"] = "Upsert";
-    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -50,8 +50,8 @@
             </select>
         </div>
         <div class="mb-3  col-6">
-           <label asp-for="tenancy.Users.Id">User ID</label>
-            <select asp-for="tenancy.Users.Id" asp-items="@Model.UserList" class="form-select">
+           <label asp-for="tenancy.UserID">User ID</label>
+            <select asp-for="tenancy.UserID" asp-items="@Model.UserList" class="form-select">
                 <option disabled selected>--Select User--</option>
             </select>
         </div>
@@ -68,7 +68,7 @@
 			{
 				<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
 			}
-			<a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:150px">
+			<a asp-controller="Tenancy" asp-action="Index" class="btn btn-secondary" style="width:150px">
 				Back to List
 			</a>
 		</div>

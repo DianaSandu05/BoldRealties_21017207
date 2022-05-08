@@ -1,5 +1,7 @@
-﻿using BoldRealties.DAL.Repository.IRepository;
+﻿using BoldRealties.BLL;
+using BoldRealties.DAL.Repository.IRepository;
 using BoldRealties.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoldRealties.Web.Controllers
@@ -13,11 +15,14 @@ namespace BoldRealties.Web.Controllers
         {
             _unit = unit;
         }
+        [Authorize(Roles = StaticDetails.Role_Admin)]
+        //function to display the enquiries list in admin portal
         public IActionResult Index()
         {
             IEnumerable<Enquiries> enquiriesList = _unit.Enquiries.GetAll();
             return View(enquiriesList);
         }
+        //function to send enquiries in the home page - for unauthorized users
         public IActionResult AddEnquiry()
         {
             return View();
@@ -36,7 +41,9 @@ namespace BoldRealties.Web.Controllers
             }
             return View(enquiries);
         }
-        public IActionResult EditEnquiry(int? ID)
+        [Authorize(Roles = StaticDetails.Role_Admin)]
+        //function to edit enquiries in the admin portal
+        public IActionResult Edit(int? ID) 
         {
             if (ID == null || ID == 0)
             {
@@ -51,7 +58,8 @@ namespace BoldRealties.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken] //to avoid the cross site request forgery
-        public IActionResult EditEnquiry(Enquiries enquiries)
+        [Authorize(Roles = StaticDetails.Role_Admin)]
+        public IActionResult Edit(Enquiries enquiries)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +70,9 @@ namespace BoldRealties.Web.Controllers
             }
             return View(enquiries);
         }
-        public IActionResult DeleteEnquiries(int? ID)
+        [Authorize(Roles = StaticDetails.Role_Admin)]
+        //delete function for enquiries in the admin portal
+        public IActionResult Delete(int? ID)
         {
             if (ID == null || ID == 0)
             {
@@ -75,9 +85,10 @@ namespace BoldRealties.Web.Controllers
             }
             return View(EnquiryFromDb);
         }
+        //post
         [HttpPost]
         [ValidateAntiForgeryToken] //to avoid the cross site request forgery
-        public IActionResult DeleteUsers(int? ID)
+        public IActionResult DeleteEnquiry(int? ID)
         {
             var enquiry = _unit.Enquiries.GetFirstOrDefault(x => x.ID == ID);
             if (enquiry == null)
@@ -90,6 +101,16 @@ namespace BoldRealties.Web.Controllers
             TempData["success"] = "The record was deleted successfully!";
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = StaticDetails.Role_Admin)]
+        //function to see the details of the enquiry/applicant
+        public IActionResult Details(int? ID)
+        {
+            Enquiries enquiries = new();
+            enquiries = _unit.Enquiries.GetFirstOrDefault(u => u.ID == ID);
 
+            return View(enquiries);
+        }
+     
+        
     }
 }

@@ -1,6 +1,38 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
+﻿@model BoldRealties.Models.PropertiesRS
 
-<p>Use this page to detail your site's privacy policy.</p>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row p-3 border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+       <h2> Property details</h2>
+       <img src="@Model.imagePath" class="card-img-top rounded mx-auto d-block" style="width:400px;height:200px;" />
+       </div>
+       <div class="row border">
+        <div class="col-6 mx-auto d-block ">
+
+    <p style="color:black">Address: <b class="">@Model.propertyAddress</b></p>
+        <p style="color:black">Price per month: <b class="">@Model.marketPrice</b></p>
+            <p style="color:black">Property type: <b class="">@Model.propertyType</b></p>
+                <p style="color:black">Number of bathrooms: <b class="">@Model.bathsNo</b></p>
+                    <p style="color:black">Number of bedrooms: <b class="">@Model.bedsNo</b></p>
+                        <p style="color:black">Floor Space: <b class="">@Model.floorSpace</b></p>
+                        </div>
+                        <div class="col-4 mx-auto d-block">
+                         
+                            <p style="color:black">:Number of balconies <b class="">@Model.balconiesNo</b></p>
+                                <p style="color:black">Balcony space: <b class="">@Model.balconySpace</b></p>
+                                <p style="color:black">Pets accepted?: <b class="">@Model.petsAllowed</b></p>
+                                    <p style="color:black">Bills included: <b class="">@Model.billsIncluded</b></p>
+                                        <p style="color:black">Parking space?: <b class="">@Model.parkingNo</b></p>
+                                            <p style="color:black">Garage: <b class="">@Model.garagesNo</b></p>
+                                                
+   
+    </div>
+    <p style="color:black">Specification: <b class="">@Model.estateDescription</b></p>
+    </div>
+</form>

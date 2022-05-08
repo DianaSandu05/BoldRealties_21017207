@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BoldRealties.DAL.Repository.IRepository.maintenanceJobsRepository">
+    <Position X="9.25" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\maintenanceJobsRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Repository.IRepository.PropertiesRSRepository">
+    <Position X="9.25" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\PropertiesRSRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Repository.IRepository.TenanciesRepository">
+    <Position X="13.75" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\TenanciesRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Repository.IRepository.UserRepository">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\UserRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Repository.DepositsRepository">
+    <Position X="16" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\DepositsRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Repository.EnquiriesRepository">
+    <Position X="7.25" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\EnquiriesRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Repository.InvoicesRepository">
+    <Position X="5.25" Y="5.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\InvoicesRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Repository.OrderDetailsRepository">
+    <Position X="11.5" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\OrderDetailsRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Repository.OrderHeaderRepository">
+    <Position X="13.75" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAEAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Repository\OrderHeaderRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Repository.Repository&lt;E&gt;">
+    <Position X="11.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAgAAAAAAAAAAAAAAABAAAAAAACAAACgAAAIAAAAA=</HashCode>
+      <FileName>Repository\Repository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Repository.ShoppingCartRepository">
+    <Position X="18" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Repository\ShoppingCartRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Repository.UnitOfWork">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAgKAAAAQAAAAAABABgACAAgAAAAQAAAAAACACAAA=</HashCode>
+      <FileName>Repository\UnitOfWork.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Repository.ViewingsRepository">
+    <Position X="7.25" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\ViewingsRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BoldRealties.DAL.Migrations.initial">
+    <Position X="13" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20220509140319_initial.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.DAL.Migrations.BoldRealties_dbContextModelSnapshot">
+    <Position X="7.5" Y="15.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Migrations\BoldRealties_dbContextModelSnapshot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.DAL.BoldRealties_dbContext">
+    <Position X="10.75" Y="15.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>CAAAQAAAAAQAAAEAAJAAgABAAAAAAAAAAAAAACAAAQA=</HashCode>
+      <FileName>Data\BoldRealties_dbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.IDepositsRepository">
+    <Position X="9.75" Y="12" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\IDepositsRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.IEnquiriesRepository">
+    <Position X="7.75" Y="14.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\IEnquiriesRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.IInvoicesRepository">
+    <Position X="9.75" Y="14.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\IInvoicesRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.ImaintenanceJobsRepository">
+    <Position X="11.75" Y="14" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\ImaintenanceJobsRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.IOrderDetailsRepository">
+    <Position X="15.75" Y="12.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\IOrderDetailsRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.IOrderHeaderRepository">
+    <Position X="16" Y="13.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\IOrderHeaderRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.IPropertiesRSRepository">
+    <Position X="7.5" Y="12" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\IPropertiesRSRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.IRepository&lt;E&gt;">
+    <Position X="11.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAABAAAAAAACAAAAgAAAIAAAAA=</HashCode>
+      <FileName>Repository\IRepository\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.IShoppingCartRepository">
+    <Position X="13.5" Y="11.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Repository\IRepository\IShoppingCartRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.ITenancyRepository">
+    <Position X="14" Y="13.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\ITenancyRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.IUnitOfWork">
+    <Position X="5.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAKAAAAQAAAAAABABgACAAgAAAAQAAAAAACACAAA=</HashCode>
+      <FileName>Repository\IRepository\IUnitOfWork.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.IUserRepository">
+    <Position X="5.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\IUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BoldRealties.DAL.Repository.IRepository.IViewingsRepository">
+    <Position X="5.75" Y="14.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repository\IRepository\IViewingsRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

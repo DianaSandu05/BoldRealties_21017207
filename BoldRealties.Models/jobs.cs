@@ -26,15 +26,17 @@ namespace BoldRealties.Models
         public string? UserID { get; set; }
         [ForeignKey("UserID")]
         [ValidateNever]
-        public Users? Users { get; set; }
-    
-        public string filePath { get; set; }
-   
+        public Users Users { get; set; }
+
+        public string? filePath { get; set; }
+
         public int? invoiceID { get; set; }
         [ForeignKey("invoiceID")]
         [ValidateNever]
         public Invoices? Invoices { get; set; }
-        public string diagnostics { get; set; }
-
+   
+        public string? diagnostics { get; set; }
+        public float? QuotationPrice { get; set; }
+        public string? ApprovalStatus { get; set; }
     }
 }

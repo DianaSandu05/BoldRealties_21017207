@@ -2,15 +2,14 @@
 @model BoldRealties.Models.ViewModels.mJobsVM
 @{
     ViewData["Title"] = "Upsert";
-    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form method="post">
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
     <div class="border p-3 mt-4">
         <input asp-for="mJobVM.ID" hidden />
-        <input asp-for="mJobVM.UserID" hidden />
         <input asp-for="mJobVM.filePath" hidden name="file" />
-         <a asp-page="/maintenanceJobs/Index" class="btn btn-primary">Jobs List</a>
+         <a asp-controller="maintenanceJobs" asp-action="Index" class="btn btn-warning">Jobs List</a>
         <div class= "row pb-2">
             <h2 cass="text-primary pl-3"> Create job</h2>
         </div>
@@ -37,25 +36,54 @@
           <div class="mb-3 col-6">
 			<label asp-for="mJobVM.filePath"></label>
 			<input asp-for="mJobVM.filePath" type="file" id="uploadBox" name="file" class="form-control" />
-               <span asp-validation-for="mJobVM.filePath" class="text-danger"></span>
 		</div>
+        <div class="mb-3  col-6">
+           <label asp-for="mJobVM.invoiceID">invoice ID</label>
+            <select asp-for="mJobVM.invoiceID" asp-items="@Model.InvoiceList" class="form-select">
+                <option disabled selected>--Select Invoice--</option>
+            </select>
+        </div>
        
         <div class="mb-3  col-6">
-           <label asp-for="mJobVM.Users.Id">User ID</label>
-            <select asp-for="mJobVM.Users.Id" asp-items="@Model.UserList" class="form-select">
+           <label asp-for="mJobVM.UserID">Subcontractor ID</label>
+            <select asp-for="mJobVM.UserID" asp-items="@Model.UserList" class="form-select">
                 <option disabled selected>--Select User--</option>
             </select>
         </div>
         <div class="mb-3  col-6">
-           <label asp-for="mJobVM.Tenancies.PropertyID">Tenancy ID</label>
-            <select asp-for="mJobVM.Tenancies.PropertyID" asp-items="@Model.TenancyList" class="form-select">
+           <label asp-for="mJobVM.tenanciesID">Tenancy ID</label>
+            <select asp-for="mJobVM.tenanciesID" asp-items="@Model.TenancyList" class="form-select">
                 <option disabled selected>--Select Tenancy--</option>
             </select>
         </div>
+          <div class="mb-3  col-6">
+           <label asp-for="mJobVM.QuotationPrice">Quotation Price</label>
+             <input asp-for="mJobVM.QuotationPrice" class="form-control" />
+            <span asp-validation-for="mJobVM.QuotationPrice" class="text-danger"></span>
+        </div>
+         <div class="mb-3  col-6">
+           <label asp-for="mJobVM.ApprovalStatus">Approval status | by landlord only</label>
+             <input asp-for="mJobVM.ApprovalStatus" class="form-control" placeholder="Write approved/declined and full name" />
+            <span asp-validation-for="mJobVM.QuotationPrice" class="text-danger"></span>
+        </div>
 	
-        <button type="submit" class="btn btn-primary">Create</button>
-         <a asp-controller="maintenanceJobs" asp-action="Index" class="btn btn-primary">Jobs List</a>
     </div>
+    <div class="col-6">
+			@if (Model.mJobVM.ID != 0)
+			{
+				<button type="submit" class="btn btn-warning" style="width:150px">Update</button>
+			}
+			else
+			{
+				<button type="submit" onclick="return ValidateInput()" class="btn btn-warning" style="width:150px">Create</button>
+			}
+
+	</div>
+	
+		<div class="col-2 pt-4">
+			<img src="@Model.mJobVM.filePath"
+			width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+		</div>
 </form>
 
 

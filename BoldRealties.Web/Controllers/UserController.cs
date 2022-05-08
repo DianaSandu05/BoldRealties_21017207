@@ -1,6 +1,9 @@
-﻿using BoldRealties.DAL.Repository.IRepository;
+﻿using BoldRealties.BLL;
+using BoldRealties.DAL.Repository.IRepository;
 using BoldRealties.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BoldRealties.Web.Controllers
 {
@@ -13,67 +16,13 @@ namespace BoldRealties.Web.Controllers
         {
             _unit = unit;
         }
-
+        [Authorize(Roles = StaticDetails.Role_Admin)]
+        //function to display the list with all users
         public IActionResult Index()
        {
            IEnumerable<Users> objUserList = _unit.Users.GetAll();
            return View(objUserList);
        }
-      
-       public IActionResult EditUser(int? ID)
-       {
-           if (ID == null || ID == 0)
-           {
-               return NotFound();
-           }
-           var UserFromDb = _unit.Properties.GetFirstOrDefault(x => x.ID == ID);
-           if (UserFromDb == null)
-           {
-               return NotFound();
-           }
-           return View(UserFromDb);
-       }
-       [HttpPost]
-       [ValidateAntiForgeryToken] //to avoid the cross site request forgery
-       public IActionResult EditUser(Users user)
-       {
-           if (ModelState.IsValid)
-           {
-               _unit.Users.Update(user);
-               _unit.Save();
-               TempData["success"] = "The record was updated successfully!";
-               return RedirectToAction("Index");
-           }
-           return View(user);
-       }
-       public IActionResult DeleteUser(int? ID)
-       {
-           if (ID == null || ID == 0)
-           {
-               return NotFound();
-           }
-      /*     var UserFromDb = _unit.Users.GetFirstOrDefault(x => x.ID == ID);
-           if (UserFromDb == null)
-           {
-               return NotFound();
-           }*/
-           return View();
-       }
-       [HttpPost]
-       [ValidateAntiForgeryToken] //to avoid the cross site request forgery
-       public IActionResult DeleteUsers(int? ID)
-       {
-          /* var user = _unit.Users.GetFirstOrDefault(x => x.ID == ID);
-           if (user == null)
-           {
-               return NotFound();
-           }*/
-/*
-           _unit.Users.Remove(user);*/
-           _unit.Save();
-           TempData["success"] = "The record was deleted successfully!";
-           return RedirectToAction("Index");
-}
     }
 }
 

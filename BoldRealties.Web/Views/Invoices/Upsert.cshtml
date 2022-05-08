@@ -2,16 +2,16 @@
 @model BoldRealties.Models.ViewModels.InvoicesVM
 @{
     ViewData["Title"] = "Upsert";
-    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form method="post">
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
     <div class="border p-3 mt-4">
-        <input asp-for="invoices.Id" hidden />
-        <input asp-for="invoices.filePath" hidden />
-         <a asp-page="/maintenanceJobs/Index" class="btn btn-primary">Jobs List</a>
+        <input asp-for="invoices.Id" hidden />       
+        <input asp-for="invoices.filePath" hidden name="file" />
+         <a asp-controller="Invoices" asp-action="Index" class="btn btn-warning">Back to List</a>
         <div class= "row pb-2">
-            <h2 cass="text-primary pl-3"> Create job</h2>
+            <h2 cass="text-dark pl-3"> Create invoice</h2>
         </div>
         <div class="mb-3">
            <label asp-for="invoices.Due_Date">Invoice Due Date</label>
@@ -21,25 +21,46 @@
        
         <div class="mb-3">
            <label asp-for="invoices.invoice_No">Invoices number</label>
-            <input asp-for="invoices.invoice_No" class="form-control" />
+            <input asp-for="invoices.invoice_No" class="form-control" type="text" />
             <span asp-validation-for="invoices.invoice_No" class="text-danger"></span>
-        </div>
-        
-     <div class="mb-3">
-           <label asp-for="invoices.tenancies.Id">Diagnostics</label>
-            <input asp-for="invoices.tenancies.Id" class="form-control" />
-            <span asp-validation-for="invoices.tenancies.Id" class="text-danger"></span>
         </div>
           <div class="mb-3 col-6">
 			<label asp-for="invoices.filePath"></label>
 			<input asp-for="invoices.filePath" type="file" id="uploadBox" name="file" class="form-control" />
 		</div>
        
-   
+     <div class="mb-3  col-6">
+           <label asp-for="invoices.TenancyID">Tenancy ID</label>
+            <select asp-for="invoices.TenancyID" asp-items="@Model.TenancyList" class="form-select">
+                <option disabled selected>--Select Tenancy--</option>
+            </select>
+        </div>
+        <div class="mb-3  col-6">
+           <label asp-for="invoices.PropertyID">Property ID</label>
+            <select asp-for="invoices.PropertyID" asp-items="@Model.PropertyList" class="form-select">
+                <option disabled selected>--Select Property--</option>
+            </select>
+        </div>
 	
-        <button type="submit" class="btn btn-primary">Create</button>
-         <a asp-controller="Invoices" asp-action="Index" class="btn btn-primary">Jobs List</a>
+     
+      
     </div>
+    <div class="col-6">
+			@if (Model.invoices.Id != 0)
+			{
+				<button type="submit" class="btn btn-warning" style="width:150px">Update</button>
+			}
+			else
+			{
+				<button type="submit" onclick="return ValidateInput()" class="btn btn-warning" style="width:150px">Create</button>
+			}
+
+	</div>
+	
+		<div class="col-2 pt-4">
+			<img src="@Model.invoices.filePath"
+			width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+		</div>
 </form>
 
 

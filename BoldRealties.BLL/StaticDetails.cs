@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Duende.IdentityServer;
+using Duende.IdentityServer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +10,6 @@ namespace BoldRealties.BLL
 {
     public class StaticDetails
     {
-        public const string Role_User = "Employee";
         public const string Role_Tenant = "Tenant";
         public const string Role_Landlord = "Landlord";
         public const string Role_Subcontractor = "Subcontractor";
@@ -27,5 +28,8 @@ namespace BoldRealties.BLL
         public const string PaymentStatusRejected = "Rejected";
 
         public const string SessionPayment = "SessionPayment";
+
+
+       
     }
 }

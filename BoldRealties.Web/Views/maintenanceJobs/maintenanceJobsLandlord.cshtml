@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using BoldRealties.Models
+@model  IEnumerable<jobs>
+
+<div class="container p-2">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class= "text-dark">Maintenance Jobs</h2>
+        </div>
+        <div class="col-6">
+            <a asp-controller="maintenanceJobs" asp-action="Upsert" class="btn btn-warning">Report a maintenance issue</a>
+        </div>
+    </div>
+    <table class= "table table-table-bordered table-table-striped">
+          <thead>
+            <tr>
+                <th>Job ID</th>
+                <th>Quotation Price</th>
+                <th>Approval status</th>
+                 <th>Start Date</th>
+                <th>Completion Date</th>
+                <th>Is Completed</th>
+                <th>Tenancy ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+             <tr>
+                <td>@item.ID</td>
+               <td>@item.QuotationPrice</td>
+                <td>@item.ApprovalStatus</td>
+                <td>@item.StartDate</td>
+                <td>@item.EndDate</td>
+                <td>@item.isCompleted</td>
+                <td>@item.tenanciesID</td>
+             
+                <td>
+                    <a asp-controller="maintenanceJobs" asp-action="Upsert" asp-route-id="@item.ID" class="btn btn-warning mx-2">
+                       <i class="bi bi-file-earmark-richtext"></i>
+                     </a>
+                       </td>
+                      
+            </tr>
+            }
+           
+
+        </tbody>
+    </table>
+</div>
+
+
+
+

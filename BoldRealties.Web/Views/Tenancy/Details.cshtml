@@ -1,15 +1,16 @@
-﻿@model BoldRealties.Models.payment
+﻿@using BoldRealties.Models
+@model ShoppingCart
 <form method="post">
-    <input hidden asp-for="TenancyID" />
+    <input hidden asp-for="TenancyId" />
     <div class="container backgroundWhite">
         <div class="card">
             <div class="card-header bg-light text-light ml-0 row container">
                 <div class="col-12 col-md-6">
-                    <h1 class="text-primary">@Model.tenancies.PropertiesRS.propertyAddress</h1>
-                    <p class="text-warning">by @Model.tenancies.rentPrice</p>
+                    <h1 class="text-dark">@Model.tenancies.PropertiesRS.propertyAddress  </h1>
+                    <p class="text-dark">@Model.tenancies.rentPrice</p>
                 </div>
                 <div class="col-12 col-md-6 text-md-right pt-4">
-                    <span class="badge badge-success pt-2" style="height:30px;">@Model.tenancies.billsIncluded</span>
+                    <span class="badge pt-2" style="height:30px;">tenancies.billsIncluded</span>
                 </div>
             </div>
             <div class="card-body">
@@ -17,38 +18,38 @@
                     <div class="row">
                         <div class="col-8 col-lg-8">
                             <div class="row text-center pl-2" style="color:maroon; font-weight:bold">
-                                <div class="p-1 col-2 bg-secondary">
-                                    <div>Rent Price</div>
+                                <div class="p-1 col-2 bg-light">
+                                    <div>@Model.tenancies.rentPrice</div>
                                 </div>
-                                <div class="p-1 col-2 bg-secondary">
+                                <div class="p-1 col-2 bg-light">
                                     <div>@Model.tenancies.rentPrice.ToString("c")</div>
                                 </div>
                             </div>
                             <div class="row pl-2">
-                                <p class="text-secondary">@Html.Raw(Model.tenancies.StartDate)</p>
-                                   <p class="text-secondary">@Html.Raw(Model.tenancies.EndDate)</p>
+                                <p class="text-secondary">@Html.Raw(@Model.tenancies.StartDate.Date)</p>
+                                   <p class="text-secondary">@Html.Raw(@Model.tenancies.EndDate.Date)</p>
                             </div>
                             <div class="row pl-2">
                                 <div class="col-2 text-primary"><h4>Count</h4></div>
                                 <div class="col-10"><input class="form-control" asp-for="Count" /></div>
                             </div>
                         </div>
-                       @* <div class="col-12 col-lg-3 offset-lg-1 text-center">
+                        <div class="col-12 col-lg-3 offset-lg-1 text-center">
                             <img src="@Model.tenancies.filePath" width="100%" class="rounded" />
-                        </div>*@
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="card-footer">
                 <div class="row">
                     <div class="col-12 col-md-6 pb-1">
-                        <a asp-action="Index" class="btn btn-success form-control  btn-square btn-lg" style="height:50px;">Back to List</a>
+                        <a asp-action="Index" class="btn btn-warning form-control  btn-square btn-lg" style="height:50px;">Back to List</a>
                     </div>
                     <div class="col-12 col-md-6 pb-1">
-                        <button type="submit" value="Add to Cart" class="btn btn-primary btn-square btn-lg form-control" style="height:50px;">Add to Cart</button>
+                        <button type="submit" value="Add to Cart" class="btn btn-warning form-control" style="height:50px;">Add to Cart</button>
                     </div>
                      <div class="col-12 col-md-6 pb-1">
-                        <button type="submit"  asp-controller="payment" asp-action="Index" value="Add to Cart" class="btn btn-primary btn-square btn-lg form-control" style="height:50px;">
+                        <button type="submit" asp-controller="payment" asp-action="Index" value="Add to Cart" class="btn btn-warning form-control" style="height:50px;">
                          Shopping Cart
 							
                             </button>

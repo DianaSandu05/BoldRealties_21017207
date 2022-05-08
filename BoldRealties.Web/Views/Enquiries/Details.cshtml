@@ -1,0 +1,83 @@
+﻿@model BoldRealties.Models.Enquiries
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ <div class="border p-3 mt-4 row">
+      <div class="col-md-6 ">
+        <div class= "row pb-2">
+            <h2 cass="text-dark pl-3"> View enquiry details</h2>
+        </div>
+          <div class="mb-3 col-6">
+           <label asp-for="NameSurname">Full name</label>
+            <input asp-for="NameSurname" class="form-control" />
+            <span asp-validation-for="NameSurname" class="text-danger"></span>
+        </div>
+
+       <div class="mb-3 col-6">
+           <label asp-for="email">Email</label>
+            <input asp-for="email" class="form-control" />
+            <span asp-validation-for="email" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+           <label asp-for="applicantType">Applicant type</label>
+            <input asp-for="applicantType" class="form-control" />
+           
+        </div>
+         <div class="mb-3 col-6">
+           <label asp-for="phone_No">Phone number</label>
+            <input asp-for="phone_No" class="form-control" />
+             <span asp-validation-for="phone_No" class="text-danger"></span>
+        </div>
+         <div class="mb-3 col-6">
+           <label asp-for="noPets">Number of pets</label>
+            <input asp-for="noPets" class="form-control" />
+             <span asp-validation-for="noPets" class="text-danger"></span>
+        </div>
+         <div class="mb-3">
+           <label asp-for="noBeds">Number of bedrooms required</label>
+            <input asp-for="noBeds" class="form-control" />
+            <span asp-validation-for="noBeds" class="text-danger"></span>
+        </div>
+           </div>
+           <div class="col-md-6 ">
+            <div class="mb-3">
+           <label asp-for="noBaths">Number of bathrooms required</label>
+            <input asp-for="noBaths" class="form-control" />
+            <span asp-validation-for="noBaths" class="text-danger"></span>
+        </div>
+         <div class="mb-3">
+           <label asp-for="specification_Content">Other requirements...</label>
+            <input asp-for="specification_Content" class="form-control" />
+            <span asp-validation-for="specification_Content" class="text-danger"></span>
+        </div>
+          <div class="mb-3">
+           <label asp-for="location">Location</label>
+            <input asp-for="location" class="form-control" />
+            <span asp-validation-for="location" class="text-danger"></span>
+        </div>
+          <div class="mb-3">
+           <label asp-for="postcode">Postcodes</label>
+            <input asp-for="postcode" placeholder="e.g. IG1, NW1, N1, SW1" class="form-control" />
+            <span asp-validation-for="postcode" class="text-danger"></span>
+        </div>
+         <div class="mb-3">
+           <label asp-for="minPrice">Minimum Price</label>
+            <input asp-for="minPrice"  class="form-control" />
+            <span asp-validation-for="minPrice" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+           <label asp-for="maxPrice">Maximum Price</label>
+            <input asp-for="maxPrice"  class="form-control" />
+            <span asp-validation-for="maxPrice" class="text-danger"></span>
+        </div>
+         <div class="mb-3">
+           <label asp-for="crime_Rate">Crime Rate</label>
+            <input asp-for="crime_Rate"  class="form-control" />
+            <span asp-validation-for="crime_Rate" class="text-danger"></span>
+        </div>			
+			<a asp-controller="Enquiries" asp-action="Index" class="btn btn-warning" style="width:150px">
+				Back to List
+			</a>
+		</div>
+        </div>

@@ -20,7 +20,7 @@ namespace BoldRealties.Web.Controllers
             _logger = logger;
             _unit = unit;
         }
-
+        //search function for home page
         public IActionResult Index(int? id, string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -44,7 +44,7 @@ namespace BoldRealties.Web.Controllers
                 propertiesRs = propertiesRs.Where(p => p.propertyAddress.ToUpper().Contains(searchString.ToUpper())
                                        || p.marketPrice.ToString().Contains(searchString.ToUpper()));
             }
-    
+
             int pageSize = 3;
             int pageNumber = (page ?? 1);
             return View(propertiesRs.ToPagedList(pageNumber, pageSize));
@@ -57,17 +57,24 @@ namespace BoldRealties.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-
-     
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        //function to display details about properties for unauthenficated users - in the home page
+        public IActionResult Details(int? ID)
+        {
+            PropertiesRS properties = new();
+            properties = _unit.Properties.GetFirstOrDefault(u => u.ID == ID);
+            return View(properties);
+        }
+
         public IActionResult ContactUs()
         {   
             return View();
         }
+      
     
 
     }

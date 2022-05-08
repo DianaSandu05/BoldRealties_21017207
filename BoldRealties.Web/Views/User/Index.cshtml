@@ -2,25 +2,23 @@
 @model  IEnumerable<Users>
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container p-2">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class= "text-primary">User List</h2>
+            <h2 class= "text-dark">User List</h2>
         </div>
-        <div class="col-6">
-            <a asp-controller="User" asp-action="AddUser" class="btn btn-primary"> Add new user</a>
-        </div>
+        
     </div>
     <table class= "table table-table-bordered table-table-striped">
         <thead>
             <tr>
-                <th>User ID</th>
+               
                  <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
-                <th>Role</th>
+                <th>Username</th>
             </tr>
         </thead>
         <tbody>
@@ -30,19 +28,10 @@
              
                 <td>@item.firstName</td>
                 <td>@item.lastName</td>
+                <td>@item.Email</td>
+                <td>@item.UserName</td>
                
-                <td>
-                    <a asp-controller="User" asp-action="Edit"  class="btn btn-primary mx-2">
-                       <i class="bi bi-file-earmark-richtext"></i>
-                     </a>
-                       <a   class="btn btn-primary mx-2">
-                        <i class="bi bi-pencil-square"></i>
-                        </a>
-                          <a asp-controller="User" asp-action="Delete"  class="btn btn-danger mx-2">
-                       <i class="bi bi-trash"></i>
-                        </a>
-
-                    </td>
+               
             </tr>
             }
            

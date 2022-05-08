@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using BoldRealties.BLL
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -15,42 +16,120 @@
 <body>
     <partial name="Partial/Messages" />
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow mb-3" style="background-color:black";>
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BoldRealties.Web</a>
+               <img class="img-fluid" style="width:120px;height:60px;" src="~/images/Bold.png" alt="Bold Realties"/>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <div class="dropdown">
+                    @if(User.IsInRole(StaticDetails.Role_Admin))
+                    {
+                       
+                      <a class="btn dropdown-toggle text-warning" style="background-color:black" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                       Tenancy Management
+                      </a>
+                      <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink">
+                         <a class="nav-link bg-dark" style="color:#f7b519" asp-controller="Tenancy" asp-action="Index">Tenancy</a>
+                           <a class="nav-link bg-dark" style="color:#f7b519" asp-controller="Invoices" asp-action="Index">Invoices</a>
+                          <a class="nav-link bg-dark" style="color:#f7b519" asp-controller="maintenanceJobs" asp-action="Index">Maintenance</a>
+                             <a class="nav-link bg-dark" style="color:#f7b519" asp-controller="Deposits" asp-action="Index">Deposits</a>
+                              <a class="nav-link bg-dark" style="color:#f7b519" asp-controller="RentPayments" asp-action="Index">Payment</a>
+
+
+                      </ul>
+                      }
+                      </div>
+                      <div class="dropdown">
+                     @if(User.IsInRole(StaticDetails.Role_Tenant))
+                    {
+                       
+                   
+                       <a class="btn dropdown-toggle text-warning" style="background-color:black" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                      Tenant | My Tenancy
+                      </a>
+                      <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink">
+                         <a  class="btn btn-dark" asp-controller="Tenancy" asp-action="Find">My Tenancy</a>
+                               <a asp-controller="RentPayments" asp-action="TenantPayments" class="btn btn-dark">My payments</a>
+                            <a class="btn btn-dark" asp-controller="payment" asp-action="Index" value="Add to Cart">
+                    Pay now
+                     </a>
+                          </ul>
+                            
+                             
+                        }
+                        </div>
+                          <div class="dropdown">
+                        @if (User.IsInRole(StaticDetails.Role_Landlord))
+                        {
+
+                            <a class="btn dropdown-toggle text-warning" style="background-color:black" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                Landlord | My Property
+                            </a>
+                            <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink">
+                                <a class="nav-link bg-dark" style="color:#f7b519" asp-controller="PropertiesRS" asp-action="LandlordProperty">My Property</a>
+                                <a asp-controller="RentPayments" asp-action="LandlordPayments" class="btn btn-warning">My payments</a>
+                                
+
+                            </ul>
+                          
+                        }
+                    </div>
+                    <div class="dropdown">
+                        @if (User.IsInRole(StaticDetails.Role_Admin))
+                        {
+                            <a class="btn dropdown-toggle text-warning" style="background-color:black" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                Rentals
+                            </a>
+                            <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink">
+                                <a class="nav-link bg-dark" style="color:#f7b519" asp-controller="Viewings" asp-action="Index">Viewings</a>
+                                <a class="nav-link bg-dark" style="color:#f7b519" asp-controller="Enquiries" asp-action="Index">Enquiries</a>
+                                <a class="nav-link bg-dark" style="color:#f7b519" asp-controller="PropertiesRS" asp-action="Index">Properties</a>
+                                  
+                            </ul>
+                           
+               
+                        }
+                    </div>
+                      <div class="dropdown">
+                        @if (User.IsInRole(StaticDetails.Role_Subcontractor))
+                        {
+                            <a class="btn dropdown-toggle text-warning" style="background-color:black" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                Subcontractor | Maintenance
+                            </a>
+                            <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink">
+                                <a class="nav-link bg-dark" style="color:#f7b519" asp-controller="Invoices" asp-action="Index">Invoices</a>
+                                <a class="nav-link bg-dark" style="color:#f7b519" asp-controller="maintenanceJobs" asp-action="QuotedMaintenanceJobs">My maintenance jobs</a>
+          
+                            </ul>
+                        }
+                    </div>
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        @if(!User.Identity.IsAuthenticated)
+                        {
+                              <li class="nav-item">
+                            <a class="nav-link py-3" style="color: #f7b519" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PropertiesRS" asp-action="Index">Properties</a>
+                            <a class="nav-link py-3" style="color: #f7b519" asp-area="" asp-controller="PropertiesRS" asp-action="PropertiesList">Properties</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Enquiries" asp-action="AddEnquiry">Send enquiry</a>
-                        </li>
+                            <a class="nav-link py-3" style="color: #f7b519" asp-area="" asp-controller="Enquiries" asp-action="AddEnquiry">Send enquiry</a>
+                            </li>
                              <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tenancy" asp-action="Index">Tenancy</a>
+                           <a class="nav-link py-3" style="color:#f7b519"  asp-controller="User" asp-action="Index">User</a>
                         </li>
-                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">User</a>
-                        </li>
-                            <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="officeAddress" asp-action="Index">User</a>
-                        </li>
-                            <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="baReports" asp-action="Index">Reports</a>
-                        </li>
-                          
+                        } 
                     </ul>
+                     
                       <partial name="_LoginPartial"/>
                 </div>
             </div>
         </nav>
+    
+       
     </header>
     <div class="container">
         <main role="main" class="pb-3">

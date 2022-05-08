@@ -1,5 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using BoldRealties.Models
+@model BoldRealties.Models.ViewModels.ViewingsVM
 @{
+    ViewData["Title"] = "Upsert";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+<form method="post" asp-action="Delete" enctype="multipart/form-data">
+	<input asp-for="Viewings.Id" hidden />
+     <a asp-page="/Viewings/Index" class="btn btn-primary">Viewings List</a>
+     <hr/>
+    <div class="border p-3 mt-4 row">
+        
+        <div class= "row pb-2">
+            <h2 cass="text-dark pl-3"> Viewings</h2>
+        </div>
+        <div class="mb-3 col-6">
+           <label asp-for="Viewings.viewing_Date">Tenancy Start Date</label>
+            <input type="date" asp-for="Viewings.viewing_Date" class="form-control" />
+            <span asp-validation-for="Viewings.viewing_Date" class="text-danger"></span>
+        </div>
+
+         <div class="mb-3  col-6">
+        <label asp-for="Viewings.isConfirmed">Confirmed?</label>
+        @Html.DropDownList("Viewings.isConfirmed", new SelectList(new[] { "True", "False" }), new { @class="form-control select1"})
+      </div>
+     
+       
+     
+       <div class="mb-3  col-6">
+           <label asp-for="Viewings.PropertiesRS.propertyAddress">Property Address</label>
+            <input type="text" asp-for="Viewings.PropertiesRS.propertyAddress" asp-items="@Model.PropertiesList" class="form-control" />
+          
+        </div>
+        <div class="mb-3  col-6">
+           <label asp-for="Viewings.Users.Id">User ID</label>
+            <input type="text" asp-for="Viewings.Users.UserName" asp-items="@Model.UserList" class="form-control" />
+          
+        </div>
+     <div class="mb-3  col-6">
+           <label asp-for="Viewings.ApplicantID">Aplicant Name</label>
+        <input type="text" asp-for="Viewings.Enquiries.NameSurname" asp-items="@Model.AplicantsList" class="form-control" />
+
+        
+        </div>
+    
+    				<button type="submit" class="btn btn-warning" style="width:150px">Delete</button>
+
+	</div>
+
+		
+	
+</form>

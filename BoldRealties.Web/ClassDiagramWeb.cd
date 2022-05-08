@@ -1,120 +1,186 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="BoldRealties.Models.PropertiesRS">
-    <Position X="9.5" Y="6.5" Width="1.5" />
-    <TypeIdentifier />
+  <Class Name="BoldRealties.Web.Controllers.DepositsController">
+    <Position X="3.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAEAAAAAAAI=</HashCode>
+      <FileName>Controllers\DepositsController.cs</FileName>
+    </TypeIdentifier>
   </Class>
-  <Class Name="BoldRealties.DAL.Repository.IRepository.maintenanceJobsRepository">
-    <Position X="5" Y="8.25" Width="1.5" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="BoldRealties.DAL.Repository.IRepository.PropertiesRSRepository">
-    <Position X="7.25" Y="8.25" Width="1.5" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="BoldRealties.DAL.Repository.IRepository.UserRepository">
-    <Position X="2.75" Y="8.25" Width="1.5" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="BoldRealties.DAL.Repository.Repository&lt;E&gt;">
-    <Position X="3.75" Y="5.5" Width="1.5" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="BoldRealties.DAL.Repository.UnitOfWork" BaseTypeListCollapsed="true">
-    <Position X="8.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BoldRealties.DAL.BoldRealties_dbContext">
-    <Position X="15.5" Y="7.5" Width="1.5" />
-    <TypeIdentifier />
+  <Class Name="BoldRealties.Web.Controllers.EnquiriesController">
+    <Position X="6.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAYAAABAAAAAAAAAAAAAAEAAAACAAEAAAAAAAI=</HashCode>
+      <FileName>Controllers\EnquiriesController.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Class Name="BoldRealties.Web.Controllers.HomeController">
-    <Position X="15.75" Y="0.5" Width="1.5" />
+    <Position X="6.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAIAAAAQAAAAEAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAABAQAAAAAAAAAAIAAAAAAQAAEAAAAAAAI=</HashCode>
       <FileName>Controllers\HomeController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BoldRealties.Web.Controllers.maintenanceJobsController">
-    <Position X="9.75" Y="3.25" Width="3.25" />
+  <Class Name="BoldRealties.Web.Controllers.InvoicesController">
+    <Position X="5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAACAAQAAAAAAAQAAAAAAAAEAAAAAAAI=</HashCode>
+      <HashCode>AAACAAAAAAABAAAAAAAAAAAAAAEAAQAAAAEAAEAAAAI=</HashCode>
+      <FileName>Controllers\InvoicesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Web.Controllers.maintenanceJobsController">
+    <Position X="5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACBAAAAAAAAACAAAAAAAAgAAAAAQAAAAEAAAAAAAI=</HashCode>
       <FileName>Controllers\maintenanceJobsController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BoldRealties.Web.Controllers.PropertiesRSController">
-    <Position X="14" Y="3.75" Width="1.5" />
+    <Position X="8" Y="11.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAABAAAAAEgAABAAAI=</HashCode>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAEABAAAAAI=</HashCode>
       <FileName>Controllers\PropertiesRSController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BoldRealties.Web.Controllers.TenancyController">
-    <Position X="12" Y="0.75" Width="1.5" />
+    <Position X="1.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAACAAAAAEAAAAAAAAAAAAAQAAAAEAAAAAAAI=</HashCode>
+      <HashCode>AAACBEAAACABAAAEAAAIAAAgIAAAAQAAAAEgAAAAAAI=</HashCode>
       <FileName>Controllers\TenancyController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BoldRealties.Web.Controllers.UserController">
-    <Position X="14" Y="0.5" Width="1.5" />
+    <Position X="9.75" Y="10.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAggAEAAAAAAgI=</HashCode>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAI=</HashCode>
       <FileName>Controllers\UserController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BoldRealties.Web.Models.ErrorViewModel">
-    <Position X="12" Y="6.75" Width="1.5" />
+  <Class Name="BoldRealties.Web.Controllers.ViewingsController">
+    <Position X="9.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\ErrorViewModel.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAQAAAAEABAAAAAI=</HashCode>
+      <FileName>Controllers\ViewingsController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BoldRealties.Models.tenancies">
-    <Position X="15.75" Y="3" Width="1.5" />
-    <TypeIdentifier />
+  <Class Name="BoldRealties.Areas.Customer.paymentController">
+    <Position X="3.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAEAAAAAAEABAABAACAAAAAACEAAAAAQAI=</HashCode>
+      <FileName>Controllers\paymentController.cs</FileName>
+    </TypeIdentifier>
   </Class>
-  <Class Name="BoldRealties.Models.Users">
-    <Position X="11.75" Y="8.25" Width="1.5" />
-    <TypeIdentifier />
+  <Class Name="LCDSArtGalleryWeb.Areas.Customer.Controllers.RentPaymentsController">
+    <Position X="8" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAQAABAAAQABAIAAAAAAAAAAAAAAEQAAAAAAI=</HashCode>
+      <FileName>Controllers\RentPaymentsController.cs</FileName>
+    </TypeIdentifier>
   </Class>
-  <Class Name="BoldRealties.Models.jobs">
-    <Position X="13.75" Y="7" Width="1.5" />
-    <TypeIdentifier />
+  <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.Manage.AuthMessageSenderOptions">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\Manage\AuthMessageSenderOptions.cs</FileName>
+    </TypeIdentifier>
   </Class>
-  <Class Name="Microsoft.AspNetCore.Mvc.Controller">
-    <Position X="19.25" Y="4.75" Width="2.25" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" />
+  <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.LoginModel">
+    <Position X="2" Y="1.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.LoginModel.InputModel" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Areas\Identity\Pages\Account\Login.cshtml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AQAABAAAAAAAAAAgAgBAAAAgMAAAAQAAAAIEAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\Login.cshtml.cs</FileName>
+    </TypeIdentifier>
   </Class>
-  <Interface Name="BoldRealties.DAL.Repository.IRepository.ImaintenanceJobsRepository">
-    <Position X="0.5" Y="3" Width="1.25" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="BoldRealties.DAL.Repository.IRepository.IPropertiesRSRepository">
-    <Position X="2.75" Y="3" Width="1.5" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="BoldRealties.DAL.Repository.IRepository.IRepository&lt;E&gt;">
-    <Position X="3.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="BoldRealties.DAL.Repository.IRepository.ITenancyRepository">
-    <Position X="7.25" Y="3" Width="1.5" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="BoldRealties.DAL.Repository.IRepository.IUserRepository">
-    <Position X="5" Y="3" Width="1.5" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="BoldRealties.DAL.Repository.IRepository.IUnitOfWork">
-    <Position X="6.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier />
-  </Interface>
+  <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.LogoutModel">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\Logout.cshtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.RegisterConfirmationModel">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAMAACAAAAAggAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\RegisterConfirmation.cshtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.ResendEmailConfirmationModel">
+    <Position X="3.5" Y="4" Width="1.5" />
+    <NestedTypes>
+      <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.ResendEmailConfirmationModel.InputModel" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Areas\Identity\Pages\Account\ResendEmailConfirmation.cshtml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAEACAAAAAAAQEAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\ResendEmailConfirmation.cshtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.ResetPasswordModel">
+    <Position X="5" Y="4.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.ResetPasswordModel.InputModel" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Areas\Identity\Pages\Account\ResetPassword.cshtml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAEAAAAAAAAAQEAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\ResetPassword.cshtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.ResetPasswordConfirmationModel">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.ForgotPasswordConfirmation">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.ForgotPasswordModel">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <NestedTypes>
+      <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.ForgotPasswordModel.InputModel" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Areas\Identity\Pages\Account\ForgotPassword.cshtml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAEACAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\ForgotPassword.cshtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.ConfirmEmailModel">
+    <Position X="6.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\ConfirmEmail.cshtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Web.Areas.Identity.Pages.Account.AccessDeniedModel">
+    <Position X="6.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\AccessDenied.cshtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

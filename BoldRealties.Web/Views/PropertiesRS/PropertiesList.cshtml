@@ -1,0 +1,31 @@
+﻿@using BoldRealties.Models
+@model  IEnumerable<PropertiesRS>
+@{
+    ViewData["Title"] = "PropertiesList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="py-3">Properties List</h1>
+ @foreach (var properties in Model)
+        {
+        <div class="col-lg-3 col-md-6">
+            <div class="row p-2">
+                <div class="col-12  p-1" style="border:1px solid #008cba; border-radius: 5px;">
+                    <div class="card" style="border:0px;">
+                        <img src="@properties.imagePath" class="card-img-top rounded" />
+                        <div class="pl-1">
+                            <p class="card-title h5"><b style="color:#2c3e50">@properties.propertyAddress</b></p>
+                        </div>
+                        <div style="padding-left:5px;">
+                            <p>Rent Price: <b class="">$@properties.marketPrice.ToString("0.00")</b></p>
+                        </div>
+                        <div style="padding-left:5px;">
+                            <p style="color:black">Specification: <b class="">@properties.estateDescription</b></p>
+                        </div>
+                    </div>
+                    <div>
+                        <a asp-action="Details" class="btn-sm btn-warning form-control" asp-controller="Home"  asp-route-id="@properties.ID">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }

@@ -2,7 +2,7 @@
 @model BoldRealties.Models.ViewModels.PropertiesVM
 @{
     ViewData["Title"] = "AddProperties";
-    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
@@ -10,9 +10,9 @@
 	<input asp-for="Properties.imagePath" hidden />
    <div class="border p-3 mt-4 row">
 
-         <a asp-controller="PropertiesRS" asp-action="Index" class="btn btn-primary">Properties List</a>
+         <a asp-controller="PropertiesRS" asp-action="Index" class="btn btn-warning">Properties List</a>
         <div class= "row pb-2">
-            <h2 cass="text-primary pl-3"> Add Property</h2>
+            <h2 cass="text-dark pl-3"> Add Property</h2>
         </div>
           <div class="mb-3 col-6">
            <label asp-for="Properties.floorSpace">Floor Space (SQ. M)</label>
@@ -87,7 +87,18 @@
            <label asp-for="Properties.maxPrice">Maximum Price</label>
             <input asp-for="Properties.maxPrice" class="form-control" />
         </div>
-     
+       <div class="mb-3  col-6">
+           <label asp-for="Properties.TenancyId">Tenancy ID</label>
+            <select asp-for="Properties.TenancyId" asp-items="@Model.TenancyList" class="form-select">
+                <option disabled selected>--Select User--</option>
+            </select>
+        </div>
+          <div class="mb-3  col-6">
+           <label asp-for="Properties.UserId">Landlord ID</label>
+            <select asp-for="Properties.UserId" asp-items="@Model.UserList" class="form-select">
+                <option disabled selected>--Select User--</option>
+            </select>
+        </div>
          <div class="mb-3 col-6">
 			<label asp-for="Properties.imagePath"></label>
 			<input asp-for="@Model.Properties.imagePath" type="file" id="uploadBox" name="file" class="form-control" />
@@ -97,13 +108,13 @@
     <div class="col-6">
 			@if (Model.Properties.ID != 0)
 			{
-				<button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+				<button type="submit" class="btn btn-warning" style="width:150px">Update</button>
 			}
 			else
 			{
-				<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+				<button type="submit" onclick="return ValidateInput()" class="btn btn-warning" style="width:150px">Create</button>
 			}
-			<a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:150px">
+			<a asp-controller="PropertiesRS" asp-action="Index" class="btn btn-warning" style="width:150px">
 				Back to List
 			</a>
 		</div>

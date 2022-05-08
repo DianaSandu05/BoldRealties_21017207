@@ -14,19 +14,18 @@ namespace BoldRealties.Models
         [Key]
         public int Id { get; set; }
         public int invoice_No { get; set; }
-        
+        [ValidateNever]
         public int PropertyID { get; set; }
         [ForeignKey("PropertyID")]
         [ValidateNever]
         public PropertiesRS PropertiesRS { get; set; }
-
+        [ValidateNever]
         public int TenancyID { get; set; }
         [ForeignKey("TenancyID")]
         [ValidateNever]
         public tenancies tenancies { get; set; }
+        
         public string? filePath { get; set; }
-        [ValidateNever]
-
         public DateTime Due_Date { get; set; }
 
     }

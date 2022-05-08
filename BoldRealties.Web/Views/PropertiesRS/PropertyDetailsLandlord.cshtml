@@ -1,0 +1,52 @@
+﻿@using BoldRealties.Models
+@model BoldRealties.Models.ViewModels.PropertiesVM
+@{
+    ViewData["Title"] = "PropertyDetailsLandlord";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="border p-3 mt-4 row">
+        
+        <div class= "row pb-2">
+            <h2 cass="text-dark pl-3"> Landlord | Tenancies</h2>
+
+        </div>
+        <div class="mb-3 col-6">
+           <label asp-for="Properties.propertyAddress">Property Address</label>
+            <input type="text" asp-for="Properties.propertyAddress" class="form-control" disabled/>
+        </div>
+
+        <div class="mb-3 col-6">
+           <label asp-for="Properties.TenancyId">Tenancy Id</label>
+            <input type="text" asp-for="Properties.TenancyId" class="form-control" disabled />
+            <a  asp-controller="PropertiesRS" asp-action="TenancyDetails" asp-route-ID = "@Model.Properties.ID" class="btn btn-sm-warning">Landlord Tenancy</a>
+        </div>
+         <div class="mb-3 col-6">
+           <label asp-for="Properties.bedsNo">Bedrooms number</label>
+            <input asp-for="Properties.bedsNo" class="form-control" disabled />
+           
+        </div>
+        <div class="mb-3  col-6">
+           <label asp-for="Properties.bathsNo">Bathrooms number</label>
+            <input asp-for="Properties.bathsNo" class="form-control" disabled/>
+        </div>
+       
+       
+        <div class="mb-3  col-6">
+        <label asp-for="Properties.estateDescription">Estate description</label>
+                  <input asp-for="Properties.estateDescription" class="form-control" disabled/>
+
+      </div>
+       <div class="mb-3  col-6">
+           <label asp-for="Properties.marketPrice">Market Price</label>
+            <input asp-for="Properties.marketPrice" class="form-control" disabled/>
+          
+        </div>
+       <div class="col-2 pt-4">
+			<img src="@Model.Properties.imagePath"
+			width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+		</div>
+        
+	</div>
+    
+		

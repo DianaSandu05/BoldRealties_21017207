@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using BoldRealties.Models
 @model  IEnumerable<tenancies>
@@ -8,15 +8,12 @@
 <div class="container p-2">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class= "text-primary">Tenancies</h2>
+            <h2 class= "text-dark">Tenancies</h2>
         </div>
         <div class="col-6">
-            <a asp-controller="Tenancy" asp-action="Upsert" class="btn btn-primary">Add tenancy</a>
-            <a asp-controller="Deposits" asp-action="Index" class="btn btn-primary">Deposits</a>
-           <a asp-controller="Accounts" asp-action="Index" class="btn btn-primary">Accounts</a>
-           <a asp-controller="maintenanceJobs" asp-action="Index" class="btn btn-primary">maintenance Jobs</a>
-              <a asp-controller="Invoices" asp-action="Index" class="btn btn-primary">Invoices</a>
-                <a  class="btn btn-primary">DocuSign</a>
+            <a asp-controller="Tenancy" asp-action="Upsert" class="btn btn-warning">Add tenancy</a> 
+ 
+
         </div>
     </div>
     <table class= "table table-table-bordered table-table-striped">
@@ -27,6 +24,7 @@
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Management Type</th>
+                <th>User Id</th>
             </tr>
         </thead>
         <tbody>
@@ -38,21 +36,13 @@
                 <td>@item.StartDate</td>
                 <td>@item.EndDate</td>
                 <td>@item.managementType</td>
-                 
-
-
+                <td>@item.UserID</td>
                 <td>
-                    <a asp-controller="Tenancy" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary mx-2">
+                    <a asp-controller="Tenancy" asp-action="TenancyDetails" asp-route-id="@item.Id" class="btn btn-warning">
                        <i class="bi bi-file-earmark-richtext"></i>
                      </a>
-                       <a   class="btn btn-primary mx-2">
-                        <i class="bi bi-pencil-square"></i>
-                        </a>
-                          <a asp-controller="Tenancy" asp-action="DeleteTenancy" asp-route-id="@item.Id"  class="btn btn-danger mx-2">
-                       <i class="bi bi-trash"></i>
-                        </a>
-
-                    </td>
+                      </td>
+                    
             </tr>
             }
            
@@ -60,7 +50,6 @@
         </tbody>
     </table>
 </div>
-
 
 
 

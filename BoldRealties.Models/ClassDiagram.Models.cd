@@ -1,31 +1,144 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="BoldRealties.Models.maintenanceJobs" Collapsed="true">
-    <Position X="2.5" Y="2.5" Width="1.5" />
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Alphabetical">
+  <Class Name="BoldRealties.Models.Identity.EmailSender" BaseTypeListCollapsed="true">
+    <Position X="8" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAgAAkAAAiAACAAAgEAAAAEAAAAAAAEAAAQA=</HashCode>
-      <FileName>maintenanceJobs.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgQAAAAA=</HashCode>
+      <FileName>Identity\EmailSender.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BoldRealties.Models.ViewModels.InvoicesVM">
+    <Position X="1.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>ViewModels\InvoicesVM.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BoldRealties.Models.PropertiesRS" Collapsed="true">
-    <Position X="4.25" Y="2.5" Width="1.5" />
+  <Class Name="BoldRealties.Models.ViewModels.mJobsVM">
+    <Position X="3.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQgEQAAAAQgAAAAIEAAAggAAAAAQIAAAAAACAAABQ=</HashCode>
+      <HashCode>gAGAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\mJobsVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.ViewModels.OrderVM">
+    <Position X="10" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\OrderVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.ViewModels.PropertiesVM">
+    <Position X="1.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>ViewModels\PropertiesVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.ViewModels.ShoppingCartVM">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ShoppingCartVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.ViewModels.tenancyVM">
+    <Position X="10" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQCAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>ViewModels\tenancyVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.ViewModels.ViewingsVM">
+    <Position X="5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQCAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>ViewModels\ViewingsVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.Deposits">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgACACAgEQAAIAEAABAAAAgAACAAgBACAABAAAAAAAA=</HashCode>
+      <FileName>Deposits.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.Enquiries">
+    <Position X="4.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAACQAkAIgAAAAAgACAIAAAAIIAAAAAQAAABQ=</HashCode>
+      <FileName>Enquiries.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.Invoices">
+    <Position X="3.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgACAAAAAAAAAAEAAJAAAAAQAAAAAEAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Invoices.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.jobs">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAgAAgAAAAAABAAggEAAAAEAAAAAACGAAACA=</HashCode>
+      <FileName>jobs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.OrderDetails">
+    <Position X="5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GAACAAAAAQAAAAEAABAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>OrderDetails.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.OrderHeader">
+    <Position X="6.75" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACEGAAACEAAAAAAAAAUAiIAAAAAAACAAAAAAEAAAg=</HashCode>
+      <FileName>OrderHeader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.PropertiesRS">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQgGQAAAAQgAAAgIEAAAggAAAAAQIAAAAAACAAABQ=</HashCode>
       <FileName>PropertiesRS.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BoldRealties.Models.Tenancy" Collapsed="true">
-    <Position X="2.5" Y="3.5" Width="1.5" />
+  <Class Name="BoldRealties.Models.ShoppingCart">
+    <Position X="8.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAACAAAAAAAAgAAAAAgwAAAAAFACAAAAAAACAQA=</HashCode>
-      <FileName>Tenancy.cs</FileName>
+      <HashCode>AAACACAAAQAAAAEAABAAAAwAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ShoppingCart.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BoldRealties.Models.User" Collapsed="true">
-    <Position X="4.25" Y="3.5" Width="1.5" />
+  <Class Name="BoldRealties.Models.StripeSettings">
+    <Position X="8.5" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAgAAgkAAAAAAAAAAAAEAAAAAACgEAAAA=</HashCode>
-      <FileName>User.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StripeSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.tenancies">
+    <Position X="9.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAASACACAAAAAAAAAIAAAAgwAAAAAFAAAAAAAEAAAAA=</HashCode>
+      <FileName>tenancies.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.Users">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAEACAAAACAAAAAA=</HashCode>
+      <FileName>Users.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoldRealties.Models.Viewings">
+    <Position X="3.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACACAAAAAAAAAAAIAAgAgQAAAAAAQAAAAAAAAAIAE=</HashCode>
+      <FileName>Viewings.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

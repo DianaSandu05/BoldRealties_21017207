@@ -2,19 +2,17 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model  IEnumerable<PropertiesRS>
 
 <div class="container p-2">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class= "text-primary">Properties List</h2>
+            <h2 class= "text-dark">Properties List</h2>
         </div>
         <div class="col-6">
-            <a asp-controller="PropertiesRS" asp-action="Upsert" class="btn btn-primary"> Add new property </a>
-               <a asp-controller="Viewings" asp-action="Index" class="btn btn-primary">Viewings</a>
-                  <a asp-controller="Enquiries" asp-action="Index" class="btn btn-primary">Enquiries</a>
+            <a asp-controller="PropertiesRS" asp-action="Upsert" class="btn btn-warning"> Add new property </a>
         </div>
     </div>
     <table class= "table table-table-bordered table-table-striped">
@@ -37,15 +35,10 @@
                 <td>@item.propertyType</td>
                 <td>@item.bedsNo</td>
                 <td>
-                    <a asp-controller="PropertiesRS" asp-action="EditProperties" asp-route-id="@item.ID" class="btn btn-primary mx-2">
+                    <a asp-controller="PropertiesRS" asp-action="Upsert" asp-route-id="@item.ID" class="btn btn-warning mx-2">
                        <i class="bi bi-file-earmark-richtext"></i>
                      </a>
-                       <a   class="btn btn-primary mx-2">
-                        <i class="bi bi-pencil-square"></i>
-                        </a>
-                          <a asp-controller="PropertiesRS" asp-action="DeleteProperties" asp-route-id="@item.ID"  class="btn btn-danger mx-2">
-                       <i class="bi bi-trash"></i>
-                        </a>
+                     
 
                     </td>
             </tr>

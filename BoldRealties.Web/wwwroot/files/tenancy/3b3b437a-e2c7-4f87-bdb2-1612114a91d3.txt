@@ -1,0 +1,4 @@
+Client Id BoldSign
+0a6aa257-9810-4305-a6e0-4bbfebff3e7f
+Client Secret "usethiskey"
+831bc481-718a-4c0e-9860-419c91f7809a 

@@ -1,66 +1,109 @@
-﻿@using BoldRealties.Models
-@model tenancies
-<!--eliminate both lines below and above and use -->
-<!--using BoldRealties.Models.ViewModels.ShoppingCartVM  -->
-
-<!--add using statement for IOptions below -->
+﻿@model BoldRealties.Models.ViewModels.ShoppingCartVM
 @using Microsoft.Extensions.Options
-<!--inject StripeSettings as Stripe inside this view  -->
-@inject IOptions<BoldRealties.Models.StripeSettings> Stripe
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
-}
-<div class="container p-2">
-    <div class="row pt-4">
-        <div class="col-6">
-            <h2 class= "text-primary">Payments List</h2>
-        </div>
-        <div class="col-6">
-            <a asp-controller="Viewings" asp-action="AddViewing" class="btn btn-primary"> Add new record</a>
-        </div>
-    </div>
-    <table class= "table table-table-bordered table-table-striped">
-        <thead>
-            <tr>
-                <th> ID</th>
-                <th>amount</th>
-                <th>received date</th>
-                 <th>Tenancy ID</th>
-                <th>User ID</th>
-                  <th>currency</th>
-               
-            </tr>
-        </thead>
-        <tbody>
-          
-             <tr>
-                <td>@Model.billsIncluded</td>
-                <td>@Model.PropertiesRS.propertyAddress</td>
-                <td>@Model.rentPrice</td>
-                <td>@Model.UserID</td>
-                <td>@Model.Users.firstName</td>
-                <td>@Model.Users.lastName</td>
-                <td>
-                    <a asp-controller="Viewing" asp-action="EditViewing" asp-route-id="@Model.Id" class="btn btn-primary mx-2">
-                       <i class="bi bi-file-earmark-richtext"></i>
-                     </a>
-                       <a   class="btn btn-primary mx-2">
-                        <i class="bi bi-pencil-square"></i>
-                        </a>
-                          <a asp-controller="Viewing" asp-action="DeleteViewing" asp-route-id="@Model.Id"  class="btn btn-danger mx-2">
-                       <i class="bi bi-trash"></i>
-                        </a>
-
-                    </td>
-            </tr>
-            
-           
-
-        </tbody>
-    </table>
-</div>
-
-
-
-
+@inject IOptions<BoldRealties.Models.StripeSettings> Stripe 
+@* DS: we inject the stripe settings inside this view to retrieve the values of the stripe keys *@
+<form method="post">
+	<br />
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-dark text-light ml-0">
+				<div class=" row container">
+					<div class="col-6">
+						<i class="fa fa-shopping-cart"></i> &nbsp;
+						Order Summary
+					</div>
+					<div class="col-6 text-end">
+						<a asp-action="Index" class="btn btn-outline-dark btn-sm">Back to Cart</a>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="container rounded p-2">
+					<div class="row">
+						<div class="col-12 col-lg-6 pb-4">
+							<div class="row">
+								<h4 class="d-flex justify-content-between align-items-center mb-3">
+									<span class="text-info">Details:</span>
+								</h4>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>First Name</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="OrderHeader.FirstName" class="form-control" />
+									<span asp-validation-for="OrderHeader.FirstName" class="text-danger"></span>
+								</div>
+							</div>
+								<div class="row my-1">
+								<div class="col-3">
+									<label>Last Name</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="OrderHeader.LastName" class="form-control" />
+									<span asp-validation-for="OrderHeader.LastName" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>Phone</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="OrderHeader.PhoneNumber" class="form-control" />
+									<span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label> Address</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="OrderHeader.Address" class="form-control" />
+									<span asp-validation-for="OrderHeader.Address" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>Email</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="OrderHeader.Email" class="form-control" />
+									<span asp-validation-for="OrderHeader.Email" class="text-danger"></span>
+								</div>
+							</div>
+							
+						<div class="col-12 col-lg-5 offset-lg-1">
+							<h4 class="d-flex justify-content-between align-items-center mb-3">
+								<span class="text-info">Order Summary:</span>
+							</h4>
+							<ul class="list-group mb-3">
+								@foreach(var details in Model.ListCart)
+								{
+								<li class="list-group-item d-flex justify-content-between">
+									<div>
+										<h6 class="my-0">@details.tenancies.PropertyID</h6>
+										<small class="text-muted">Quantity: @details.Count</small>
+									</div>
+									<span class="text-muted">@((details.Price * details.Count).ToString("c")) </span>
+								</li>	
+								}
+								<li class="list-group-item d-flex justify-content-between bg-light">
+									<small class="text-info">Total (USD)</small>
+									<strong class="text-info">@Model.OrderHeader.PaymentTotal.ToString("c")</strong>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-footer">
+				<div class="row">
+				
+					<div class="col-12 col-md-4">
+						<button type="submit" value="Place Order" class="btn btn-warning form-control">Place Order</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

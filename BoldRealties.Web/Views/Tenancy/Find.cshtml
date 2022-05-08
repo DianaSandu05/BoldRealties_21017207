@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using BoldRealties.Models
+@model  IEnumerable<tenancies>
+
+<div class="container p-2">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class= "text-dark">Tenancies</h2>
+        </div>
+        <div class="col-6">
+            <a asp-controller="RentPayments" asp-action="TenantPayments" class="btn btn-warning">My payments</a>
+
+        </div>
+    </div>
+    <table class= "table table-table-bordered table-table-striped">
+        <thead>
+            <tr>
+                <th>Tenancy ID</th>
+                 <th>Rent Price</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Management Type</th>
+                <th>User Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+             <tr>
+                <td>@item.Id</td>
+                <td>@item.rentPrice</td>
+                <td>@item.StartDate</td>
+                <td>@item.EndDate</td>
+                <td>@item.managementType</td>
+                <td>@item.UserID</td>
+               <td>
+                <a asp-controller="maintenanceJobs" asp-action="maintenanceTenant" asp-route-id="@item.Id" class="btn btn-warning">Maintenance</a>
+
+               </td>
+                 <td>
+                <a asp-controller="Tenancy" asp-action="Details" asp-route-TenancyId="@item.Id" class="btn btn-warning">Pay rent</a>
+
+               </td>
+            </tr>
+            }
+           
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+

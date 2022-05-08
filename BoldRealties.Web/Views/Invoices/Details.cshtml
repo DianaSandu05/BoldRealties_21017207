@@ -1,0 +1,42 @@
+﻿ @using BoldRealties.Models
+@model BoldRealties.Models.ViewModels.InvoicesVM
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="border p-3 mt-4">
+        <input asp-for="invoices.Id" hidden />
+        <input asp-for="invoices.filePath" hidden />
+         <a asp-controller="Invoices" asp-action="Index" class="btn btn-warning">Back to List</a>
+        <div class= "row pb-2">
+            <h2 cass="text-dark pl-3"> Invoice details</h2>
+        </div>
+        <div class="mb-3">
+           <label asp-for="invoices.Due_Date">Invoice Due Date</label>
+            <input asp-for="invoices.Due_Date" class="form-control" disabled/>
+            <span asp-validation-for="invoices.Due_Date" class="text-danger"></span>
+        </div>
+       
+        <div class="mb-3">
+           <label asp-for="invoices.invoice_No">Invoices number</label>
+            <input asp-for="invoices.invoice_No" class="form-control" disabled />
+            <span asp-validation-for="invoices.invoice_No" class="text-danger"></span>
+        </div>
+        
+     <div class="mb-3">
+           <label asp-for="invoices.tenancies.Id">Tenancy ID</label>
+            <input asp-for="invoices.tenancies.Id" class="form-control" disabled />
+            <span asp-validation-for="invoices.tenancies.Id" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+           <label asp-for="invoices.PropertiesRS.propertyAddress">Tenancy ID</label>
+            <input asp-for="invoices.PropertiesRS.propertyAddress" class="form-control" disabled />
+            <span asp-validation-for="invoices.PropertiesRS.propertyAddress" class="text-danger"></span>
+        </div>
+       <div class="col-2 pt-4">
+			<img src="@Model.invoices.filePath"
+			width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+		</div>
+       

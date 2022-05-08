@@ -4,7 +4,6 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-         
                 <div class="container col-xxl-8 px-4 py-5">
                 <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
                     <div class="carousel flex-row justify-content-start w-50">
@@ -51,7 +50,7 @@
                         {
                             <div class="card-row align-content-center">
                                 Find by address: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string )   
-                                 <input type="submit" value="Search" class="btn btn-dark" />
+                                 <input type="submit" value="Search" class="btn-sm btn-dark" />
                              </div>
                         }
                        
@@ -62,24 +61,8 @@
                   <button class="btn-sm btn-dark">More details</button>
                </div>
                 </div>
-                </div>
-
-
-
-
-
-             
-
-
-
-
-
-
-                 
+                </div>           
         <div class="row pb-3 backgroundWhite">
-         
-
-
    @foreach (var properties in Model)
         {
         <div class="col-lg-3 col-md-6">
@@ -89,24 +72,79 @@
                         <img src="@properties.imagePath" class="card-img-top rounded" />
                         <div class="pl-1">
                             <p class="card-title h5"><b style="color:#2c3e50">@properties.propertyAddress</b></p>
-                            @*<p class="card-title text-primary">by <b>@product.Artist</b></p>*@
                         </div>
                         <div style="padding-left:5px;">
-                            <p>List Price: <b class="">$@properties.marketPrice.ToString("0.00")</b></p>
+                            <p>Rent Price: <b class="">$@properties.marketPrice.ToString("0.00")</b></p>
                         </div>
                         <div style="padding-left:5px;">
-                            <p style="color:maroon">Specification: <b class="">@properties.estateDescription</b></p>
+                            <p style="color:black">Specification: <b class="">@properties.estateDescription</b></p>
                         </div>
                     </div>
                     <div>
-                        <a asp-action="Details" class="btn btn-primary form-control" asp-route-id="@properties.ID">Details</a>
+                        <a asp-action="Details" class="btn-sm btn-dark form-control"  asp-route-id="@properties.ID">Details</a>
                     </div>
                 </div>
             </div>
         </div>
         }
-        
                 </div>
+                 <div id="gallery" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="row">
+               
+                <div class="col-3 m-0 p-0 ">
+                    <img class="img-fluid" src="https://images.unsplash.com/photo-1554995207-c18c203602cb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Image 1"/>
+                </div>
+               <div class="col-3 m-0 p-0 ">
+                    <img class="img-fluid" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Image 2"/>
+                </div>
+
+              <div class="col-3 m-0 p-0 ">
+                    <img class="img-fluid" src="https://images.unsplash.com/photo-1448630360428-65456885c650?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=867&q=80" alt="Image 3"/>
+                </div>
+
+                <div class="col-3 m-0 p-0 ">
+                    <img class="img-fluid" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Image 4"/>
+                </div>
+
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="row">
+                <div class="col-3 m-0 p-0 ">
+                    <img class="img-fluid" src="https://images.unsplash.com/photo-1433477303177-8270baa12c9a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=873&q=80" alt="Image 6"/>
+                </div>
+
+               <div class="col-3 m-0 p-0 ">
+                    <img class="img-fluid" src="https://images.unsplash.com/photo-1630650231815-a567e2ed26cc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Image 7"/>
+                </div>
+
+                <div class="col-3 m-0 p-0 ">
+                    <img class="img-fluid" src="https://images.unsplash.com/photo-1577651741085-1750b109671c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872&q=80" alt="Image 8"/>
+                </div>
+
+                <div class="col-3 m-0 p-0 ">
+                    <img class="img-fluid" src="https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Image 9"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a class="carousel-control-prev" href="#gallery" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+
+    <a class="carousel-control-next" href="#gallery" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
       
     <footer class="footer mt-auto py-3 bg-light">
   <div class="container">
@@ -114,15 +152,12 @@
   </div>
  
 </footer>
-       
-      
-   
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
         
         </script>
-         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        
 
 

@@ -20,11 +20,15 @@ namespace BoldRealties.Web.Controllers
             _unit = unit;
             _host = host;
         }
+        [Authorize(Roles = StaticDetails.Role_Admin)]
+        //function to list all properties in admin portal
         public IActionResult Index()
         {
             IEnumerable<PropertiesRS> objPropertiesList = _unit.Properties.GetAll();
             return View(objPropertiesList);
         }
+        [Authorize(Roles = StaticDetails.Role_Admin)]
+        //function to update and/or insert properties 
         //GET
         public IActionResult Upsert(int? id)
         {
@@ -33,12 +37,12 @@ namespace BoldRealties.Web.Controllers
                 Properties = new(),
                 TenancyList = _unit.Tenancies.GetAll().Select(i => new SelectListItem
                 {
-                    Text = i.managementType,
+                    Text = i.Id.ToString(),
                     Value = i.Id.ToString()
                 }),
                 UserList = _unit.Users.GetAll().Select(i => new SelectListItem
                 {
-                    Text = i.firstName + i.lastName,
+                    Text = i.Id.ToString(),
                     Value = i.Id.ToString()
                 }),
             };
@@ -55,9 +59,9 @@ namespace BoldRealties.Web.Controllers
 
               
             }
-
-
         }
+        [Authorize(Roles = StaticDetails.Role_Admin)]
+        //function to update and/or delete
         [HttpPost]
         [ValidateAntiForgeryToken] //to avoid the cross site request forgery
         public IActionResult Upsert(PropertiesVM propertiesVM, IFormFile? file)
@@ -101,64 +105,86 @@ namespace BoldRealties.Web.Controllers
             }
             return View(propertiesVM);
         }
-        //POST
-        [HttpDelete]
-        public IActionResult Delete(int? id)
+           
+
+        //function to display the properties on the Properties for unauthentificated users
+        public IActionResult PropertiesList()
         {
-            var obj = _unit.Properties.GetFirstOrDefault(u => u.ID == id);
-            if (obj == null)
-            {
-                return Json(new { success = false, message = "Error while deleting" });
-            }
-
-            var oldImagePath = Path.Combine(_host.WebRootPath, obj.imagePath.TrimStart('\\'));
-            if (System.IO.File.Exists(oldImagePath))
-            {
-                System.IO.File.Delete(oldImagePath);
-            }
-
-            _unit.Properties.Remove(obj);
-            _unit.Save();
-            return Json(new { success = true, message = "Delete Successful" });
-
-        }
-        public IActionResult Details(int tenancyId)
-        {
-            payment Obj = new()
-            {
-                
-                TenancyID = tenancyId,
-                tenancies = _unit.Tenancies.GetFirstOrDefault(u => u.Id == tenancyId),
-            };
-
-            return View(Obj);
+            IEnumerable<PropertiesRS> objPropertiesList = _unit.Properties.GetAll();
+            return View(objPropertiesList);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public IActionResult Details(payment payment)
+        //                                   Aside comments
+        //details function in home controller  -- details of the property for the applicants in home controller
+        //details function in properties controller -- details of the property for admin in this controller -- upsert
+
+        [Authorize(Roles = StaticDetails.Role_Landlord)]
+
+        //get the properties list for the logged in landlord
+        public IActionResult LandlordProperty()
         {
-            //this takes the identity to the user who is logged in!!! maybe use it for payment for tenant
+
+            //DS: we create a variable 'claimsIdentity' and we initialize it with the name identifier
             var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //DS: we then create another variable 'claim' to extract the claim from the ClaimsIdentity
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            payment.UserID = claim.Value;
-
-            payment objFromDb = _unit.payment.GetFirstOrDefault(
-                u => u.UserID == claim.Value && u.TenancyID == payment.TenancyID);
 
 
-            if (objFromDb == null)
-            {
-
-                _unit.payment.Add(payment);
-                _unit.Save();
-                
-                
-            }
-         
-
-            return RedirectToAction(nameof(Index));
+            IEnumerable<PropertiesRS> obj = _unit.Properties.GetAll().Where(u => u.UserId == claim.Value);
+            return View(obj);
         }
+        [Authorize(Roles = StaticDetails.Role_Landlord)]
+        //get property details for each property the landlord has -- this function is called from LandlordProperty page
+        //it passes the property and compares with the id from the db and displays the record for that property
+        public IActionResult PropertyDetailsLandlord(int? ID)
+        {
+            PropertiesVM propertiesVM = new()
+            {
+                Properties = new(),
+                TenancyList = _unit.Tenancies.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.Id.ToString(),
+                    /*Value = x.ID.ToString()*/
+                }),
+                UserList = _unit.Users.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.firstName + x.lastName,
+                    /*   Value = x.ID.ToString()*/
+                }),
+            };
+            if (ID == null || ID == 0)
+            {
+                return View(propertiesVM);
+            }
+            else
+            {
+                propertiesVM.Properties = _unit.Properties.GetFirstOrDefault(u => u.ID == ID);
+                return View(propertiesVM);
+
+
+            }
+        }
+        /* The function TenancyDetails() gets the details of the property
+          then the landlord can get info about the tenancy for that property.
+          In the PropertyDetailsLandlord the tenancyId(FK) of the property is displayed
+         when the button to redirect the landlord to TenancyDetails page is clicked, 
+        the tenancyId(FK) is compared to the all any id from tenancies tables and if it maches, the record is displayed
+        */
+        [Authorize(Roles = StaticDetails.Role_Landlord)]
+        public IActionResult TenancyDetails(int? ID)
+        {
+
+            //DS: we create a variable 'claimsIdentity' and we initialize it with the name identifier
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //DS: we then create another variable 'claim' to extract the claim from the ClaimsIdentity
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+
+            IEnumerable<tenancies> objTenanciesList = _unit.Tenancies.GetAll().Where(u => u.PropertyID == ID);
+            return View(objTenanciesList);
+        }
+
+      
+       
     }
 }
