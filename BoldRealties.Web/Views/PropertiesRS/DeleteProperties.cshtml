@@ -10,7 +10,7 @@
 <form method="post" asp-action="DeleteProperty">
     <div class="border p-3 mt-4">
          <div class="border p-3 mt-4">
-         <a asp-page="/Properties/Index" class="btn btn-primary">Properties List</a>
+         <a asp-page="/Properties/Index" class="btn btn-warning">Properties List</a>
         
         <div class= "row pb-2">
             <h2 cass="text-primary pl-3"> Delete Property</h2>
@@ -77,11 +77,9 @@
            <label asp-for="maxPrice">Maximum Price</label>
             <input asp-for="maxPrice" class="form-control" />
         </div>
-       
-         <a asp-controller="PropertiesRS" asp-action="Index" class="btn btn-primary">Properties List</a>
-    </div>
+           </div>
 
-         <button type="submit" class="btn btn-primary">Delete</button>
+         <button type="submit" class="btn btn-warning">Delete</button>
          </div>
          </form>
         

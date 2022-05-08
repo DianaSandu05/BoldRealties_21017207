@@ -10,7 +10,7 @@
         <input asp-for="mJobVM.ID" hidden />
         <input asp-for="mJobVM.UserID" hidden />
         <input asp-for="mJobVM.filePath" hidden name="file" />
-         <a asp-page="/maintenanceJobs/Index" class="btn btn-primary">Jobs List</a>
+         <a asp-page="/maintenanceJobs/Index" class="btn btn-warning">Jobs List</a>
         <div class= "row pb-2">
             <h2 cass="text-primary pl-3"> Create job</h2>
         </div>
@@ -54,7 +54,7 @@
         </div>
 	
         <button type="submit" class="btn btn-primary">Create</button>
-         <a asp-controller="maintenanceJobs" asp-action="Index" class="btn btn-primary">Jobs List</a>
+         <a asp-controller="maintenanceJobs" asp-action="Index" class="btn btn-warning">Jobs List</a>
     </div>
 </form>
 

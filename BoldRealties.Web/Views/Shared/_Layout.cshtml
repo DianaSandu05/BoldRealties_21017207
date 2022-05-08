@@ -15,9 +15,9 @@
 <body>
     <partial name="Partial/Messages" />
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow mb-3" style="background-color:black";>
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BoldRealties.Web</a>
+               <img class="img-fluid" style="width:120px;height:60px;" src="~/images/Bold.png" alt="Bold Realties"/>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -25,32 +25,22 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link py-3" style="color: #f7b519" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PropertiesRS" asp-action="Index">Properties</a>
+                            <a class="nav-link py-3" style="color: #f7b519" asp-area="" asp-controller="PropertiesRS" asp-action="PropertiesList">Properties</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Enquiries" asp-action="AddEnquiry">Send enquiry</a>
-                        </li>
-                             <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tenancy" asp-action="Index">Tenancy</a>
-                        </li>
-                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">User</a>
-                        </li>
-                            <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="officeAddress" asp-action="Index">User</a>
-                        </li>
-                            <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="baReports" asp-action="Index">Reports</a>
-                        </li>
+                            <a class="nav-link py-3" style="color: #f7b519" asp-area="" asp-controller="Enquiries" asp-action="AddEnquiry">Send enquiry</a>
+
                           
                     </ul>
                       <partial name="_LoginPartial"/>
                 </div>
             </div>
         </nav>
+    
+       
     </header>
     <div class="container">
         <main role="main" class="pb-3">

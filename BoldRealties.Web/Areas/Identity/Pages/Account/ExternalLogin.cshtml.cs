@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication;
+using BoldRealties.DAL.Repository.IRepository;
+using BoldRealties.BLL;
 
 namespace BoldRealties.Web.Areas.Identity.Pages.Account
 {
@@ -24,17 +27,25 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly IUserStore<IdentityUser> _userStore;
+        private readonly IUserEmailStore<IdentityUser> _emailStore;
+        private readonly IUnitOfWork _unitOfWork;
 
         public ExternalLoginModel(
             SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager,
+             IUserStore<IdentityUser> userStore,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IUnitOfWork unitOfWork)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
+            _userStore = userStore;
+            _emailStore = GetEmailStore();
             _emailSender = emailSender;
+            _unitOfWork = unitOfWork;
         }
 
         [BindProperty]
@@ -52,6 +63,10 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+             public string firstName { get; set; }
+            [Required]
+            public string lastName { get; set; }
+            public string? PhoneNumber { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -66,7 +81,17 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return new ChallengeResult(provider, properties);
         }
-
+        private readonly IReadOnlyDictionary<string, string> _claimsToSync =
+     new Dictionary<string, string>()
+     {
+             { "account_id", "account_id" },
+             {"account_name", "account_name" },
+             {"accounts", "accounts" },
+             { "access_token", "access_token" },
+             {"base_uri", "base_uri" },
+             {"refresh_token", "refresh_token" },
+             { "expires_in", "expires_in"}
+     };
         public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -87,6 +112,49 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
+                if (_claimsToSync.Count > 0)
+                {
+                    var user = await _userManager.FindByLoginAsync(info.LoginProvider,
+                        info.ProviderKey);
+                    var userClaims = await _userManager.GetClaimsAsync(user);
+                    bool refreshSignIn = false;
+
+                    foreach (var addedClaim in _claimsToSync)
+                    {
+                        var userClaim = userClaims
+                            .FirstOrDefault(c => c.Type == addedClaim.Key);
+
+                        if (info.Principal.HasClaim(c => c.Type == addedClaim.Key))
+                        {
+                            var externalClaim = info.Principal.FindFirst(addedClaim.Key);
+
+                            if (userClaim == null)
+                            {
+                                await _userManager.AddClaimAsync(user,
+                                    new Claim(addedClaim.Key, externalClaim.Value));
+                                refreshSignIn = true;
+                            }
+                            else if (userClaim.Value != externalClaim.Value)
+                            {
+                                await _userManager
+                                    .ReplaceClaimAsync(user, userClaim, externalClaim);
+                                refreshSignIn = true;
+                            }
+                        }
+                        else if (userClaim == null)
+                        {
+                            // Fill with a default value
+                            await _userManager.AddClaimAsync(user, new Claim(addedClaim.Key,
+                                addedClaim.Value));
+                            refreshSignIn = true;
+                        }
+                    }
+
+                    if (refreshSignIn)
+                    {
+                        await _signInManager.RefreshSignInAsync(user);
+                    }
+                }
                 return LocalRedirect(returnUrl);
             }
             if (result.IsLockedOut)
@@ -102,7 +170,9 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        firstName = info.Principal.FindFirstValue(ClaimTypes.Name),
+                        lastName = info.Principal.FindFirstValue(ClaimTypes.GivenName)
                     };
                 }
                 return Page();
@@ -111,7 +181,7 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl = returnUrl ?? Url.Content("https://boldrealties.azurewebsites.net/");
             // Get the information about the user from the external login provider
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
@@ -122,15 +192,33 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
-
+                /*var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+*/
+                var user = CreateUser();
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.firstName = Input.firstName;
+                user.lastName = Input.lastName;
+                user.PhoneNumber = Input.PhoneNumber;
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, StaticDetails.Role_Tenant);
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                        // If they exist, add claims to the user for:
+                        //    Given (first) name
+                        //    Locale
+                        //    Picture
+                   
+                     
+                        // Include the access token in the properties
+                        // using Microsoft.AspNetCore.Authentication;
+                        var props = new AuthenticationProperties();
+                        props.StoreTokens(info.AuthenticationTokens);
+                        props.IsPersistent = true;
 
                         var userId = await _userManager.GetUserIdAsync(user);
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -164,6 +252,29 @@ namespace BoldRealties.Web.Areas.Identity.Pages.Account
             ProviderDisplayName = info.ProviderDisplayName;
             ReturnUrl = returnUrl;
             return Page();
+        }
+
+        private Users CreateUser()
+        {
+            try
+            {
+                return Activator.CreateInstance<Users>();
+            }
+            catch
+            {
+
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}" +
+                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and had a parameter" +
+                    $"override the register page in Areas/Identity/Pages/Account/Register.cshtml");
+            }
+        }
+        private IUserEmailStore<IdentityUser> GetEmailStore()
+        {
+            if (!_userManager.SupportsUserEmail)
+            {
+                throw new NotSupportedException("The default UI requires a user store with email support.");
+            }
+            return (IUserEmailStore<IdentityUser>)_userStore;
         }
     }
 }

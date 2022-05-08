@@ -6,16 +6,18 @@
 }
 
 <form method="post">
-    <div class="border p-3 mt-4">
+    <div class="row">
+        <h2 class="py-md-2 border-bottom borderborder-warning">Send an enquiry</h2>
+    </div>
        
-        <div class= "row pb-2">
-            <h2 cass="text-primary pl-3"> Add Enquiries</h2>
-        </div>
+<div class="row">
+    <div class="col-md-6">
         <div class="mb-3">
            <label asp-for="NameSurname">Full Name</label>
             <input asp-for="NameSurname" placeholder="First Name + Second Name" class="form-control" />
             <span asp-validation-for="NameSurname" class="text-danger"></span>
         </div>
+        <div class="mb-3">
            <label asp-for="email">Email</label>
             <input asp-for="email" class="form-control" />
             <span asp-validation-for="email" class="text-danger"></span>
@@ -49,6 +51,8 @@
             <input asp-for="noBeds" class="form-control" />
             <span asp-validation-for="noBeds" class="text-danger"></span>
         </div>
+           </div>
+           <div class="col-md-6 ">
             <div class="mb-3">
            <label asp-for="noBaths">Number of bathrooms required</label>
             <input asp-for="noBaths" class="form-control" />
@@ -84,10 +88,13 @@
             <input asp-for="crime_Rate"  class="form-control" />
             <span asp-validation-for="crime_Rate" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary">Add</button>
-         <a asp-controller="User" asp-action="Index" class="btn btn-primary">User List</a>
+        <button type="submit" class="btn btn-warning">Send enquiry</button>
+        
+    </div>
     </div>
 </form>
+
+
 
 
 

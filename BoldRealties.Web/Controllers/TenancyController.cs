@@ -2,9 +2,7 @@
 using BoldRealties.DAL.Repository.IRepository;
 using BoldRealties.Models;
 using BoldRealties.Models.ViewModels;
-using DocuSign.eSign.Api;
-using DocuSign.eSign.Client;
-using DocuSign.eSign.Model;
+using BoldSign.Api;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,31 +13,23 @@ using System.Text;
 
 namespace BoldRealties.Web.Controllers
 {
-
+    /// <summary>
+    /// Initializes a new instance of the <see cref="HomeController"/> class.
+    /// </summary>
+    /// <param name=" apiClient ">The api client.</param>
     public class TenancyController : Controller
     {
+        private readonly ApiClient apiClient;
         private readonly IUnitOfWork _unit;
         private readonly IWebHostEnvironment _webHost;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<TenancyController> _logger;
-        /// <summary>
-        /// Creates an envelope that would include two documents and add a signer and cc recipients to be notified via email
-        /// </summary>
-        /// <param name="signerEmail">Email address for the signer</param>
-        /// <param name="signerName">Full name of the signer</param>
-        /// <param name="ccEmail">Email address for the cc recipient</param>
-        /// <param name="ccName">Name of the cc recipient</param>
-        /// <param name="accessToken">Access Token for API call (OAuth)</param>
-        /// <param name="basePath">BasePath for API calls (URI)</param>
-        /// <param name="accountId">The DocuSign Account ID (GUID or short version) for which the APIs call would be made</param>
-        /// <param name="docPdf">String of bytes representing the document (pdf)</param>
-        /// <param name="docDocx">String of bytes representing the Word document (docx)</param>
-        /// <param name="envStatus">Status to set the envelope to</param>
-        /// <returns>EnvelopeId for the new envelope</returns>
 
-        public TenancyController(IUnitOfWork unit, ILogger<TenancyController> logger, IWebHostEnvironment webHost, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager
-       )
+
+        public TenancyController(IUnitOfWork unit, ILogger<TenancyController> logger, IWebHostEnvironment webHost,
+            UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager
+, ApiClient apiClient)
         {
             _unit = unit;
             _webHost = webHost;
@@ -47,6 +37,7 @@ namespace BoldRealties.Web.Controllers
             _roleManager = roleManager;
             _logger = logger;
             ViewBag.title = "Signing request by email";
+            this.apiClient = apiClient;
         }
         public IActionResult Index()
         {
@@ -128,21 +119,34 @@ namespace BoldRealties.Web.Controllers
 
         }
 
-        [HttpDelete]
+     
         public IActionResult DeleteTenancies(int? ID)
         {
+            tenancyVM tenancyVM = new()
+            {
+                tenancy = new(),
+                PropertiesList = _unit.Properties.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.propertyAddress,
+                    Value = x.ID.ToString()
+                }),
+                UserList = _unit.Users.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.firstName + x.lastName,
+                    /*   Value = x.ID.ToString()*/
+                }),
+            };
             if (ID == null || ID == 0)
             {
-                return NotFound();
+                return View(tenancyVM);
             }
-            var TenancyFromDb = _unit.Tenancies.GetFirstOrDefault(x => x.Id == ID);
-            if (TenancyFromDb == null)
+            else
             {
-                return NotFound();
+                tenancyVM.tenancy = _unit.Tenancies.GetFirstOrDefault(u => u.Id == ID);
+                return View(tenancyVM);
             }
-            return View(TenancyFromDb);
-        }
-        [HttpPost]
+            }
+        [HttpDelete]
         [ValidateAntiForgeryToken] //to avoid the cross site request forgery
         public IActionResult DeleteTenancy(int? ID)
         {
@@ -159,16 +163,7 @@ namespace BoldRealties.Web.Controllers
 
 
         }
-        //most probably this should be moved in the user portal??
-
-        //To do for Details:
-        /*
-         1. The details should be taken from user page when the tenant view his tenancy
-        2. Show payment due
-        3. Click details
-        4. View details about payments and have a button for 'shopping cart' aka 'pay now'
-        5. Redirect to payment summary. 
-
+  /*
         logical:
         Function Details()
         1. get tenancy id, create payment obj and pass the tenanancy details. return the obj
@@ -183,9 +178,6 @@ namespace BoldRealties.Web.Controllers
         {
             var tenancyFromDb = _unit.Tenancies.
                         GetFirstOrDefault(u => u.Id == id, includeProperties: "PropertiesRS");
-            //shopping cart = payment
-            //product = tenancy
-
             payment paymentObj = new payment()
             {
                 tenancies = tenancyFromDb,
@@ -234,12 +226,7 @@ namespace BoldRealties.Web.Controllers
                     .GetAll(c => c.UserID == paymentObj.UserID)
                     .ToList().Count();
 
-              /*  HttpContext.Session.SetObject(StaticDetails.SessionPayment, paymentObj);*/
-
-                //DS: these lines were causing the errors
-
-           /*     HttpContext.Session.SetInt32(StaticDetails.SessionPayment, count);
-*/
+           
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -256,11 +243,35 @@ namespace BoldRealties.Web.Controllers
 
 
         }
-        public IActionResult ViewMyTenancy()
+        public IActionResult ViewMyTenancy(int? ID)
         {
-            return View();
+            tenancyVM tenancyVM = new()
+            {
+                tenancy = new(),
+                PropertiesList = _unit.Properties.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.propertyAddress,
+                    Value = x.ID.ToString()
+                }),
+                UserList = _unit.Users.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.firstName + x.lastName,
+                    /*   Value = x.ID.ToString()*/
+                }),
+            };
+            if (ID == null || ID == 0)
+            {
+                return View(tenancyVM);
+            }
+            else
+            {
+                tenancyVM.tenancy = _unit.Tenancies.GetFirstOrDefault(u => u.Id == ID);
+                return View(tenancyVM);
+
+
+            }
         }
 
-
+      
     }
 }

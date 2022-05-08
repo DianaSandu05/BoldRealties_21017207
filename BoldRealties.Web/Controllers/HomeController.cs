@@ -64,10 +64,19 @@ namespace BoldRealties.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult Details(int? ID)
+        {
+            PropertiesRS properties = new();
+            properties = _unit.Properties.GetFirstOrDefault(u => u.ID == ID);
+
+            return View(properties);
+        }
+
         public IActionResult ContactUs()
         {   
             return View();
         }
+      
     
 
     }

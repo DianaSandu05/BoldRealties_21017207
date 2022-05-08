@@ -16,10 +16,18 @@ namespace BoldRealties.Models
         public string firstName { get; set; }
         [Required]
         public string lastName { get; set; }
-        [Required]
-        public string AccessToken { get; set; }
-        public string? filePath { get; set; }
-        public string Address { get; set; }
+       /* public string AccessToken { get; set; }
+       [NotMapped]
+        public string RefreshToken { get; set; }
+        [NotMapped]
+        public DateTime? ExpireIn { get; set; }
+        [NotMapped]
+
+        public string AccountId { get; set; }*/
+
+        public string filePath { get; set; }
+   
+        public string? Address { get; set; }
 
     }
 }

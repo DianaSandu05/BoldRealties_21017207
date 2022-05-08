@@ -36,7 +36,7 @@ namespace BoldRealties.Web.Controllers
             }
             return View(enquiries);
         }
-        public IActionResult EditEnquiry(int? ID)
+        public IActionResult Edit(int? ID)
         {
             if (ID == null || ID == 0)
             {
@@ -51,7 +51,7 @@ namespace BoldRealties.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken] //to avoid the cross site request forgery
-        public IActionResult EditEnquiry(Enquiries enquiries)
+        public IActionResult Edit(Enquiries enquiries)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +62,7 @@ namespace BoldRealties.Web.Controllers
             }
             return View(enquiries);
         }
-        public IActionResult DeleteEnquiries(int? ID)
+        public IActionResult Delete(int? ID)
         {
             if (ID == null || ID == 0)
             {
@@ -75,9 +75,10 @@ namespace BoldRealties.Web.Controllers
             }
             return View(EnquiryFromDb);
         }
+        //post
         [HttpPost]
         [ValidateAntiForgeryToken] //to avoid the cross site request forgery
-        public IActionResult DeleteUsers(int? ID)
+        public IActionResult DeleteEnquiry(int? ID)
         {
             var enquiry = _unit.Enquiries.GetFirstOrDefault(x => x.ID == ID);
             if (enquiry == null)
@@ -90,6 +91,14 @@ namespace BoldRealties.Web.Controllers
             TempData["success"] = "The record was deleted successfully!";
             return RedirectToAction("Index");
         }
+        public IActionResult Details(int? ID)
+        {
+            Enquiries enquiries = new();
+            enquiries = _unit.Enquiries.GetFirstOrDefault(u => u.ID == ID);
 
+            return View(enquiries);
+        }
+     
+        
     }
 }

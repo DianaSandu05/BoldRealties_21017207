@@ -6,31 +6,26 @@
 }
 <div class="container p-2">
     <div class="row pt-4">
-        <div class="col-6">
+        <div class="col-10">
             <h2 class= "text-primary">Enquiries List</h2>
         </div>
-        <div class="col-6">
-            <a asp-controller="User" asp-action="AddUser" class="btn btn-primary"> Add new enquiry</a>
-        </div>
+       
     </div>
     <table class= "table table-table-bordered table-table-striped">
         <thead>
             <tr>
-                <th>ID</th>
+            
                 
-                <th>applicantType</th>
-                <th>NameSurname</th>
-                 <th>crime_Rate</th>
-                 <th>email</th>
-                <th> location</th>
-                <th>maxPrice</th>
-                <th>minPrice</th>
-                   <th>pets</th>
-                 <th>postcode</th>
-                <th> phone_No</th>
-                <th>noPets</th>
-                <th>noBeds</th>
-                  <th>noBaths</th>
+                <th>Applicant type</th>
+                <th>Full name</th>
+                 <th>Email</th>
+                 <th>Postcode</th>
+                <th> Phone number</th>
+                <th>Number of bedrooms</th>
+                  <th>Number of bathrooms</th>
+                  <th></th>
+                   <th></th>
+                   <th></th>
 
             </tr>
         </thead>
@@ -38,33 +33,33 @@
             @foreach(var item in Model)
             {
              <tr>
-                <td>@item.ID</td>
+              
            
                 <td>@item.applicantType</td>
                 <td>@item.NameSurname</td>
-                <td>@item.crime_Rate</td>
                  <td>@item.email</td>
-                <td>@item.location</td>
-                <td>@item.maxPrice</td>
-                <td>@item.minPrice</td>
-                 <td>@item.pets</td>
                 <td>@item.postcode</td>
                 <td>@item.phone_No</td>
-                <td>@item.noPets</td>
                  <td>@item.noBeds</td>
                 <td>@item.noBaths</td>
+            
+
               
                 <td>
-                    <a asp-controller="User" asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary mx-2">
-                       <i class="bi bi-file-earmark-richtext"></i>
+                      <a asp-controller="Enquiries" asp-action="Details" asp-route-id="@item.ID" class="btn btn-warning">
+                       <i class="bi bi-file-earmark-richtext">Details</i>
                      </a>
-                       <a   class="btn btn-primary mx-2">
-                        <i class="bi bi-pencil-square"></i>
-                        </a>
-                          <a asp-controller="User" asp-action="Delete" asp-route-id="@item.ID"  class="btn btn-danger mx-2">
-                       <i class="bi bi-trash"></i>
-                        </a>
-
+                     </td>
+                       <td>
+                    <a asp-controller="Enquiries" asp-action="Edit" asp-route-id="@item.ID" class="btn btn-warning">
+                       <i class="bi bi-file-earmark-richtext">Edit</i>
+                     </a>
+                     </td>
+                       <td>
+                      <a asp-controller="Enquiries" asp-action="Delete" asp-route-id="@item.ID" class="btn btn-warning">
+                       <i class="bi bi-file-earmark-richtext">Delete</i>
+                     </a>
+                       
                     </td>
             </tr>
             }

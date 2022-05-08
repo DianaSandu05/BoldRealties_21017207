@@ -122,7 +122,7 @@ namespace BoldRealties.Web.Controllers
             //some things might be added here at a later stage
 
             //DS: stripe settings from here
-            //DS: comment for Liviu --> we might want to change the below line of code at a later stage
+           
             var domain = "https://localhost:44318/";
             var options = new SessionCreateOptions //we create a session create option
             {

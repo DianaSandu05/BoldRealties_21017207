@@ -122,43 +122,16 @@ namespace BoldRealties.Web.Controllers
             return Json(new { success = true, message = "Delete Successful" });
 
         }
-        public IActionResult Details(int tenancyId)
+
+        public IActionResult PropertiesList()
         {
-            payment Obj = new()
-            {
-                
-                TenancyID = tenancyId,
-                tenancies = _unit.Tenancies.GetFirstOrDefault(u => u.Id == tenancyId),
-            };
-
-            return View(Obj);
+            IEnumerable<PropertiesRS> objPropertiesList = _unit.Properties.GetAll();
+            return View(objPropertiesList);
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public IActionResult Details(payment payment)
-        {
-            //this takes the identity to the user who is logged in!!! maybe use it for payment for tenant
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            payment.UserID = claim.Value;
-
-            payment objFromDb = _unit.payment.GetFirstOrDefault(
-                u => u.UserID == claim.Value && u.TenancyID == payment.TenancyID);
+        //details function in home controller  -- details of the property for the applicants in home controller
+        //details function in properties controller -- details of the property for admin in this controller -- upsert
 
 
-            if (objFromDb == null)
-            {
 
-                _unit.payment.Add(payment);
-                _unit.Save();
-                
-                
-            }
-         
-
-            return RedirectToAction(nameof(Index));
-        }
     }
 }

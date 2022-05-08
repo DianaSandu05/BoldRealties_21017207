@@ -13,7 +13,7 @@
             <h2 class= "text-primary">Invoices</h2>
         </div>
         <div class="col-6">
-            <a asp-controller="invoices" asp-action="Add" class="btn btn-primary">Add Invoice</a>
+            <a asp-controller="Invoices" asp-action="Upsert" class="btn btn-warning">Add Invoice</a>
         </div>
     </div>
     <table class= "table table-table-bordered table-table-striped">
@@ -35,14 +35,9 @@
                 <td>@item.invoice_No</td>
                 <td>@item.PropertyID</td>
                 <td>@item.TenancyID</td>
-                <td>
-                    <a asp-controller="maintenanceJobs" asp-action="EditMJ" asp-route-id="@item.Id" class="btn btn-primary mx-2">
-                       <i class="bi bi-file-earmark-richtext"></i>
-                     </a>
-                       <a   class="btn btn-primary mx-2">
-                        <i class="bi bi-pencil-square"></i>
-                        </a>
-                          <a asp-controller="maintenanceJobs" asp-action="DeleteMJ" asp-route-id="@item.Id"  class="btn btn-danger mx-2">
+               
+                       <td>
+                          <a asp-controller="Invoices" asp-action="Delete" asp-route-id="@item.Id"  class="btn btn-warning mx-2">
                        <i class="bi bi-trash"></i>
                         </a>
 

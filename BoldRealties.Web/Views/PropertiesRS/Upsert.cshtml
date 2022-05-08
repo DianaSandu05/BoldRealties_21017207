@@ -10,7 +10,7 @@
 	<input asp-for="Properties.imagePath" hidden />
    <div class="border p-3 mt-4 row">
 
-         <a asp-controller="PropertiesRS" asp-action="Index" class="btn btn-primary">Properties List</a>
+         <a asp-controller="PropertiesRS" asp-action="Index" class="btn btn-warning">Properties List</a>
         <div class= "row pb-2">
             <h2 cass="text-primary pl-3"> Add Property</h2>
         </div>
@@ -103,7 +103,7 @@
 			{
 				<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
 			}
-			<a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:150px">
+			<a asp-controller="Product" asp-action="Index" class="btn btn-warning" style="width:150px">
 				Back to List
 			</a>
 		</div>

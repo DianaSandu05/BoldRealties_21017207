@@ -46,34 +46,34 @@ namespace BoldRealties.Web.Controllers
            }
            return View(user);
        }
-       public IActionResult DeleteUser(int? ID)
+      /* public IActionResult DeleteUser(int? ID)
        {
-           if (ID == null || ID == 0)
-           {
-               return NotFound();
-           }
-      /*     var UserFromDb = _unit.Users.GetFirstOrDefault(x => x.ID == ID);
-           if (UserFromDb == null)
-           {
-               return NotFound();
-           }*/
-           return View();
-       }
+            if (ID == null || ID == 0)
+            {
+                return NotFound();
+            }
+            var UserFromDb = _unit.Users.GetFirstOrDefault(x => x.Id == ID);
+            if (UserFromDb == null)
+            {
+                return NotFound();
+            }
+            return View();
+        }
        [HttpPost]
        [ValidateAntiForgeryToken] //to avoid the cross site request forgery
        public IActionResult DeleteUsers(int? ID)
        {
-          /* var user = _unit.Users.GetFirstOrDefault(x => x.ID == ID);
-           if (user == null)
-           {
-               return NotFound();
-           }*/
-/*
-           _unit.Users.Remove(user);*/
-           _unit.Save();
+         *//*   var user = _unit.Users.GetFirstOrDefault(x => x.ID == ID);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _unit.Users.Remove(user);*//*
+            _unit.Save();
            TempData["success"] = "The record was deleted successfully!";
            return RedirectToAction("Index");
-}
+}*/
     }
 }
 
