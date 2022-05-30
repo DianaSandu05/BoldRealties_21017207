@@ -19,6 +19,7 @@ namespace BoldRealties.Web.Controllers
     /// <param name=" apiClient ">The api client.</param>
     public class TenancyController : Controller
     {
+        private readonly ApiClient apiClient;
         private readonly IUnitOfWork _unit;
         private readonly IWebHostEnvironment _webHost;
         private readonly UserManager<IdentityUser> _userManager;
@@ -246,5 +247,5 @@ namespace BoldRealties.Web.Controllers
         }
         }
 
-
+      
     }

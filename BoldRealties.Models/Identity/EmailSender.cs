@@ -21,6 +21,20 @@ namespace BoldRealties.Models.Identity
         }
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
+         /*   var emailToSend = new MimeKit.MimeMessage();
+            emailToSend.From.Add(MailboxAddress.Parse("diana@boldrealties.com"));
+            emailToSend.To.Add(MailboxAddress.Parse(email));
+            emailToSend.Subject = subject;
+            emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html){ Text = htmlMessage };
+
+            using (var emailClient = new SmtpClient())
+            {
+                emailClient.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                emailClient.Authenticate("diana.s.lori05@gmail.com", "Diana2205");
+                emailClient.Send(emailToSend);
+                emailClient.Disconnect(true);
+            }
+            return Task.CompletedTask;*/
          var client = new SendGridClient(SendGridSecret);
             var from = new EmailAddress("dls0053@my.londonmet.ac.uk", "student");
             var to = new EmailAddress(email);

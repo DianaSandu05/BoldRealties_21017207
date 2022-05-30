@@ -1,0 +1,63 @@
+﻿@using BoldRealties.Models
+@model BoldRealties.Models.ViewModels.tenancyVM
+@{
+    ViewData["Title"] = "ViewMyTenancy";
+    Layout = "~/Views/Shared/_UserPanel_Layout.cshtml";
+}
+<form method="post" asp-action="DeleteTenancy" enctype="multipart/form-data">
+	<input asp-for="tenancy.Id" hidden />
+	<input asp-for="tenancy.filePath" hidden />
+     <hr/>
+    <div class="border p-3 mt-4 row">
+        
+        <div class= "row pb-2">
+            <h2 cass="text-primary pl-3"> Tenancy</h2>
+            <a asp-controller="Tenancy" asp-action="Index" class="btn btn-warning" style="width:150px">
+				Back to List
+			</a>
+	
+        </div>
+        <div class="mb-3 col-6">
+           <label asp-for="tenancy.StartDate">Tenancy Start Date</label>
+            <input type="date" asp-for="tenancy.StartDate" class="form-control" disabled/>
+        </div>
+
+        <div class="mb-3 col-6">
+           <label asp-for="tenancy.EndDate">Tenancy End Date</label>
+            <input type="date" asp-for="tenancy.EndDate" class="form-control" disabled />
+        </div>
+         <div class="mb-3 col-6">
+           <label asp-for="tenancy.rentPrice">Rent Price</label>
+            <input asp-for="tenancy.rentPrice" class="form-control" disabled />
+           
+        </div>
+        <div class="mb-3  col-6">
+           <label asp-for="tenancy.comission">Agency comission</label>
+            <input asp-for="tenancy.comission" class="form-control" disabled/>
+        </div>
+       
+       
+        <div class="mb-3  col-6">
+        <label asp-for="tenancy.managementType">Management Type</label>
+                  <input asp-for="tenancy.managementType" class="form-control" disabled/>
+
+      </div>
+       <div class="mb-3  col-6">
+           <label asp-for="tenancy.PropertyID">Property ID</label>
+            <input asp-for="tenancy.PropertyID" class="form-control" disabled/>
+          
+        </div>
+        <div class="mb-3  col-6">
+           <label asp-for="tenancy.Users.Id">User ID</label>
+              <input asp-for="tenancy.rentPrice" class="form-control" disabled />
+          
+        </div>
+       <div class="col-2 pt-4">
+			<img src="@Model.tenancy.filePath"
+			width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+		</div>
+        				
+
+	</div>	
+    <button type="submit" class="btn btn-primary" style="width:150px">Delete</button>
+</form>	
